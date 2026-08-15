@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="it" style="background:#060608;">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Consulenze — Siti, Social, Digital per la ristorazione | RistoNext</title>
+  <meta name="description" content="Siti web, gestione social, strategia digitale e contenuti video per ristoranti e aziende hospitality. Costruiti dallo stesso team che ha fatto l'app RistoNext." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23E67E22'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <script defer src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora__blob aurora__blob--1"></div>
+    <div class="aurora__blob aurora__blob--2"></div>
+    <div class="aurora__blob aurora__blob--3"></div>
+  </div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+
+  <nav class="nav">
+    <a href="index.html" class="nav__logo">Risto<em>Next</em></a>
+    <ul class="nav__menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ristoratori.html">Ristoratori</a></li>
+      <li><a href="professionisti.html">Professionisti</a></li>
+      <li><a href="funzioni.html">Funzioni</a></li>
+      <li><a href="consulenze.html" class="active">Consulenze</a></li>
+      <li><a href="chi-siamo.html">Chi siamo</a></li>
+      <li><a href="contatti.html">Contatti</a></li>
+    </ul>
+    <a href="#contatto" class="nav__cta">Richiedi preventivo <span aria-hidden="true">→</span></a>
+    <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="nav__mobile" role="dialog" aria-label="Menu">
+    <a href="index.html">Home</a>
+    <a href="ristoratori.html">Ristoratori</a>
+    <a href="professionisti.html">Professionisti</a>
+    <a href="funzioni.html">Funzioni</a>
+    <a href="consulenze.html">Consulenze</a>
+    <a href="chi-siamo.html">Chi siamo</a>
+    <a href="contatti.html">Contatti</a>
+  </div>
+
+  <!-- PAGE HERO ======================================== -->
+  <section class="page-hero">
+    <div class="page-hero__bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="page-hero__inner">
+        <span class="eyebrow">Consulenze digitali</span>
+        <h1 class="split">Portiamo il tuo locale <em>online, sul serio</em>.</h1>
+        <p class="lead word-reveal">Sito web, gestione social, contenuti video, strategia digitale, ads su Meta e Google. Costruito su misura per la ristorazione — dalla stessa squadra che ha fatto l'app RistoNext.</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;">
+          <a href="#contatto" class="btn btn--primary">Chiedimi un preventivo <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+          <a href="#servizi" class="btn btn--ghost">Vedi cosa faccio</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER ========================================== -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span class="ticker__item">Sito web</span>
+      <span class="ticker__item">Social media</span>
+      <span class="ticker__item">Video content</span>
+      <span class="ticker__item">SEO local</span>
+      <span class="ticker__item">Meta Ads</span>
+      <span class="ticker__item">Google Ads</span>
+      <span class="ticker__item">Menu digitale</span>
+      <span class="ticker__item">Strategia</span>
+      <span class="ticker__item">Sito web</span>
+      <span class="ticker__item">Social media</span>
+      <span class="ticker__item">Video content</span>
+      <span class="ticker__item">SEO local</span>
+      <span class="ticker__item">Meta Ads</span>
+      <span class="ticker__item">Google Ads</span>
+      <span class="ticker__item">Menu digitale</span>
+      <span class="ticker__item">Strategia</span>
+    </div>
+  </div>
+
+  <!-- WHY US =========================================== -->
+  <section>
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Perché noi</span>
+        <h2 class="h-section split">Non parliamo di ristorazione. <em>La costruiamo</em>.</h2>
+        <p class="lead word-reveal">RistoNext, l'app che gestisce turni, squadra, match IA per centinaia di professionisti italiani, l'abbiamo fatta noi. Da zero. Dal codice al design, dallo store al marketing su Instagram. Se ti serve una vetrina digitale seria per il tuo locale — o per la tua attività — sai a chi rivolgerti.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIZI ========================================== -->
+  <section id="servizi">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Cosa faccio per te</span>
+        <h2 class="h-section split">Sei aree, <em>un'unica firma</em>.</h2>
+      </div>
+
+      <div class="bento reveal--stagger">
+
+        <div class="bento__cell bento__cell--wide bento__cell--tall">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20M6 12h6M6 16h4"/></svg>
+            </div>
+            <h3 class="bento__title">Siti web per ristoranti</h3>
+            <p class="bento__desc">One-page eleganti o siti completi con menù, prenotazioni, area eventi. Design moderno, veloce, ottimizzato SEO locale ("ristorante Roma", "pizzeria Milano"). Hosting incluso.</p>
+          </div>
+          <div class="bento__num">7g<div class="bento__num-label">tempo medio di consegna</div></div>
+        </div>
+
+        <div class="bento__cell bento__cell--small">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+            </div>
+            <h3 class="bento__title">Instagram & Meta</h3>
+            <p class="bento__desc">Feed strategico, reel produzione, calendario editoriale.</p>
+          </div>
+        </div>
+
+        <div class="bento__cell bento__cell--small">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            </div>
+            <h3 class="bento__title">Video reel</h3>
+            <p class="bento__desc">Ripresa in loco + editing pro (stesso stile RistoNext).</p>
+          </div>
+        </div>
+
+        <div class="bento__cell bento__cell--med">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+            </div>
+            <h3 class="bento__title">SEO locale</h3>
+            <p class="bento__desc">Google Business, schema.org restaurant, keyword geo-targeted. Chi cerca "pizzeria vicino a me" ti trova.</p>
+          </div>
+        </div>
+
+        <div class="bento__cell bento__cell--med">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+            </div>
+            <h3 class="bento__title">Meta & Google Ads</h3>
+            <p class="bento__desc">Campagne performance con obiettivi chiari: coperti, prenotazioni, follower. Report leggibile ogni mese.</p>
+          </div>
+        </div>
+
+        <div class="bento__cell bento__cell--wide">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h3 class="bento__title">Consulenza strategica 1:1</h3>
+            <p class="bento__desc">Sessioni mirate: cosa fare online per il tuo locale, dove tagliare, dove investire, quali strumenti adottare. Zero fuffa, tutto orientato ai risultati.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- METHOD =========================================== -->
+  <section>
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Il metodo</span>
+        <h2 class="h-section split">Come lavoriamo. <em>Sempre così</em>.</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step__num">01 / ASCOLTO</div>
+          <h3 class="step__title">Prima capisco cosa ti serve davvero.</h3>
+          <p class="step__desc">Chiamata (o incontro se sei in zona) di 45 minuti. Situazione attuale, obiettivi, budget. Nessun template, nessuna proposta pre-cotta.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step__num">02 / PROPOSTA</div>
+          <h3 class="step__title">Ti mando cosa farei, con prezzi trasparenti.</h3>
+          <p class="step__desc">Preventivo scritto: attività, tempistiche, costo fisso o mensile. Puoi confrontare con altri, non c'è problema.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step__num">03 / ESECUZIONE</div>
+          <h3 class="step__title">Costruisco. Ti aggiorno. Consegno.</h3>
+          <p class="step__desc">Aggiornamenti settimanali, revisioni incluse, consegna nei tempi. Tutto documentato, tutto tuo alla fine.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDY ======================================= -->
+  <section>
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Case study</span>
+        <h2 class="h-section split">RistoNext. <em>Costruita da zero</em>.</h2>
+        <p class="lead">Non ti mostro il portfolio di uno stagista. Il pezzo forte è l'app che stai vedendo pubblicizzata qui: RistoNext. Progettata, sviluppata, portata sui due store, con l'IA integrata dentro. Se sono riuscito a fare questo, il tuo sito o il tuo Instagram sono la parte facile.</p>
+      </div>
+      <div class="stats reveal--stagger">
+        <div class="stat">
+          <div class="stat__num"><em>2</em></div>
+          <div class="stat__label">Store: iOS + Android</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num"><em>8</em></div>
+          <div class="stat__label">Strumenti nell'app</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">v<em>1.0.18</em></div>
+          <div class="stat__label">Rilasciata pubblicamente</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num"><em>100%</em></div>
+          <div class="stat__label">Codice, design, marketing in casa</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA ============================================= -->
+  <section id="contatto" class="cta-final">
+    <div class="cta-final__bg" aria-hidden="true"></div>
+    <div class="container cta-final__inner reveal">
+      <span class="eyebrow">Cominciamo</span>
+      <h2 class="h-display split">Raccontami <em>il tuo progetto</em>.</h2>
+      <p class="lead" style="text-align:center;">Rispondo entro 24h. Sempre. Nessun bot, nessuna segreteria.</p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+        <a href="mailto:ristonext@outlook.com?subject=Richiesta consulenza" class="btn btn--primary">Scrivimi via email <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+        <a href="https://www.instagram.com/ristonext/" target="_blank" rel="noopener" class="btn btn--ghost">DM su Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER =========================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="nav__logo">Risto<em>Next</em></div>
+          <p>L'app che unisce ristoratori e professionisti della ristorazione italiana. E la squadra che porta il tuo locale online, sul serio.</p>
+        </div>
+        <div class="footer__col"><h4>Prodotto</h4><ul>
+          <li><a href="funzioni.html">Funzioni</a></li>
+          <li><a href="ristoratori.html">Per i ristoratori</a></li>
+          <li><a href="professionisti.html">Per i professionisti</a></li>
+          <li><a href="index.html#download">Scarica l'app</a></li>
+        </ul></div>
+        <div class="footer__col"><h4>Azienda</h4><ul>
+          <li><a href="consulenze.html">Consulenze</a></li>
+          <li><a href="chi-siamo.html">Chi siamo</a></li>
+          <li><a href="contatti.html">Contatti</a></li>
+          <li><a href="https://www.instagram.com/ristonext/" target="_blank" rel="noopener">Instagram</a></li>
+        </ul></div>
+        <div class="footer__col"><h4>Legale</h4><ul>
+          <li><a href="https://ricciardi96-netizen.github.io/ristonext-legal/privacy.html" target="_blank" rel="noopener">Privacy</a></li>
+          <li><a href="https://ricciardi96-netizen.github.io/ristonext-legal/support.html" target="_blank" rel="noopener">Supporto</a></li>
+          <li><a href="https://ricciardi96-netizen.github.io/ristonext-legal/account-deletion.html" target="_blank" rel="noopener">Cancella account</a></li>
+        </ul></div>
+      </div>
+      <div class="footer__bottom">
+        <div>© 2026 Michele Ricciardi — RistoNext.</div>
+        <div class="footer__social">
+          <a href="https://www.instagram.com/ristonext/" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:ristonext@outlook.com">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
