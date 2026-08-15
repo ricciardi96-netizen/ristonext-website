@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="it" style="background:#060608;">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>RistoNext — La ristorazione, finalmente insieme</title>
+  <meta name="description" content="RistoNext è l'app che unisce ristoratori e professionisti della ristorazione. Match IA, turni, squadra, competenze verificate. Scaricala su App Store e Google Play." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta property="og:title" content="RistoNext — La ristorazione, finalmente insieme" />
+  <meta property="og:description" content="L'app che unisce chi cerca e chi offre lavoro nella ristorazione. Match IA, turni, squadra, competenze verificate." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ristonext.com" />
+  <meta property="og:image" content="https://ristonext.com/assets/img/og.jpg" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23E67E22'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <script defer src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.161.0/build/three.module.js"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora__blob aurora__blob--1"></div>
+    <div class="aurora__blob aurora__blob--2"></div>
+    <div class="aurora__blob aurora__blob--3"></div>
+  </div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+
+  <div class="preloader" aria-hidden="true">
+    <div class="preloader__num"><em class="preloader__num-val">00</em></div>
+  </div>
+
+  <!-- NAV ============================================== -->
+  <nav class="nav">
+    <a href="index.html" class="nav__logo">Risto<em>Next</em></a>
+    <ul class="nav__menu">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="ristoratori.html">Ristoratori</a></li>
+      <li><a href="professionisti.html">Professionisti</a></li>
+      <li><a href="funzioni.html">Funzioni</a></li>
+      <li><a href="consulenze.html">Consulenze</a></li>
+      <li><a href="chi-siamo.html">Chi siamo</a></li>
+      <li><a href="contatti.html">Contatti</a></li>
+    </ul>
+    <a href="#download" class="nav__cta">Scarica l'app <span aria-hidden="true">→</span></a>
+    <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="nav__mobile" role="dialog" aria-label="Menu">
+    <a href="index.html">Home</a>
+    <a href="ristoratori.html">Ristoratori</a>
+    <a href="professionisti.html">Professionisti</a>
+    <a href="funzioni.html">Funzioni</a>
+    <a href="consulenze.html">Consulenze</a>
+    <a href="chi-siamo.html">Chi siamo</a>
+    <a href="contatti.html">Contatti</a>
+  </div>
+
+  <!-- HERO ============================================= -->
+  <section class="hero">
+    <canvas class="hero__canvas" aria-hidden="true"></canvas>
+    <div class="container hero__content">
+      <span class="hero__eyebrow eyebrow">Live · v1.0.18 su App Store e Google Play</span>
+      <h1 class="h-display hero__title split">La ristorazione, finalmente <em>insieme</em>.</h1>
+      <p class="hero__sub word-reveal">RistoNext è l'app che connette ristoratori e professionisti con l'intelligenza artificiale. Cerca profili verificati, gestisci turni, costruisci squadre. Tutto in un posto.</p>
+      <div class="hero__actions">
+        <a href="#download" class="btn btn--primary">
+          Scarica gratis
+          <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+        <a href="funzioni.html" class="btn btn--ghost">Scopri come funziona</a>
+      </div>
+    </div>
+    <div class="hero__scroll">Scroll<span></span></div>
+  </section>
+
+  <!-- PHONE SCENE — vetrina app subito dopo hero ======= -->
+  <section class="phone-scene" id="app-vetrina">
+    <div class="container">
+      <div class="phone-scene__head reveal">
+        <span class="eyebrow">Toccala con mano</span>
+        <h2 class="h-section split">L'app che <em>lavora davvero</em>.</h2>
+        <p class="lead">Passa sulle voci ai lati, oppure scorri: l'app cambia sotto i tuoi occhi. Ogni sezione risolve un problema concreto della ristorazione.</p>
+      </div>
+
+      <div class="phone-scene__stage">
+
+        <div class="phone-scene__labels phone-scene__labels--left">
+          <div class="phone-scene__label active" data-phone-index="0"><span class="phone-scene__label__num">01</span><span>Match IA — compatibilità reale</span></div>
+          <div class="phone-scene__label" data-phone-index="1"><span class="phone-scene__label__num">02</span><span>Feed annunci ordinato per te</span></div>
+          <div class="phone-scene__label" data-phone-index="2"><span class="phone-scene__label__num">03</span><span>Squadra del locale, viva</span></div>
+          <div class="phone-scene__label" data-phone-index="3"><span class="phone-scene__label__num">04</span><span>Calendario turni intelligente</span></div>
+        </div>
+
+        <div class="phone">
+          <div class="phone__screen">
+            <div class="phone__slide active"><img src="assets/img/match-ia.png" alt="Match IA" /></div>
+            <div class="phone__slide"><img src="assets/img/feed-annunci.png" alt="Feed annunci" /></div>
+            <div class="phone__slide"><img src="assets/img/squadra.png" alt="Squadra" /></div>
+            <div class="phone__slide"><img src="assets/img/turni-locale.png" alt="Turni" /></div>
+            <div class="phone__slide"><img src="assets/img/extra-cerca.png" alt="Extra" /></div>
+            <div class="phone__slide"><img src="assets/img/competenze.png" alt="Competenze" /></div>
+            <div class="phone__slide"><img src="assets/img/consulente-ia.png" alt="Consulente IA" /></div>
+            <div class="phone__glare"></div>
+          </div>
+        </div>
+
+        <div class="phone-scene__labels phone-scene__labels--right">
+          <div class="phone-scene__label" data-phone-index="4"><span class="phone-scene__label__num">05</span><span>Extra & ingaggi last-minute</span></div>
+          <div class="phone-scene__label" data-phone-index="5"><span class="phone-scene__label__num">06</span><span>Competenze verificate & sigilli</span></div>
+          <div class="phone-scene__label" data-phone-index="6"><span class="phone-scene__label__num">07</span><span>Consulente IA sui tuoi dati</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE ========================================== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Match IA</span><em>◆</em>
+      <span>Turni intelligenti</span><em>◆</em>
+      <span>Squadra del locale</span><em>◆</em>
+      <span>Competenze verificate</span><em>◆</em>
+      <span>Extra & Ingaggi</span><em>◆</em>
+      <span>Consulente IA</span><em>◆</em>
+      <span>Coach IA</span><em>◆</em>
+      <span>Match IA</span><em>◆</em>
+      <span>Turni intelligenti</span><em>◆</em>
+      <span>Squadra del locale</span><em>◆</em>
+      <span>Competenze verificate</span><em>◆</em>
+      <span>Extra & Ingaggi</span><em>◆</em>
+      <span>Consulente IA</span><em>◆</em>
+      <span>Coach IA</span><em>◆</em>
+    </div>
+  </div>
+
+  <!-- PROBLEM/SOLUTION ================================= -->
+  <section id="perche" class="section-problem">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Perché esiste RistoNext</span>
+        <h2 class="h-section split">Trovare persone giuste per il tuo locale — o un locale giusto per te — non dovrebbe essere <em>una lotteria</em>.</h2>
+        <p class="lead">Curriculum che nessuno legge. Turni che saltano. Colloqui a vuoto. Squadre che si sfaldano. La ristorazione italiana perde ogni anno miliardi in turnover e ricerche fallite. RistoNext è la risposta: un'app fatta da chi lavora nella ristorazione, per chi lavora nella ristorazione.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENTO FEATURES =================================== -->
+  <section id="funzioni-preview">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Le funzioni</span>
+        <h2 class="h-section split">Un'app, <em>otto strumenti</em>, zero attriti.</h2>
+      </div>
+      <div class="bento reveal--stagger">
+
+        <div class="bento__cell bento__cell--wide bento__cell--tall">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/><path d="M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>
+            </div>
+            <h3 class="bento__title">Match IA che capisce davvero.</h3>
+            <p class="bento__desc">Non un semplice filtro parole chiave: l'IA legge il tuo annuncio, capisce cosa serve al locale, e ordina i candidati per compatibilità reale. Percentuali che hanno un senso.</p>
+          </div>
+          <div class="bento__num">98<span style="font-size:0.4em;color:var(--text-mute)">%</span>
+            <div class="bento__num-label">match più rilevanti vs ricerca classica</div>
+          </div>
+        </div>
+
+        <div class="bento__cell bento__cell--small">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            </div>
+            <h3 class="bento__title">Turni</h3>
+            <p class="bento__desc">Pianifica settimane in minuti. Notifiche push a chi lavora.</p>
+          </div>
+        </div>
+
+        <div class="bento__cell bento__cell--small">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/><circle cx="18" cy="9" r="2.5"/><path d="M22 21v-1a3 3 0 0 0-2.5-3"/></svg>
+            </div>
+            <h3 class="bento__title">Squadra</h3>
+            <p class="bento__desc">La rosa del tuo locale con ruoli, schede e statistiche.</p>
+          </div>
+        </div>
+
+        <div class="bento__cell bento__cell--med">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="4"/></svg>
+            </div>
+            <h3 class="bento__title">Extra & Ingaggi</h3>
+            <p class="bento__desc">Copri buchi last-minute con professionisti già verificati nella tua zona. Chiama, conferma, chiuso.</p>
+          </div>
+        </div>
+
+        <div class="bento__cell bento__cell--med">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <h3 class="bento__title">Competenze verificate</h3>
+            <p class="bento__desc">Quiz profondi per ruolo. Sigilli visibili sul profilo. Basta CV che dicono tutti la stessa cosa.</p>
+          </div>
+        </div>
+
+        <div class="bento__cell bento__cell--wide">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h3 class="bento__title">Consulente IA + Coach IA</h3>
+            <p class="bento__desc">Due assistenti pensati per due mondi diversi. Il Consulente legge i tuoi dati e ti suggerisce mosse concrete. Il Coach guida i professionisti nella crescita di carriera.</p>
+          </div>
+        </div>
+
+        <div class="bento__cell bento__cell--small">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <h3 class="bento__title">Mappa Italia</h3>
+            <p class="bento__desc">Filtra per città, provincia, distanza. Zero fuffa.</p>
+          </div>
+        </div>
+
+        <div class="bento__cell bento__cell--small">
+          <div class="bento__body">
+            <div class="bento__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 17h5l-1.4-1.4A6 6 0 0 0 20 11V8a6 6 0 0 0-12 0v3a6 6 0 0 0 1.4 4.6L8 17h5"/><path d="M9 17a3 3 0 0 0 6 0"/></svg>
+            </div>
+            <h3 class="bento__title">Chat & notifiche</h3>
+            <p class="bento__desc">Messaggi diretti, note vocali, sveglie turno. Tutto nell'app.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DEEP DIVE FUNZIONI =============================== -->
+  <section id="deep-dive">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">In profondità</span>
+        <h2 class="h-section split">Le cinque cose che <em>nessuno fa così</em>.</h2>
+        <p class="lead">Le funzioni sopra sono ovvie. Queste cinque sono il vero motivo per cui RistoNext è diversa da qualsiasi altra app di annunci — e perché i ristoratori che la provano non tornano indietro.</p>
+      </div>
+
+      <div class="feat-row reveal">
+        <div>
+          <span class="feat-row__eyebrow">01 · Compatibilità IA</span>
+          <h2 class="feat-row__title split">Un match che <em>ha davvero senso</em>.</h2>
+          <p class="feat-row__desc">L'IA non legge parole chiave. Legge il contesto. Un cameriere junior con esperienza in pizzeria da asporto non è la stessa cosa di un chef de rang stellato — e il tuo annuncio nemmeno. Il match è calcolato su decine di segnali: ruolo, seniority, esperienza reale, disponibilità, distanza, cucina, ritmo di servizio. Il numero che vedi (92%, 45%, 8%) è una percentuale onesta.</p>
+          <ul class="feat-row__list">
+            <li>Percentuale visibile sia lato locale che lato professionista</li>
+            <li>Ricalcolo in tempo reale quando modifichi l'annuncio</li>
+            <li>Motivazione sintetica del match (cosa ti manca, dove hai chance)</li>
+          </ul>
+        </div>
+        <div class="feat-row__media"><img src="assets/img/match-ia.png" alt="Match IA con percentuali" loading="lazy" class="parallax-img" /></div>
+      </div>
+
+      <div class="feat-row reveal">
+        <div>
+          <span class="feat-row__eyebrow">02 · Team del locale</span>
+          <h2 class="feat-row__title split">La tua squadra <em>è un'infrastruttura</em>.</h2>
+          <p class="feat-row__desc">Non un elenco. Un ecosistema vivo con ruoli, competenze, statistiche, deleghe granulari. Il tuo capo servizio gestisce i turni. Il tuo chef gestisce la brigata. Tu vedi tutto, decidi cosa. Storico completo, note, valutazioni interne, copertura per servizio.</p>
+          <ul class="feat-row__list">
+            <li>Ruoli configurabili (cuoco, sala, bar, back-office)</li>
+            <li>Deleghe per singolo permesso (turni sì, assunzioni no)</li>
+            <li>Statistiche di squadra: chi copre, chi salta, chi cresce</li>
+            <li>Schede membri con storico completo</li>
+          </ul>
+        </div>
+        <div class="feat-row__media"><img src="assets/img/squadra.png" alt="Squadra del locale" loading="lazy" class="parallax-img" /></div>
+      </div>
+
+      <div class="feat-row reveal">
+        <div>
+          <span class="feat-row__eyebrow">03 · Solo Italia</span>
+          <h2 class="feat-row__title split">Profondità <em>sul mercato che ti interessa</em>.</h2>
+          <p class="feat-row__desc">Le piattaforme globali sono deserti locali. RistoNext è solo Italia — città per città, provincia per provincia. Mappa geografica, filtri per zona, disponibilità distanza in chilometri reali. A Roma c'è la copertura di Roma. A Palermo la copertura di Palermo. Non 12 candidati polacchi per un posto in un locale di Milano.</p>
+          <ul class="feat-row__list">
+            <li>Filtri per città, provincia, distanza in km</li>
+            <li>Mappa con densità profili nella tua zona</li>
+            <li>Zero rumore da altri paesi — solo il mercato italiano</li>
+          </ul>
+        </div>
+        <div class="feat-row__media"><img src="assets/img/extra-cerca.png" alt="Ricerca geografica Italia" loading="lazy" class="parallax-img" /></div>
+      </div>
+
+      <div class="feat-row reveal">
+        <div>
+          <span class="feat-row__eyebrow">04 · Attestazioni & sigilli</span>
+          <h2 class="feat-row__title split">Non "verificato". <em>Attestato</em>.</h2>
+          <p class="feat-row__desc">Il badge blu comprato non serve a niente. Da noi si passa attraverso quiz veri, profondi, specifici per ruolo. Bronzo, argento, oro. Poi sigilli scuola per chi ha formazione. Sigilli specialista per aree tecniche (HACCP, sommellerie, mixology). Il ristoratore vede a colpo d'occhio cosa sa fare la persona che sta valutando.</p>
+          <ul class="feat-row__list">
+            <li>Quiz specifici per ruolo (cucina, sala, bar, gestione)</li>
+            <li>4 livelli di sigillo: bronzo, argento, oro, scuola</li>
+            <li>Filtri "solo attestati" per il ristoratore</li>
+            <li>Storico attestazioni sempre visibile</li>
+          </ul>
+        </div>
+        <div class="feat-row__media"><img src="assets/img/competenze.png" alt="Sigilli e attestazioni" loading="lazy" class="parallax-img" /></div>
+      </div>
+
+      <div class="feat-row reveal">
+        <div>
+          <span class="feat-row__eyebrow">05 · Esperienze verificate</span>
+          <h2 class="feat-row__title split">Non solo <em>dichiarate</em>.</h2>
+          <p class="feat-row__desc">"Ho lavorato al Ritz" scrivere è facile. RistoNext permette al locale precedente di confermare l'esperienza direttamente in app: date, ruolo, valutazione sintetica. Il profilo diventa un curriculum che nessuno può gonfiare. Chi non ha verifiche non è invisibile — è solo un candidato da valutare senza scorciatoie.</p>
+          <ul class="feat-row__list">
+            <li>Conferma esperienza dal locale precedente in un tap</li>
+            <li>Icona "verificato" accanto a ogni esperienza confermata</li>
+            <li>Filtri "solo con esperienze verificate" per ricerche mirate</li>
+            <li>Reputazione che cresce col tempo, senza scorciatoie</li>
+          </ul>
+        </div>
+        <div class="feat-row__media"><img src="assets/img/profilo-professionista.png" alt="Profilo con esperienze verificate" loading="lazy" class="parallax-img" /></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STEPS ============================================ -->
+  <section id="come-funziona">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Come funziona</span>
+        <h2 class="h-section split">Dall'iscrizione al primo turno in <em>tre passaggi</em>.</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step__num">01 / RISTORATORE</div>
+          <h3 class="step__title">Racconta il tuo locale in due minuti.</h3>
+          <p class="step__desc">Nome, cucina, città, ritmo di servizio. Aggiungi la squadra attuale se già ce l'hai. L'IA impara chi sei per proporti i profili giusti.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step__num">02 / PROFESSIONISTA</div>
+          <h3 class="step__title">Crea il profilo che parla di te davvero.</h3>
+          <p class="step__desc">Esperienze, competenze, disponibilità, sigilli. Fai i quiz per verificare quello che sai. Il profilo diventa il tuo miglior curriculum.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step__num">03 / INSIEME</div>
+          <h3 class="step__title">L'IA fa il resto.</h3>
+          <p class="step__desc">Match ordinati per compatibilità reale. Chat diretta. Turni e ingaggi in due tap. Nessuna piattaforma di mezzo che ti spreme in commissioni.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DUAL CARDS ======================================= -->
+  <section id="chi-e">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Chi usa RistoNext</span>
+        <h2 class="h-section split">Fatta per due, <em>pensata come una</em>.</h2>
+      </div>
+      <div class="dual reveal--stagger">
+        <a href="ristoratori.html" class="dual-card">
+          <div class="dual-card__head">
+            <div class="dual-card__label">Sei un ristoratore</div>
+            <h3 class="dual-card__title">Costruisci la tua squadra migliore.</h3>
+            <p class="dual-card__desc">Ogni giorno che perdi cercando personale è un giorno che il tuo locale rende meno. RistoNext ti dà uno strumento chirurgico.</p>
+          </div>
+          <ul class="dual-card__list">
+            <li>Pubblica annunci e ricevi candidati ordinati per match</li>
+            <li>Gestisci turni, extra, coperture last-minute</li>
+            <li>Analisi IA sui tuoi dati per decisioni migliori</li>
+            <li>Deleghe granulari al tuo team</li>
+          </ul>
+          <span class="dual-card__link">Vedi funzioni per ristoratori →</span>
+        </a>
+
+        <a href="professionisti.html" class="dual-card">
+          <div class="dual-card__head">
+            <div class="dual-card__label">Sei un professionista</div>
+            <h3 class="dual-card__title">Fatti trovare da chi ti cerca.</h3>
+            <p class="dual-card__desc">Cuoco, cameriere, pizzaiolo, barista, sommelier, manager. Se lavori nella ristorazione, RistoNext esiste per te.</p>
+          </div>
+          <ul class="dual-card__list">
+            <li>Profilo con sigilli, competenze verificate, portfolio</li>
+            <li>Candidature ordinate per match — vedi dove hai chance</li>
+            <li>Extra pagati per singole serate</li>
+            <li>Coach IA per crescere in carriera</li>
+          </ul>
+          <span class="dual-card__link">Vedi funzioni per professionisti →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGENCY / CONSULENZE ============================== -->
+  <section class="agency" id="consulenze-preview">
+    <div class="container">
+      <div class="agency__intro reveal">
+        <div class="agency__flag">Non solo un'app</div>
+        <h2 class="h-section split">Costruiamo <em>siti, social e strategia</em> per la ristorazione.</h2>
+        <p class="lead">Se hai visto RistoNext e ti stai chiedendo "chi c'è dietro?", la risposta è: la stessa squadra che porta il tuo locale online. Sito web, gestione Instagram, video reel, campagne ads, consulenza digitale. Fatti da chi la ristorazione la conosce sul serio.</p>
+      </div>
+    </div>
+
+    <div class="h-scroll">
+      <div class="h-scroll__track">
+        <div class="h-scroll__card">
+          <div>
+            <div class="h-scroll__num">01</div>
+            <h3 class="h-scroll__title">Sito web per il tuo locale</h3>
+            <p class="h-scroll__desc">One-page eleganti o siti completi con menu, prenotazioni, area eventi. Design moderno, veloce, ottimizzato per Google.</p>
+          </div>
+          <div class="h-scroll__tags">
+            <span class="h-scroll__tag">Design</span>
+            <span class="h-scroll__tag">SEO</span>
+            <span class="h-scroll__tag">Hosting</span>
+          </div>
+        </div>
+
+        <div class="h-scroll__card">
+          <div>
+            <div class="h-scroll__num">02</div>
+            <h3 class="h-scroll__title">Social media & Instagram</h3>
+            <p class="h-scroll__desc">Feed strategico, reel produzione, calendario editoriale, community management. Facciamo crescere l'account che meriti.</p>
+          </div>
+          <div class="h-scroll__tags">
+            <span class="h-scroll__tag">Content</span>
+            <span class="h-scroll__tag">Reel</span>
+            <span class="h-scroll__tag">Community</span>
+          </div>
+        </div>
+
+        <div class="h-scroll__card">
+          <div>
+            <div class="h-scroll__num">03</div>
+            <h3 class="h-scroll__title">Video content</h3>
+            <p class="h-scroll__desc">Ripresa in loco + editing pro. Stesso stile visivo dei reel di RistoNext — audio pulito, ritmo, storia.</p>
+          </div>
+          <div class="h-scroll__tags">
+            <span class="h-scroll__tag">Shooting</span>
+            <span class="h-scroll__tag">Editing</span>
+            <span class="h-scroll__tag">Motion</span>
+          </div>
+        </div>
+
+        <div class="h-scroll__card">
+          <div>
+            <div class="h-scroll__num">04</div>
+            <h3 class="h-scroll__title">Meta & Google Ads</h3>
+            <p class="h-scroll__desc">Campagne performance con obiettivi chiari: coperti, prenotazioni, follower. Report leggibile ogni mese.</p>
+          </div>
+          <div class="h-scroll__tags">
+            <span class="h-scroll__tag">Ads</span>
+            <span class="h-scroll__tag">Analytics</span>
+            <span class="h-scroll__tag">Report</span>
+          </div>
+        </div>
+
+        <div class="h-scroll__card">
+          <div>
+            <div class="h-scroll__num">05</div>
+            <h3 class="h-scroll__title">Consulenza 1:1</h3>
+            <p class="h-scroll__desc">Sessioni mirate: cosa fare online per il tuo locale, dove tagliare, dove investire, quali strumenti adottare. Zero fuffa.</p>
+          </div>
+          <div class="h-scroll__tags">
+            <span class="h-scroll__tag">Strategia</span>
+            <span class="h-scroll__tag">Digital</span>
+            <span class="h-scroll__tag">1:1</span>
+          </div>
+        </div>
+
+        <div class="h-scroll__card">
+          <div>
+            <div class="h-scroll__num">06</div>
+            <h3 class="h-scroll__title">Setup strumenti digitali</h3>
+            <p class="h-scroll__desc">Menu digitale QR, sistema prenotazioni, Google Business, TripAdvisor, TheFork. Ti configuriamo tutto, ti mostriamo come mantenerlo.</p>
+          </div>
+          <div class="h-scroll__tags">
+            <span class="h-scroll__tag">QR</span>
+            <span class="h-scroll__tag">Prenotazioni</span>
+            <span class="h-scroll__tag">GBP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top: 60px;">
+      <div class="mini-cta reveal">
+        <div class="mini-cta__text">
+          <h3>Cerchi qualcuno per il tuo digitale?</h3>
+          <p>Rispondo entro 24h con un preventivo trasparente. Nessun impegno.</p>
+        </div>
+        <a href="consulenze.html" class="btn btn--primary">Vedi tutti i servizi <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS ============================================ -->
+  <section id="numeri">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">I numeri</span>
+        <h2 class="h-section split">Fatti, <em>non promesse</em>.</h2>
+      </div>
+      <div class="stats reveal--stagger">
+        <div class="stat">
+          <div class="stat__num"><span data-count="1833">1833</span></div>
+          <div class="stat__label">Community Instagram attiva</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num"><em>8</em></div>
+          <div class="stat__label">Strumenti in una sola app</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num"><em>2</em></div>
+          <div class="stat__label">Store: iOS + Android</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">v<em>1.0.18</em></div>
+          <div class="stat__label">In continuo aggiornamento</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL ======================================== -->
+  <section id="download" class="cta-final">
+    <div class="cta-final__bg" aria-hidden="true"></div>
+    <div class="container cta-final__inner reveal">
+      <span class="eyebrow">Pronto?</span>
+      <h2 class="h-display">Scaricala. È <em>gratis</em>.</h2>
+      <p class="lead" style="text-align:center;">Iscriviti in 60 secondi. Nessuna carta di credito richiesta.</p>
+      <div class="store-badges">
+        <a href="https://apps.apple.com/it/app/ristonext/id6762455597" target="_blank" rel="noopener" class="store-badge">
+          <svg class="store-badge__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.7 17.3c-.3.7-.7 1.4-1.2 2-.6.8-1.1 1.4-1.5 1.7-.6.5-1.3.8-2 .8-.5 0-1.1-.1-1.9-.4-.7-.3-1.4-.4-2-.4-.7 0-1.4.1-2.1.4-.7.3-1.3.4-1.8.4-.7 0-1.4-.3-2.1-.8-.4-.3-.9-.9-1.6-1.7-.7-.9-1.2-2-1.7-3.2C1 15 .7 13.6.7 12.3c0-1.5.3-2.8 1-3.9.5-.9 1.2-1.6 2-2.1.9-.5 1.8-.8 2.8-.8.5 0 1.2.2 2.1.5.9.3 1.4.5 1.7.5.2 0 .8-.2 1.9-.5.9-.3 1.7-.5 2.4-.4 1.7.1 3 .8 3.9 2.1-1.5.9-2.3 2.2-2.3 3.9 0 1.3.5 2.4 1.4 3.3.4.4.9.7 1.5.9-.1.4-.2.7-.4 1.1zm-4.3-16.6c0 1.1-.4 2.1-1.2 3.1-1 1.1-2.1 1.8-3.4 1.7 0-.1 0-.3 0-.4 0-1.1.4-2.2 1.3-3.1.4-.5.9-.9 1.6-1.2.6-.3 1.2-.4 1.7-.5 0 .2 0 .3 0 .4z"/></svg>
+          <span class="store-badge__text">
+            <span class="store-badge__small">Scarica su</span>
+            <span class="store-badge__big">App Store</span>
+          </span>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=dev.a0.apps.ristonext493" target="_blank" rel="noopener" class="store-badge">
+          <svg class="store-badge__icon" viewBox="0 0 24 24"><path fill="#EA4335" d="M3 2.5v19l10-9.5z" transform="translate(0.5,0)"/><path fill="#4285F4" d="M13 12L3 21.5l14-8z" transform="translate(0.5,0)"/><path fill="#FBBC04" d="M17 13.5l4.5-2.5-4.5-2.5-4 4z" transform="translate(0.5,0)"/><path fill="#34A853" d="M13 12L3 2.5l14 8z" transform="translate(0.5,0)"/></svg>
+          <span class="store-badge__text">
+            <span class="store-badge__small">Scarica su</span>
+            <span class="store-badge__big">Google Play</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER =========================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="nav__logo">Risto<em>Next</em></div>
+          <p>L'app che unisce ristoratori e professionisti della ristorazione italiana. Match IA, turni, squadra, competenze verificate.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Prodotto</h4>
+          <ul>
+            <li><a href="funzioni.html">Funzioni</a></li>
+            <li><a href="ristoratori.html">Per i ristoratori</a></li>
+            <li><a href="professionisti.html">Per i professionisti</a></li>
+            <li><a href="#download">Scarica l'app</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Azienda</h4>
+          <ul>
+            <li><a href="consulenze.html">Consulenze</a></li>
+            <li><a href="chi-siamo.html">Chi siamo</a></li>
+            <li><a href="contatti.html">Contatti</a></li>
+            <li><a href="https://www.instagram.com/ristonext/" target="_blank" rel="noopener">Instagram</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Legale</h4>
+          <ul>
+            <li><a href="https://ricciardi96-netizen.github.io/ristonext-legal/privacy.html" target="_blank" rel="noopener">Privacy</a></li>
+            <li><a href="https://ricciardi96-netizen.github.io/ristonext-legal/support.html" target="_blank" rel="noopener">Supporto</a></li>
+            <li><a href="https://ricciardi96-netizen.github.io/ristonext-legal/account-deletion.html" target="_blank" rel="noopener">Cancella account</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <div>© 2026 Michele Ricciardi — RistoNext. Tutti i diritti riservati.</div>
+        <div class="footer__social">
+          <a href="https://www.instagram.com/ristonext/" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:ristonext@outlook.com">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
