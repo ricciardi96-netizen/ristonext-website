@@ -13,11 +13,22 @@ import * as THREE from 'three';
 const LOGO_URL = 'assets/img/logo-official.png';
 const LIGHT_COUNT = 3;
 
-/* Shared GLSL: pull alpha out of the texture's luminance. */
+/* Shared GLSL: pull alpha out of the texture's luminance, and recolour the
+   mark. The logo is a concentric composition — gold ring on the outside,
+   lettering in the middle — so the radial distance from the centre tells
+   the two apart: the ring keeps the brand gold, the lettering goes white. */
 const ALPHA_FROM_LUMA = /* glsl */ `
   float lumaAlpha(vec3 rgb) {
     float lum = dot(rgb, vec3(0.299, 0.587, 0.114));
     return smoothstep(0.05, 0.26, lum);
+  }
+
+  vec3 markColor(vec2 uv) {
+    float r = distance(uv, vec2(0.5));
+    float ring = smoothstep(0.33, 0.38, r);
+    vec3 white = vec3(1.0, 0.99, 0.97);
+    vec3 gold  = vec3(0.85, 0.69, 0.22);
+    return mix(white, gold, ring);
   }
 `;
 
@@ -93,45 +104,46 @@ export function initHero(canvas) {
   backdrop.renderOrder = 0;
   stageGroup.add(backdrop);
 
-  /* ============ SHADOWS: one per light, cast onto the backdrop ============ */
-  const shadowMeshes = [];
-  for (let i = 0; i < LIGHT_COUNT; i++) {
-    const mat = new THREE.ShaderMaterial({
-      uniforms: { uLogo: { value: logoTexture }, uOpacity: { value: 0.55 } },
-      vertexShader: /* glsl */ `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: /* glsl */ `
-        uniform sampler2D uLogo;
-        uniform float uOpacity;
-        varying vec2 vUv;
-        ${ALPHA_FROM_LUMA}
-        void main() {
-          // Sample a few taps to soften the silhouette into a diffuse shadow.
-          float a = 0.0;
-          float o = 0.012;
-          a += lumaAlpha(texture2D(uLogo, vUv).rgb);
-          a += lumaAlpha(texture2D(uLogo, vUv + vec2( o, 0.0)).rgb);
-          a += lumaAlpha(texture2D(uLogo, vUv + vec2(-o, 0.0)).rgb);
-          a += lumaAlpha(texture2D(uLogo, vUv + vec2(0.0,  o)).rgb);
-          a += lumaAlpha(texture2D(uLogo, vUv + vec2(0.0, -o)).rgb);
-          a /= 5.0;
-          if (a < 0.01) discard;
-          gl_FragColor = vec4(0.01, 0.008, 0.02, a * uOpacity);
-        }
-      `,
-      transparent: true,
-      depthWrite: false,
-    });
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat);
-    mesh.renderOrder = 1;
-    stageGroup.add(mesh);
-    shadowMeshes.push(mesh);
-  }
+  /* ============ SHADOW: a single soft drop behind the mark ============ */
+  const shadowMat = new THREE.ShaderMaterial({
+    uniforms: { uLogo: { value: logoTexture }, uOpacity: { value: 0.5 } },
+    vertexShader: /* glsl */ `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: /* glsl */ `
+      uniform sampler2D uLogo;
+      uniform float uOpacity;
+      varying vec2 vUv;
+      ${ALPHA_FROM_LUMA}
+      void main() {
+        // Ring of taps around each texel blurs the silhouette into a
+        // diffuse shadow rather than a hard duplicate of the logo.
+        float a = 0.0;
+        float o = 0.016;
+        a += lumaAlpha(texture2D(uLogo, vUv).rgb);
+        a += lumaAlpha(texture2D(uLogo, vUv + vec2( o, 0.0)).rgb);
+        a += lumaAlpha(texture2D(uLogo, vUv + vec2(-o, 0.0)).rgb);
+        a += lumaAlpha(texture2D(uLogo, vUv + vec2(0.0,  o)).rgb);
+        a += lumaAlpha(texture2D(uLogo, vUv + vec2(0.0, -o)).rgb);
+        a += lumaAlpha(texture2D(uLogo, vUv + vec2( o,  o)).rgb);
+        a += lumaAlpha(texture2D(uLogo, vUv + vec2(-o,  o)).rgb);
+        a += lumaAlpha(texture2D(uLogo, vUv + vec2( o, -o)).rgb);
+        a += lumaAlpha(texture2D(uLogo, vUv + vec2(-o, -o)).rgb);
+        a /= 9.0;
+        if (a < 0.01) discard;
+        gl_FragColor = vec4(0.01, 0.008, 0.02, a * uOpacity);
+      }
+    `,
+    transparent: true,
+    depthWrite: false,
+  });
+  const shadowMesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), shadowMat);
+  shadowMesh.renderOrder = 1;
+  stageGroup.add(shadowMesh);
 
   /* ============ BEAMS: volumetric shafts raking down from above ============ */
   const beamMeshes = [];
@@ -203,7 +215,7 @@ export function initHero(canvas) {
           lit += uLightColor[i] * atten * 2.6;
         }
         // Ambient floor keeps the mark legible between sweeps.
-        vec3 color = tex.rgb * (0.55 + lit);
+        vec3 color = markColor(vUv) * (0.55 + lit);
         gl_FragColor = vec4(color, a);
       }
     `,
@@ -286,7 +298,6 @@ export function initHero(canvas) {
 
   /* ============ RENDER LOOP ============ */
   const clock = new THREE.Clock();
-  const tmp = new THREE.Vector3();
 
   function tick() {
     const t = clock.getElapsedTime();
@@ -305,7 +316,9 @@ export function initHero(canvas) {
 
     backdrop.position.set(cx, cy, -2.2);
 
-    // Drive the three spotlights on independent orbits.
+    // Drive the three spotlights on independent orbits, and track their
+    // combined direction so the single shadow leans away from the light.
+    let sumDx = 0, sumDy = 0;
     for (let i = 0; i < LIGHT_COUNT; i++) {
       const speed = 0.24 + i * 0.11;
       const phase = (i * Math.PI * 2) / LIGHT_COUNT;
@@ -314,24 +327,33 @@ export function initHero(canvas) {
       const lx = cx + Math.cos(t * speed + phase) * rx;
       const ly = cy + Math.sin(t * speed * 1.35 + phase) * ry + logoSize * 0.25;
       lightPositions[i].set(lx, ly, 2.6);
-
-      // Each light throws its own shadow, opposite the light, onto the backdrop.
-      const dx = cx - lx;
-      const dy = cy - ly;
-      const shadow = shadowMeshes[i];
-      shadow.position.set(cx + dx * 0.16, cy + dy * 0.16, -1.9);
-      shadow.scale.setScalar(logoSize * 1.06);
-      shadow.rotation.copy(logoMesh.rotation);
-      shadow.material.uniforms.uOpacity.value = 0.16 + 0.2 / (1 + (dx * dx + dy * dy) * 0.1);
+      sumDx += cx - lx;
+      sumDy += cy - ly;
 
       // Beam: a cone from the light, aimed at the logo.
       const beam = beamMeshes[i];
-      const emitter = tmp.set(lx, ly + 4.5, 2.4);
-      beam.position.copy(emitter);
+      beam.position.set(lx, ly + 4.5, 2.4);
       beam.lookAt(cx, cy, 0);
       // ConeGeometry points along +Y; rotate so it points along the look axis.
       beam.rotateX(-Math.PI / 2);
       beam.translateY(-4.5);
+    }
+
+    // One soft shadow, offset along the average light direction.
+    const k = 0.055 / LIGHT_COUNT;
+    shadowMesh.position.set(cx + sumDx * k, cy + sumDy * k - logoSize * 0.02, -1.9);
+    shadowMesh.scale.setScalar(logoSize * 1.08);
+    shadowMesh.rotation.copy(logoMesh.rotation);
+
+    // Fade the whole stage out as the hero leaves, so the next section
+    // arrives as a dissolve instead of a hard cut.
+    const fade = 1 - Math.min(1, Math.max(0, (scrollY - canvas.clientHeight * 0.15) / (canvas.clientHeight * 0.55)));
+    if (fade <= 0.001) {
+      stageGroup.visible = false;
+    } else {
+      stageGroup.visible = true;
+      logoMat.opacity = fade;
+      canvas.style.opacity = fade.toFixed(3);
     }
 
     renderer.render(scene, camera);
