@@ -222,9 +222,57 @@ export function initHero(canvas) {
     transparent: true,
     depthWrite: false,
   });
+  /* The mark is carried by a group so the extrusion stack below shares its
+     transform exactly. */
+  const logoGroup = new THREE.Group();
+  stageGroup.add(logoGroup);
+
   const logoMesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), logoMat);
-  logoMesh.renderOrder = 3;
-  stageGroup.add(logoMesh);
+  logoMesh.renderOrder = 4;
+  logoGroup.add(logoMesh);
+
+  /* ============ EXTRUSION: real thickness behind the face ============
+     A stack of copies marching back along -Z, each darker than the last.
+     Flat-on they hide behind the face; as the group sways they reveal the
+     side wall of the ring and lettering, so the mark reads as a solid
+     object rather than a decal. */
+  const EXTRUDE_LAYERS = isMobile ? 10 : 18;
+  const EXTRUDE_DEPTH = 0.075;
+  const extrusionMeshes = [];
+  for (let i = 1; i <= EXTRUDE_LAYERS; i++) {
+    const k = i / EXTRUDE_LAYERS;            // 0 → front, 1 → deepest
+    const mat = new THREE.ShaderMaterial({
+      uniforms: {
+        uLogo: { value: logoTexture },
+        uShade: { value: 0.52 * (1 - k * 0.82) },
+      },
+      vertexShader: /* glsl */ `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: /* glsl */ `
+        uniform sampler2D uLogo;
+        uniform float uShade;
+        varying vec2 vUv;
+        ${ALPHA_FROM_LUMA}
+        void main() {
+          float a = lumaAlpha(texture2D(uLogo, vUv).rgb);
+          if (a < 0.01) discard;
+          gl_FragColor = vec4(markColor(vUv) * uShade, a);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+    });
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat);
+    mesh.renderOrder = 3;
+    mesh.userData.depth = -k * EXTRUDE_DEPTH;
+    logoGroup.add(mesh);
+    extrusionMeshes.push(mesh);
+  }
 
   /* ============ INTERACTION ============ */
   const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
@@ -263,11 +311,12 @@ export function initHero(canvas) {
     const roomRight = w - textRight;
 
     if (roomRight > 300) {
-      // Sits in the empty column beside the copy, vertically centered.
-      const cx = textRight + roomRight / 2;
-      const cy = h * 0.52;
+      // Sits in the empty column beside the copy, pushed toward the right
+      // edge and high in the frame, clear of the headline.
+      const px = Math.min(roomRight * 0.74, h * 0.52);
+      const cx = Math.min(textRight + roomRight * 0.62, w - px / 2 - 24);
+      const cy = Math.max(h * 0.34, px / 2 + 96);
       logoPos = screenToWorld(cx, cy, w, h);
-      const px = Math.min(roomRight * 0.78, h * 0.6);
       const edge = screenToWorld(cx + px / 2, cy, w, h);
       logoSize = Math.abs(edge.x - logoPos.x) * 2;
     } else {
@@ -308,11 +357,15 @@ export function initHero(canvas) {
     const cx = logoPos.x + mouse.x * 0.12;
     const cy = logoPos.y + parallaxY + mouse.y * 0.08;
 
-    // Logo: face-on, with a gentle sway so highlights travel across the gold.
-    logoMesh.position.set(cx, cy, 0);
-    logoMesh.scale.setScalar(logoSize);
-    logoMesh.rotation.y = Math.sin(t * 0.22) * 0.13 + mouse.x * 0.12;
-    logoMesh.rotation.x = Math.sin(t * 0.17) * 0.05 + mouse.y * 0.07;
+    // Logo: face-on, with a wider sway so the extruded side wall shows and
+    // the mark reads as a solid object catching the lights.
+    logoGroup.position.set(cx, cy, 0);
+    logoGroup.scale.setScalar(logoSize);
+    logoGroup.rotation.y = Math.sin(t * 0.22) * 0.30 + mouse.x * 0.22;
+    logoGroup.rotation.x = Math.sin(t * 0.17) * 0.10 + mouse.y * 0.12;
+    // Local offsets stay in group space so the stack rotates as one solid.
+    logoMesh.position.set(0, 0, 0);
+    for (const m of extrusionMeshes) m.position.set(0, 0, m.userData.depth);
 
     backdrop.position.set(cx, cy, -2.2);
 
@@ -343,7 +396,7 @@ export function initHero(canvas) {
     const k = 0.055 / LIGHT_COUNT;
     shadowMesh.position.set(cx + sumDx * k, cy + sumDy * k - logoSize * 0.02, -1.9);
     shadowMesh.scale.setScalar(logoSize * 1.08);
-    shadowMesh.rotation.copy(logoMesh.rotation);
+    shadowMesh.rotation.copy(logoGroup.rotation);
 
     // Fade the whole stage out as the hero leaves, so the next section
     // arrives as a dissolve instead of a hard cut.
