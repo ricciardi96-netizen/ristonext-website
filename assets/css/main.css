@@ -228,11 +228,15 @@ section { position: relative; padding-block: clamp(80px, 12vw, 180px); }
   letter-spacing: -0.02em;
   display: flex;
   align-items: center;
-  gap: 10px;
+  /* No flex `gap` here: "Risto" and <em>Next</em> are two separate flex
+     items, so a gap would push them apart and break the wordmark. The dot
+     gets its own margin instead. */
 }
 .nav__logo::before {
   content: '';
+  flex: none;
   width: 10px; height: 10px;
+  margin-right: 10px;
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 20px var(--accent);
