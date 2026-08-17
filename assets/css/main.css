@@ -30,21 +30,11 @@ canvas { display: block; }
   --accent-deep: #C43D00;
   --gold: #E8B84A;
 
-  /* Cool accent (depth counterpoint — deep violet magenta) */
-  --accent-cool: #7C3AED;
-  --accent-cool-hot: #A855F7;
-  --accent-cool-deep: #4C1D95;
-
-  /* Aurora tint (used in gradients) */
-  --plum: #2A1D3A;
-  --midnight: #0A1225;
-
   --border: rgba(245, 245, 240, 0.07);
   --border-strong: rgba(245, 245, 240, 0.18);
 
   --shadow-soft: 0 20px 60px rgba(0, 0, 0, 0.6);
   --shadow-glow: 0 0 80px rgba(255, 122, 26, 0.35);
-  --shadow-cool: 0 0 80px rgba(124, 58, 237, 0.3);
 
   --radius-sm: 8px;
   --radius: 16px;
@@ -97,7 +87,7 @@ body {
 .aurora__blob--2 {
   width: 50vw; height: 50vw;
   top: 30%; right: -15%;
-  background: radial-gradient(circle, rgba(124,58,237,0.42) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(212,175,55,0.35) 0%, transparent 65%);
   animation: aurora2 28s ease-in-out infinite;
 }
 .aurora__blob--3 {
@@ -139,7 +129,7 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: -0.02em; }
 }
 .h-display em, .h-display em .word, .h-display em .char {
   font-style: italic;
-  background: linear-gradient(120deg, var(--accent-hot) 0%, var(--gold) 55%, var(--accent-cool-hot) 100%);
+  background: linear-gradient(120deg, var(--accent-hot) 0%, var(--gold) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -790,7 +780,7 @@ section { position: relative; padding-block: clamp(80px, 12vw, 180px); }
 
 /* ============ SPLIT TEXT ============ */
 .split { display: block; }
-.split .word { display: inline-block; overflow: hidden; padding: 0 0.05em 0.15em; margin: 0 0.1em -0.15em 0; }
+.split .word { display: inline-block; overflow: hidden; padding: 0.14em 0.05em 0.34em; margin: -0.14em 0.1em -0.34em 0; }
 .split .word .char { display: inline-block; transform: translateY(110%); will-change: transform; }
 .split.in .word .char { transform: translateY(0); }
 .split em .word { color: inherit; }
@@ -901,8 +891,7 @@ section { position: relative; padding-block: clamp(80px, 12vw, 180px); }
     0 0 0 1px rgba(255,255,255,0.08) inset,
     0 0 0 2px rgba(0,0,0,0.5),
     0 60px 120px -30px rgba(0,0,0,0.8),
-    0 0 140px rgba(255, 122, 26, 0.25),
-    0 0 100px rgba(124, 58, 237, 0.18);
+    0 0 140px rgba(255, 122, 26, 0.22);
   transition: transform 0.8s var(--ease-out);
   animation: phoneFloat 6s ease-in-out infinite;
 }
