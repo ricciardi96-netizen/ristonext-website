@@ -1,13 +1,14 @@
-/* Hero 3D scene — extruded chrome "RistoNext" 3D logo + ambient particles.
+/* Hero 3D scene — frosted-glass extruded "RistoNext" 3D logo + rising steam wisps.
    Uses three.js from CDN (loaded as ESM import map in the HTML). */
 import * as THREE from 'three';
 import { FontLoader } from 'https://unpkg.com/three@0.161.0/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'https://unpkg.com/three@0.161.0/examples/jsm/geometries/TextGeometry.js';
 
-/* Faceted chrome shader shared by the logo mesh — normals come from
-   screen-space derivatives (dFdx/dFdy), not vertex normals, so any solid
-   geometry (including extruded text) gets the same polished, low-poly
-   liquid-metal reflections used across the site's palette. */
+/* Frosted-glass / acrylic shader for the logo mesh. Normals come from
+   screen-space derivatives (dFdx/dFdy), not vertex normals — any solid
+   geometry (including extruded text) gets the same treatment. The look:
+   pale frosted edges (fresnel), a warm glow reading as backlit from
+   within, soft translucency instead of a mirror-chrome reflection. */
 const VERTEX = /* glsl */ `
   varying vec3 vViewPosition;
   void main() {
@@ -19,31 +20,9 @@ const VERTEX = /* glsl */ `
 
 const FRAGMENT = /* glsl */ `
   uniform float uTime;
-  uniform vec3 uColorWarm;
-  uniform vec3 uColorGold;
-  uniform vec3 uColorCool;
-  uniform vec3 uColorDeep;
+  uniform vec3 uGlow;
+  uniform vec3 uFrost;
   varying vec3 vViewPosition;
-
-  vec3 envColor(vec3 R, float t) {
-    float h = R.y * 0.5 + 0.5;
-    vec3 sky = mix(uColorDeep, uColorCool, smoothstep(0.0, 0.5, h));
-    sky = mix(sky, uColorGold, smoothstep(0.45, 0.75, h));
-    sky = mix(sky, uColorWarm, smoothstep(0.7, 1.0, h));
-
-    vec3 sunDir = normalize(vec3(sin(t * 0.15) * 0.6 + 0.5, 0.55, 0.6));
-    float sun = pow(max(dot(R, sunDir), 0.0), 48.0);
-    float sunSoft = pow(max(dot(R, sunDir), 0.0), 6.0) * 0.3;
-
-    vec3 coolDir = normalize(vec3(-0.6, -0.3, 0.5));
-    float rim = pow(max(dot(R, coolDir), 0.0), 10.0);
-
-    vec3 col = sky;
-    col += sun * vec3(1.0, 0.92, 0.75) * 1.6;
-    col += sunSoft * uColorGold * 0.8;
-    col += rim * uColorCool * 0.7;
-    return col;
-  }
 
   void main() {
     vec3 fdx = dFdx(vViewPosition);
@@ -51,25 +30,29 @@ const FRAGMENT = /* glsl */ `
     vec3 N = normalize(cross(fdx, fdy));
     vec3 I = normalize(vViewPosition);
 
-    vec3 R = reflect(I, N);
-    vec3 base = envColor(R, uTime);
+    float facing = max(dot(-I, N), 0.0);
+    float fresnel = pow(1.0 - facing, 2.4);
 
-    float fresnel = pow(1.0 - max(dot(-I, N), 0.0), 3.0);
-    base += fresnel * vec3(1.0, 0.97, 0.9) * 0.6;
+    // Pale, slightly cool-neutral frost brightens toward grazing edges —
+    // the classic thick-glass look — while the center stays soft/translucent.
+    vec3 frostColor = mix(uFrost * 0.6, vec3(1.0), fresnel);
 
-    gl_FragColor = vec4(base, 1.0);
+    // Warm light reads as coming from behind the glass: strongest where
+    // the surface faces the camera, with a slow breathing pulse.
+    float pulse = 0.78 + 0.22 * sin(uTime * 0.55);
+    vec3 glow = uGlow * facing * 0.5 * pulse;
+
+    vec3 color = frostColor + glow;
+    float alpha = mix(0.7, 0.95, fresnel);
+    gl_FragColor = vec4(color, alpha);
   }
 `;
 
-function sharedUniforms() {
+function logoUniformsFactory() {
   return {
     uTime: { value: 0 },
-    uColorWarm: { value: new THREE.Color('#FF7A1A') },
-    uColorGold: { value: new THREE.Color('#E8B84A') },
-    // Brushed-silver mid-tone (was violet) — an elegant, brand-neutral
-    // metal reflection instead of a purple tint.
-    uColorCool: { value: new THREE.Color('#C4C8D2') },
-    uColorDeep: { value: new THREE.Color('#0A0A10') },
+    uGlow: { value: new THREE.Color('#FF9142') },
+    uFrost: { value: new THREE.Color('#EDEFF4') },
   };
 }
 
@@ -91,7 +74,7 @@ export function initHero(canvas) {
   scene.add(logoGroup);
 
   /* ============ 3D LOGO (async: needs the font) ============ */
-  const logoUniforms = sharedUniforms();
+  const logoUniforms = logoUniformsFactory();
   const loader = new FontLoader();
   loader.load(
     'https://unpkg.com/three@0.161.0/examples/fonts/helvetiker_bold.typeface.json',
@@ -114,13 +97,13 @@ export function initHero(canvas) {
       const rawWidth = bb.max.x - bb.min.x;
       textGeo.translate(-cx, -cy, -cz);
 
-      const textMat = new THREE.ShaderMaterial({ uniforms: logoUniforms, vertexShader: VERTEX, fragmentShader: FRAGMENT });
+      const textMat = new THREE.ShaderMaterial({ uniforms: logoUniforms, vertexShader: VERTEX, fragmentShader: FRAGMENT, transparent: true });
       const textMesh = new THREE.Mesh(textGeo, textMat);
       logoGroup.add(textMesh);
 
       // Brand accent dot, echoing the pulsing bullet in front of the nav wordmark.
       const dotGeo = new THREE.SphereGeometry(0.22, 32, 32);
-      const dotMat = new THREE.ShaderMaterial({ uniforms: logoUniforms, vertexShader: VERTEX, fragmentShader: FRAGMENT });
+      const dotMat = new THREE.ShaderMaterial({ uniforms: logoUniforms, vertexShader: VERTEX, fragmentShader: FRAGMENT, transparent: true });
       const dot = new THREE.Mesh(dotGeo, dotMat);
       dot.position.set(bb.min.x - cx - 0.55, bb.max.y - cy - 0.05, 0);
       logoGroup.add(dot);
@@ -134,54 +117,72 @@ export function initHero(canvas) {
     (err) => console.warn('Hero logo font failed to load:', err)
   );
 
-  /* ============ AMBIENT SPARKLE PARTICLES ============ */
-  const particleCount = isMobile ? 350 : 900;
-  const particleGeo = new THREE.BufferGeometry();
-  const positions = new Float32Array(particleCount * 3);
-  const scales = new Float32Array(particleCount);
-  for (let i = 0; i < particleCount; i++) {
-    const r = 3.5 + Math.random() * 7;
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(2 * Math.random() - 1);
-    positions[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
-    positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-    positions[i * 3 + 2] = r * Math.cos(phi);
-    scales[i] = Math.random();
+  /* ============ RISING STEAM WISPS ============
+     Sparse, soft warm-toned billboards drift slowly upward and sideways,
+     fading in and out on a loop — like steam off a hot plate. Each point
+     carries its own start position, duration and phase so the loop never
+     feels synchronized or mechanical.
+  ============ */
+  const wispCount = isMobile ? 22 : 40;
+  const wispGeo = new THREE.BufferGeometry();
+  const basePos = new Float32Array(wispCount * 3);   // x0, z0, seed
+  const timing = new Float32Array(wispCount * 2);    // duration, phase
+  const sizeSeed = new Float32Array(wispCount);
+  for (let i = 0; i < wispCount; i++) {
+    basePos[i * 3]     = (Math.random() - 0.5) * 8.5;   // x0
+    basePos[i * 3 + 1] = (Math.random() - 0.5) * 5.5 - 1.5; // z0 (reused as base z)
+    basePos[i * 3 + 2] = Math.random();                  // seed
+    timing[i * 2]     = 10 + Math.random() * 9;          // duration (10–19s)
+    timing[i * 2 + 1] = Math.random() * 20;               // phase offset
+    sizeSeed[i] = 0.5 + Math.random();
   }
-  particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  particleGeo.setAttribute('aScale', new THREE.BufferAttribute(scales, 1));
+  wispGeo.setAttribute('aBase', new THREE.BufferAttribute(basePos, 3));
+  wispGeo.setAttribute('aTiming', new THREE.BufferAttribute(timing, 2));
+  wispGeo.setAttribute('aSize', new THREE.BufferAttribute(sizeSeed, 1));
+  // Dummy position attribute (required by three.js); actual placement
+  // happens in the vertex shader from aBase/aTiming.
+  wispGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(wispCount * 3), 3));
 
-  const particleMat = new THREE.ShaderMaterial({
+  const wispMat = new THREE.ShaderMaterial({
     uniforms: { uTime: { value: 0 }, uPixelRatio: { value: renderer.getPixelRatio() } },
     vertexShader: /* glsl */ `
       uniform float uTime;
       uniform float uPixelRatio;
-      attribute float aScale;
+      attribute vec3 aBase;
+      attribute vec2 aTiming;
+      attribute float aSize;
       varying float vAlpha;
-      varying float vHue;
+      varying float vLife;
+
       void main() {
-        vec3 p = position;
-        float angle = uTime * 0.06 * (aScale + 0.5);
-        float c = cos(angle); float s = sin(angle);
-        p.xz = mat2(c, -s, s, c) * p.xz;
-        p.y += sin(uTime * 0.4 + aScale * 6.28) * 0.5;
-        vec4 mv = modelViewMatrix * vec4(p, 1.0);
+        float duration = aTiming.x;
+        float life = fract((uTime + aTiming.y) / duration);
+
+        float x = aBase.x + sin(life * 6.2831 * 1.4 + aBase.z * 12.0) * (0.5 + aBase.z * 0.8);
+        float y = mix(-4.2, 4.0, life);
+        float z = aBase.y;
+
+        vec4 mv = modelViewMatrix * vec4(x, y, z, 1.0);
         gl_Position = projectionMatrix * mv;
-        gl_PointSize = (1.0 + aScale * 2.2) * uPixelRatio * (1.0 / -mv.z) * 60.0;
-        vAlpha = 0.12 + aScale * 0.45;
-        vHue = aScale;
+
+        float sizeGrowth = mix(0.7, 2.2, life);
+        gl_PointSize = aSize * sizeGrowth * uPixelRatio * (1.0 / -mv.z) * 170.0;
+
+        vAlpha = sin(life * 3.14159) ;
+        vLife = life;
       }
     `,
     fragmentShader: /* glsl */ `
       varying float vAlpha;
-      varying float vHue;
+      varying float vLife;
       void main() {
         float d = length(gl_PointCoord - 0.5);
-        if (d > 0.5) discard;
-        float a = smoothstep(0.5, 0.0, d) * vAlpha;
-        vec3 warm = vec3(1.0, 0.78, 0.5);
-        vec3 pale = vec3(0.96, 0.93, 0.85);
-        vec3 col = mix(pale, warm, step(0.5, vHue));
+        // Wide, soft feather — a wisp, not a dot.
+        float a = smoothstep(0.5, 0.0, d);
+        a = pow(a, 1.6) * vAlpha * 0.4;
+        vec3 cream = vec3(0.97, 0.9, 0.78);
+        vec3 amber = vec3(1.0, 0.72, 0.42);
+        vec3 col = mix(cream, amber, vLife * 0.6);
         gl_FragColor = vec4(col, a);
       }
     `,
@@ -190,8 +191,8 @@ export function initHero(canvas) {
     blending: THREE.AdditiveBlending,
   });
 
-  const particles = new THREE.Points(particleGeo, particleMat);
-  scene.add(particles);
+  const wisps = new THREE.Points(wispGeo, wispMat);
+  scene.add(wisps);
 
   /* ============ INTERACTION ============ */
   const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
@@ -251,7 +252,7 @@ export function initHero(canvas) {
     mouse.y += (mouse.ty - mouse.y) * 0.06;
 
     logoUniforms.uTime.value = t;
-    particleMat.uniforms.uTime.value = t;
+    wispMat.uniforms.uTime.value = t;
 
     camera.position.x = mouse.x * 0.6;
     camera.position.y = mouse.y * 0.35 - scrollY * 0.0015;
@@ -277,8 +278,8 @@ export function initHero(canvas) {
         if (obj.geometry) obj.geometry.dispose();
         if (obj.material) obj.material.dispose();
       });
-      particleGeo.dispose();
-      particleMat.dispose();
+      wispGeo.dispose();
+      wispMat.dispose();
       renderer.dispose();
     }
   };
