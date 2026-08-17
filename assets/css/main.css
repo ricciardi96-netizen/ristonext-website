@@ -127,12 +127,17 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: -0.02em; }
   letter-spacing: -0.03em;
   font-weight: 400;
 }
+/* Solid fill, deliberately NOT a background-clip:text gradient. With the
+   split-text markup every glyph is its own inline-block, and an italic
+   serif's ink overhangs that box — a clipped background simply isn't
+   painted out there, so the tail of each "e" vanished and read as cut.
+   A plain colour paints the whole glyph, overhang included. */
 .h-display em, .h-display em .word, .h-display em .char {
   font-style: italic;
-  background: linear-gradient(120deg, var(--accent-hot) 0%, var(--gold) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  color: var(--gold);
 }
 .h-section {
   font-family: var(--font-display);
