@@ -210,12 +210,14 @@ if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 })();
 
 /* ============ PHONE MOCKUP SCROLL ============
-   The phone slides change based on scroll progress within .phone-scene.
-   Add data-phone-index to each .phone-scene__label.
+   The phone stays pinned dead-center while the user scrolls; each ~1/7th
+   of the pinned scroll distance advances the active screen (1→7), so the
+   phone itself never moves — only its content and the side labels change.
 ============ */
 (function phoneMockup() {
   const scene = document.querySelector('.phone-scene');
-  if (!scene) return;
+  const stage = scene?.querySelector('.phone-scene__stage');
+  if (!scene || !stage) return;
   const slides = scene.querySelectorAll('.phone__slide');
   const labels = scene.querySelectorAll('.phone-scene__label');
   if (!slides.length) return;
@@ -227,10 +229,14 @@ if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
   activate(0);
 
   if (gsap && ScrollTrigger) {
+    const STEP_PX = 420; // scroll distance per screen while pinned
     ScrollTrigger.create({
-      trigger: scene,
-      start: 'top 40%',
-      end: 'bottom 60%',
+      trigger: stage,
+      start: 'top 100px',
+      end: () => '+=' + (STEP_PX * slides.length),
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
       onUpdate(self) {
         const idx = Math.min(slides.length - 1, Math.floor(self.progress * slides.length));
         activate(idx);
@@ -240,12 +246,21 @@ if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
   labels.forEach((l, i) => l.addEventListener('mouseenter', () => activate(i)));
 })();
 
-/* ============ HORIZONTAL SCROLL SERVICES ============ */
+/* ============ HORIZONTAL SCROLL SERVICES ============
+   Desktop: pin the section and scrub the track horizontally as the user
+   scrolls vertically (cinematic). Mobile: that same trick demands a huge
+   vertical scroll distance to traverse a narrow viewport and reads as
+   "stuck" — so instead let it be a native swipeable carousel there.
+============ */
 (function hScroll() {
-  if (!gsap || !ScrollTrigger) return;
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
   document.querySelectorAll('.h-scroll').forEach(section => {
     const track = section.querySelector('.h-scroll__track');
     if (!track) return;
+    if (isMobile || !gsap || !ScrollTrigger) {
+      section.classList.add('h-scroll--native');
+      return;
+    }
     const scrollDist = () => track.scrollWidth - window.innerWidth + 40;
     gsap.to(track, {
       x: () => -scrollDist(),
