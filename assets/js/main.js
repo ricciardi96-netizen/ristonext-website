@@ -24,7 +24,12 @@ if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
         // trigger initial splits + reveals for above-fold elements
         document.querySelectorAll('.split, .word-reveal').forEach(s => {
           const r = s.getBoundingClientRect();
-          if (r.top < window.innerHeight) s.classList.add('in');
+          if (r.top >= window.innerHeight) return;
+          s.classList.add('in');
+          if (s.classList.contains('split')) {
+            const chars = s.querySelectorAll('.char').length;
+            setTimeout(() => s.classList.add('revealed'), 900 + chars * 12 + 150);
+          }
         });
       }, 200);
     }
@@ -142,7 +147,16 @@ if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
   if (!('IntersectionObserver' in window) || !els.length) { els.forEach(e => e.classList.add('in')); return; }
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      el.classList.add('in');
+      io.unobserve(el);
+      // Drop the reveal mask once the stagger has finished so descenders
+      // and italic overhangs can never be clipped afterwards.
+      if (el.classList.contains('split')) {
+        const chars = el.querySelectorAll('.char').length;
+        setTimeout(() => el.classList.add('revealed'), 900 + chars * 12 + 150);
+      }
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
   els.forEach(el => io.observe(el));
