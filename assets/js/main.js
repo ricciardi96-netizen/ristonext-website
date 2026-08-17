@@ -229,7 +229,7 @@ if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
   activate(0);
 
   if (gsap && ScrollTrigger) {
-    const STEP_PX = 420; // scroll distance per screen while pinned
+    const STEP_PX = 190; // scroll distance per screen while pinned
     ScrollTrigger.create({
       trigger: stage,
       start: 'top 100px',
