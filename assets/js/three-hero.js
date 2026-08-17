@@ -305,26 +305,44 @@ export function initHero(canvas) {
     if (!contentEl || w <= 0 || h <= 0) return;
 
     const canvasBox = canvas.getBoundingClientRect();
-    const textBox = contentEl.getBoundingClientRect();
-    const textRight = textBox.right - canvasBox.left;
-    const textBottom = textBox.bottom - canvasBox.top;
+
+    // .hero__content is the full-width container, so its own box says
+    // nothing about where the copy actually ends. Measure the real
+    // children (they carry the max-widths) to find the true text edge.
+    let textRight = 0;
+    let textBottom = 0;
+    // Full-width flex wrappers (.hero__actions) would report the container
+    // edge, so drill into them and measure the buttons themselves.
+    const parts = [];
+    contentEl.querySelectorAll('.hero__eyebrow, .hero__title, .hero__sub').forEach(el => parts.push(el));
+    contentEl.querySelectorAll('.hero__actions > *').forEach(el => parts.push(el));
+    if (!parts.length) parts.push(contentEl);
+
+    for (const el of parts) {
+      const b = el.getBoundingClientRect();
+      if (b.width === 0) continue;
+      textRight = Math.max(textRight, b.right - canvasBox.left);
+      textBottom = Math.max(textBottom, b.bottom - canvasBox.top);
+    }
     const roomRight = w - textRight;
 
     if (roomRight > 300) {
-      // Sits in the empty column beside the copy, pushed toward the right
-      // edge and high in the frame, clear of the headline.
-      const px = Math.min(roomRight * 0.74, h * 0.52);
-      const cx = Math.min(textRight + roomRight * 0.62, w - px / 2 - 24);
-      const cy = Math.max(h * 0.34, px / 2 + 96);
+      // Tucked into the top-right of the free column beside the copy.
+      // The clamps keep it inside the right edge and just clear of the nav.
+      const px = Math.min(roomRight * 0.70, h * 0.46);
+      const cx = Math.min(textRight + roomRight * 0.74, w - px / 2 - 20);
+      const cy = Math.max(h * 0.28, px / 2 + 84);
       logoPos = screenToWorld(cx, cy, w, h);
       const edge = screenToWorld(cx + px / 2, cy, w, h);
       logoSize = Math.abs(edge.x - logoPos.x) * 2;
     } else {
-      // Narrow viewport: drop it under the copy, centered.
-      const avail = h - textBottom - 40;
-      const px = Math.max(150, Math.min(w * 0.62, avail * 0.9));
+      // Narrow viewport: sit under the copy, sized to whatever strip is
+      // actually left. Forcing a minimum here made it overlap the CTAs on
+      // short phones, so the available height wins.
+      const avail = Math.max(0, h - textBottom - 24);
+      const px = Math.max(80, Math.min(w * 0.55, avail - 12));
       const cx = w / 2;
-      const cy = textBottom + Math.min(avail / 2, px / 2 + 16);
+      const cy = textBottom + avail / 2;
       logoPos = screenToWorld(cx, cy, w, h);
       const edge = screenToWorld(cx + px / 2, cy, w, h);
       logoSize = Math.abs(edge.x - logoPos.x) * 2;
