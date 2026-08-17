@@ -41,7 +41,7 @@ const FRAGMENT = /* glsl */ `
     vec3 col = sky;
     col += sun * vec3(1.0, 0.92, 0.75) * 1.6;
     col += sunSoft * uColorGold * 0.8;
-    col += rim * uColorCool * 1.1;
+    col += rim * uColorCool * 0.7;
     return col;
   }
 
@@ -66,7 +66,9 @@ function sharedUniforms() {
     uTime: { value: 0 },
     uColorWarm: { value: new THREE.Color('#FF7A1A') },
     uColorGold: { value: new THREE.Color('#E8B84A') },
-    uColorCool: { value: new THREE.Color('#7C3AED') },
+    // Brushed-silver mid-tone (was violet) — an elegant, brand-neutral
+    // metal reflection instead of a purple tint.
+    uColorCool: { value: new THREE.Color('#C4C8D2') },
     uColorDeep: { value: new THREE.Color('#0A0A10') },
   };
 }
@@ -177,9 +179,9 @@ export function initHero(canvas) {
         float d = length(gl_PointCoord - 0.5);
         if (d > 0.5) discard;
         float a = smoothstep(0.5, 0.0, d) * vAlpha;
-        vec3 warm = vec3(1.0, 0.75, 0.45);
-        vec3 cool = vec3(0.75, 0.6, 1.0);
-        vec3 col = mix(warm, cool, step(0.5, vHue));
+        vec3 warm = vec3(1.0, 0.78, 0.5);
+        vec3 pale = vec3(0.96, 0.93, 0.85);
+        vec3 col = mix(pale, warm, step(0.5, vHue));
         gl_FragColor = vec4(col, a);
       }
     `,
