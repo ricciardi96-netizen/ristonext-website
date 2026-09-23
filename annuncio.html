@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="color-scheme" content="dark" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>L'annuncio che funziona, in 5 righe — RistoNext</title>
+<meta name="description" content="Scrivi in un minuto un annuncio di lavoro a cui rispondono davvero: orario esatto, date, alloggio con la distanza. E la versione per chi cerca lavoro. Gratis, senza registrarsi." />
+<meta name="theme-color" content="#0a0a0a" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23E67E22'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#060608; --bg-card:#14141a; --bg-elev:#0e0e12;
+    --text:#f5f5f0; --text-mute:#8a8a85; --accent:#FF7A1A; --gold:#E8B84A;
+    --border:rgba(245,245,240,.10); --border-strong:rgba(245,245,240,.20);
+    --radius:16px; --font-sans:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;
+    --font-display:'Instrument Serif',Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.55}
+  .wrap{max-width:880px;margin:0 auto;padding:clamp(24px,5vw,56px) 16px 72px}
+  h1{font-family:var(--font-display);font-weight:400;font-size:clamp(30px,6vw,46px);line-height:1.1;margin:0 0 10px}
+  .sub{color:var(--text-mute);margin:0 0 28px;max-width:60ch}
+  .tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+  .tab{flex:1 1 200px;min-width:0;background:var(--bg-elev);color:var(--text);border:1px solid var(--border);
+       border-radius:var(--radius);padding:14px 16px;font:inherit;font-weight:600;cursor:pointer;text-align:left}
+  .tab[aria-selected="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+  .tab small{display:block;font-weight:400;color:var(--text-mute);margin-top:2px}
+  form{display:grid;gap:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:clamp(16px,3vw,24px)}
+  label{display:grid;gap:6px;font-size:14px;color:var(--text-mute)}
+  input,select,textarea{font:inherit;color:var(--text);background:var(--bg-elev);border:1px solid var(--border-strong);
+       border-radius:10px;padding:11px 12px;width:100%;min-width:0}
+  input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .due{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+  @media (max-width:560px){.due{grid-template-columns:1fr}}
+  .out{margin-top:26px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:clamp(16px,3vw,24px)}
+  .out h2{font-family:var(--font-display);font-weight:400;font-size:24px;margin:0 0 12px}
+  pre{white-space:pre-wrap;word-wrap:break-word;overflow-wrap:anywhere;background:var(--bg-elev);border:1px solid var(--border);
+      border-radius:12px;padding:16px;margin:0;font:inherit}
+  .btns{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  button.azione{background:var(--accent);color:#1a0d00;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer}
+  button.ghost{background:transparent;color:var(--text);border:1px solid var(--border-strong);border-radius:10px;padding:12px 18px;font:inherit;cursor:pointer}
+  .perche{margin-top:26px;color:var(--text-mute);font-size:15px}
+  .perche h3{color:var(--text);font-size:16px;margin:18px 0 6px}
+  .perche li{margin:5px 0}
+  footer{margin-top:40px;padding-top:22px;border-top:1px solid var(--border);color:var(--text-mute);font-size:14px}
+  footer a{color:var(--gold)}
+  .nota{font-size:13px;color:var(--text-mute)}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>L'annuncio che funziona, in cinque righe</h1>
+  <p class="sub">Gli annunci a cui la gente risponde dicono sempre le stesse cose, nello stesso ordine.
+  Qui le metti in un minuto e copi il testo. È gratis e non serve registrarsi.</p>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="t-locale" aria-selected="true" aria-controls="form">Cerco personale
+      <small>sono un locale, un hotel, un rifugio</small></button>
+    <button class="tab" role="tab" id="t-prof" aria-selected="false" aria-controls="form">Cerco lavoro
+      <small>sono cuoco, cameriere, barista…</small></button>
+  </div>
+
+  <form id="form" autocomplete="off">
+    <div class="due">
+      <label>Ruolo<input id="ruolo" placeholder="aiuto cuoco" /></label>
+      <label>Zona (il paese, non la provincia)<input id="zona" placeholder="Bardonecchia" /></label>
+    </div>
+    <div class="due">
+      <label>Da quando<input id="da" placeholder="1 dicembre" /></label>
+      <label>Fino a quando<input id="a" placeholder="fine marzo" /></label>
+    </div>
+    <div class="due">
+      <label>Orario del turno<input id="orario" placeholder="18-24, chiuso il lunedì" /></label>
+      <label id="l-alloggio">Alloggio
+        <select id="alloggio">
+          <option value="no">non lo offro</option>
+          <option value="si">sì, vitto e alloggio</option>
+          <option value="letto">sì, solo posto letto</option>
+        </select>
+      </label>
+    </div>
+    <div class="due">
+      <label id="l-dist">Quanto dista l'alloggio dal locale<input id="dist" placeholder="5 minuti a piedi" /></label>
+      <label>Come ti scrivono<input id="contatto" placeholder="WhatsApp 333 1234567" /></label>
+    </div>
+    <label id="l-extra">Una cosa vera del posto (facoltativa)
+      <input id="extra" placeholder="squadra di sei, cucina piccola, si lavora solo la sera" /></label>
+  </form>
+
+  <section class="out" aria-live="polite">
+    <h2>Il testo da copiare</h2>
+    <pre id="testo">Compila i campi qui sopra: il testo si scrive da solo.</pre>
+    <div class="btns">
+      <button class="azione" id="copia" type="button">Copia il testo</button>
+      <button class="ghost" id="pulisci" type="button">Ricomincia</button>
+    </div>
+    <p class="nota" id="stato"></p>
+  </section>
+
+  <section class="perche">
+    <h3>Perché queste righe e non altre</h3>
+    <ul>
+      <li><strong>L'orario esatto invece di "full time".</strong> Chi non può fare quel turno non ti scrive nemmeno: ti arriva meno gente e più giusta.</li>
+      <li><strong>Le date in cima.</strong> Chi sceglie fra due stagioni prende quella con la data scritta: deve dare la disdetta di casa e dire di no a qualcun altro.</li>
+      <li><strong>L'alloggio con la distanza.</strong> "Alloggio incluso" apre dieci domande; "posto letto a 5 minuti a piedi" ne chiude nove.</li>
+      <li><strong>Una cosa vera del posto.</strong> Una riga concreta vale più di "ambiente giovane e dinamico", che non dice niente.</li>
+    </ul>
+    <h3>E prima di dire sì a qualcuno</h3>
+    <ul>
+      <li>Chiedi <em>che turno fa adesso e a che ora stacca</em>: si capisce subito se è libero davvero.</li>
+      <li>Chiedi <em>come arriva la sera del primo giorno, con cosa</em>: chi non sa dirlo, quel giorno non c'è.</li>
+      <li>Il giorno prima del colloquio chiedi una conferma attiva: "scrivimi un ok quando leggi". Chi non lo manda, non viene.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Questo strumento è di <strong>RistoNext</strong>, l'app che dice quanto un candidato e un locale
+    sono compatibili prima del colloquio: turni, competenze, distanza e date libere.
+    Pubblicare i turni, gestire la squadra e gli extra è gratuito.</p>
+    <p><a href="https://ristonext.com">ristonext.com</a></p>
+  </footer>
+</main>
+
+<script>
+(function(){
+  var modo = "locale";
+  var campi = ["ruolo","zona","da","a","orario","alloggio","dist","contatto","extra"];
+  var el = {}; campi.forEach(function(k){ el[k] = document.getElementById(k); });
+  var testo = document.getElementById("testo"), stato = document.getElementById("stato");
+
+  function v(k){ return (el[k].value || "").trim(); }
+
+  function scriviLocale(){
+    var r = [];
+    var titolo = (v("ruolo") || "Cerchiamo personale") + (v("zona") ? " — " + v("zona") : "");
+    r.push(titolo.toUpperCase());
+    if (v("da") || v("a")) r.push("Da " + (v("da") || "…") + " a " + (v("a") || "…") + ".");
+    if (v("orario")) r.push("Orario: " + v("orario") + ".");
+    var al = el.alloggio.value;
+    if (al === "si" || al === "letto") {
+      r.push((al === "si" ? "Vitto e alloggio" : "Posto letto") +
+             (v("dist") ? ", a " + v("dist") + " dal locale." : ". Chiedeteci pure dov'è e quanto dista."));
+    } else {
+      r.push("Alloggio non incluso: lo scrivo subito per non farvi perdere tempo.");
+    }
+    if (v("extra")) r.push(v("extra") + ".");
+    if (v("contatto")) r.push("Per candidarsi: " + v("contatto") + ".");
+    r.push("Rispondo a tutti, anche per dire di no.");
+    return r.join("\n");
+  }
+
+  function scriviProfessionista(){
+    var r = [];
+    r.push((v("zona") ? "Disponibile a " + v("zona") : "Disponibile") +
+           (v("da") || v("a") ? ", da " + (v("da") || "subito") + " a " + (v("a") || "fine stagione") : "") + ".");
+    r.push("Come ci arrivo: " + (v("dist") || "auto mia") + ".");
+    r.push((v("ruolo") ? v("ruolo").charAt(0).toUpperCase() + v("ruolo").slice(1) : "Ruolo") +
+           (v("orario") ? ", abituato a turni " + v("orario") : "") + ".");
+    if (el.alloggio.value === "si" || el.alloggio.value === "letto")
+      r.push("Cerco un posto che dia " + (el.alloggio.value === "si" ? "vitto e alloggio" : "almeno il posto letto") + ".");
+    if (v("extra")) r.push(v("extra") + ".");
+    if (v("contatto")) r.push("Mi trovate qui: " + v("contatto") + ".");
+    return r.join("\n");
+  }
+
+  function aggiorna(){
+    var vuoto = campi.every(function(k){ return k === "alloggio" || !v(k); });
+    testo.textContent = vuoto ? "Compila i campi qui sopra: il testo si scrive da solo."
+                              : (modo === "locale" ? scriviLocale() : scriviProfessionista());
+  }
+
+  function cambiaModo(nuovo){
+    modo = nuovo;
+    document.getElementById("t-locale").setAttribute("aria-selected", String(nuovo === "locale"));
+    document.getElementById("t-prof").setAttribute("aria-selected", String(nuovo === "prof"));
+    document.getElementById("l-alloggio").firstChild.textContent = nuovo === "locale" ? "Alloggio" : "Alloggio: cosa ti serve";
+    document.getElementById("l-dist").firstChild.textContent =
+      nuovo === "locale" ? "Quanto dista l'alloggio dal locale" : "Come ci arrivi la sera";
+    el.dist.placeholder = nuovo === "locale" ? "5 minuti a piedi" : "auto mia, o treno fino a…";
+    el.extra.placeholder = nuovo === "locale" ? "squadra di sei, si lavora solo la sera"
+                                             : "tre stagioni in montagna, parlo inglese";
+    el.contatto.placeholder = nuovo === "locale" ? "WhatsApp 333 1234567" : "scrivetemi in privato";
+    aggiorna();
+  }
+
+  document.getElementById("t-locale").addEventListener("click", function(){ cambiaModo("locale"); });
+  document.getElementById("t-prof").addEventListener("click", function(){ cambiaModo("prof"); });
+  campi.forEach(function(k){ el[k].addEventListener("input", aggiorna); el[k].addEventListener("change", aggiorna); });
+
+  document.getElementById("copia").addEventListener("click", function(){
+    var t = testo.textContent;
+    function fatto(){ stato.textContent = "Copiato. Ora incollalo dove serve."; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(t).then(fatto, function(){ stato.textContent = "Selezionalo e copialo a mano: il browser non me lo lascia fare."; });
+    } else { stato.textContent = "Selezionalo e copialo a mano: il browser non me lo lascia fare."; }
+  });
+  document.getElementById("pulisci").addEventListener("click", function(){
+    campi.forEach(function(k){ if (k === "alloggio") el[k].value = "no"; else el[k].value = ""; });
+    stato.textContent = ""; aggiorna();
+  });
+  cambiaModo("locale");
+})();
+</script>
+</body>
+</html>
