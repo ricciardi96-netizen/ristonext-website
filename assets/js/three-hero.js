@@ -1,292 +1,249 @@
-/* Hero 3D scene — the official RistoNext logo presented on a stage:
-   three coloured spotlights sweep across it, the gold catches the light as
-   they pass, each light throws its own soft shadow onto the backdrop, and
-   volumetric beams rake down from above.
+/* Apertura 3D (giro 2, 05/10 notte): il marchio ufficiale come medaglia.
 
-   The logo PNG is 800x800 RGB on solid black (no alpha channel), so the
-   shaders derive transparency from luminance: black background drops out,
-   the gold ring and lettering stay.
+   Prima: una texture piatta "illuminata" da tre fasci colorati e un'ombra
+   sfocata; risultato bruciato e impastato. Ora: geometria vera con un
+   materiale d'oro metallico (anello a toro, disco nero lucido, scritta in
+   rilievo) illuminata da un ambiente da studio disegnato al volo (softbox
+   caldo in alto, kicker freddo di lato) piu' una luce chiave calda e un
+   controluce oro. Niente fasci, niente fumo: il marchio resta nitido.
 
-   Uses three.js from CDN (loaded as ESM import map in the HTML). */
+   La scritta viene dal PNG ufficiale (oro su nero): si ricava l'alpha dalla
+   luminosita' e si scarta l'anello, che e' un solido a parte.
+
+   three.js e' in assets/vendor (import map nell'HTML). */
 import * as THREE from 'three';
 
-const LOGO_URL = 'assets/img/logo-official.png';
-const LIGHT_COUNT = 3;
+const LOGO_URL = 'assets/img/logo-official.png'; // 800px: la scritta resta nitida
+const GOLD = '#d4a82e';       // oro del brand book, versione per fondo scuro
+const GOLD_DEEP = '#6f5612';  // lati in ombra della scritta in rilievo
 
-/* Shared GLSL: pull alpha out of the texture's luminance, and recolour the
-   mark. The logo is a concentric composition — gold ring on the outside,
-   lettering in the middle — so the radial distance from the centre tells
-   the two apart: the ring keeps the brand gold, the lettering goes white. */
-const ALPHA_FROM_LUMA = /* glsl */ `
-  float lumaAlpha(vec3 rgb) {
-    float lum = dot(rgb, vec3(0.299, 0.587, 0.114));
-    return smoothstep(0.05, 0.26, lum);
+/* ---------- texture disegnate al volo ---------- */
+
+/* Ambiente equirettangolare 512x256: studio scuro e caldo, un softbox
+   largo in alto a sinistra, un kicker freddo a destra, una linea d'orizzonte
+   calda. E' quello che l'oro riflette. */
+function makeStudioEnvironment(renderer) {
+  const c = document.createElement('canvas');
+  c.width = 512; c.height = 256;
+  const g = c.getContext('2d');
+  const base = g.createLinearGradient(0, 0, 0, 256);
+  base.addColorStop(0, '#2b241a');
+  base.addColorStop(0.5, '#15110c');
+  base.addColorStop(1, '#070605');
+  g.fillStyle = base; g.fillRect(0, 0, 512, 256);
+
+  g.filter = 'blur(14px)';
+  // softbox caldo, alto a sinistra
+  g.fillStyle = 'rgba(255, 238, 210, 0.95)';
+  g.fillRect(60, 18, 190, 58);
+  // secondo pannello piu' piccolo, alto a destra: secondo riflesso sull'anello
+  g.fillStyle = 'rgba(255, 220, 160, 0.55)';
+  g.fillRect(330, 30, 90, 40);
+  // kicker freddo laterale
+  g.fillStyle = 'rgba(150, 185, 230, 0.55)';
+  g.fillRect(430, 96, 40, 90);
+  // orizzonte caldo
+  g.fillStyle = 'rgba(255, 200, 120, 0.35)';
+  g.fillRect(0, 124, 512, 6);
+  g.filter = 'none';
+
+  const tex = new THREE.CanvasTexture(c);
+  tex.mapping = THREE.EquirectangularReflectionMapping;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const env = pmrem.fromEquirectangular(tex).texture;
+  tex.dispose();
+  pmrem.dispose();
+  return env;
+}
+
+/* Mappa di rugosita' "spazzolata": righe sottili concentriche lungo l'anello.
+   Sul toro la u corre intorno all'anello, quindi righe costanti per riga. */
+function makeBrushedRoughness() {
+  const c = document.createElement('canvas');
+  c.width = 4; c.height = 256;
+  const g = c.getContext('2d');
+  for (let y = 0; y < 256; y++) {
+    const v = Math.round(255 * (0.30 + (Math.sin(y * 12.9898) * 43758.5453 % 1) * 0.22));
+    g.fillStyle = `rgb(${v},${v},${v})`;
+    g.fillRect(0, y, 4, 1);
   }
+  const tex = new THREE.CanvasTexture(c);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(1, 6);
+  return tex;
+}
 
-  vec3 markColor(vec2 uv) {
-    float r = distance(uv, vec2(0.5));
-    float ring = smoothstep(0.33, 0.38, r);
-    vec3 white = vec3(1.0, 0.99, 0.97);
-    vec3 gold  = vec3(0.85, 0.69, 0.22);
-    return mix(white, gold, ring);
-  }
-`;
+/* Alone morbido dietro la medaglia (sprite): e' l'unica "luce" di scena. */
+function makeGlowTexture() {
+  const c = document.createElement('canvas');
+  c.width = c.height = 256;
+  const g = c.getContext('2d');
+  const grad = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+  grad.addColorStop(0, 'rgba(212, 168, 46, 0.62)');
+  grad.addColorStop(0.35, 'rgba(212, 168, 46, 0.26)');
+  grad.addColorStop(1, 'rgba(212, 168, 46, 0)');
+  g.fillStyle = grad; g.fillRect(0, 0, 256, 256);
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
 
-export function initHero(canvas) {
+/* Dal PNG ufficiale (oro su nero) alla maschera della sola scritta:
+   alpha dalla luminosita', anello escluso (sta oltre r = 0.72). */
+function loadLetteringAlpha(url, size, onReady) {
+  const img = new Image();
+  img.decoding = 'async';
+  img.onload = () => {
+    const S = size;
+    const c = document.createElement('canvas');
+    c.width = c.height = S;
+    const g = c.getContext('2d');
+    g.drawImage(img, 0, 0, S, S);
+    const id = g.getImageData(0, 0, S, S);
+    const d = id.data;
+    const half = S / 2;
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const i = (y * S + x) * 4;
+        const lum = (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]) / 255;
+        const r = Math.hypot(x - half, y - half) / half;
+        let a = 0;
+        if (r < 0.72) {
+          const t = Math.min(1, Math.max(0, (lum - 0.10) / 0.25));
+          a = t * t * (3 - 2 * t);
+        }
+        d[i] = d[i + 1] = d[i + 2] = 255;
+        d[i + 3] = Math.round(a * 255);
+      }
+    }
+    g.putImageData(id, 0, 0);
+    const tex = new THREE.CanvasTexture(c);
+    tex.anisotropy = 16;
+    onReady(tex);
+  };
+  img.src = url;
+}
+
+export function initHero(canvas, opts = {}) {
+  // still: movimento ridotto. Un fotogramma, ridisegnato solo se cambia la
+  // misura o si scorre.
+  const still = !!opts.still;
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
-  const scene = new THREE.Scene();
 
+  const scene = new THREE.Scene();
   const initialAspect = (canvas.clientWidth > 0 && canvas.clientHeight > 0)
     ? canvas.clientWidth / canvas.clientHeight : 16 / 9;
-  const camera = new THREE.PerspectiveCamera(42, initialAspect, 0.1, 100);
+  const camera = new THREE.PerspectiveCamera(36, initialAspect, 0.1, 100);
   camera.position.set(0, 0, 9.5);
 
   const renderer = new THREE.WebGLRenderer({
     canvas, antialias: !isMobile, alpha: true, powerPreference: 'high-performance',
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.25 : 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.0;
+  renderer.toneMappingExposure = 1.15;
 
-  const logoTexture = new THREE.TextureLoader().load(LOGO_URL);
-  logoTexture.colorSpace = THREE.SRGBColorSpace;
-  logoTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  // Sul telefono niente ambiente PMREM (costa in CPU e in compilazione):
+  // bastano le luci dirette, con piu' riempimento.
+  if (!isMobile) scene.environment = makeStudioEnvironment(renderer);
 
-  /* Stage lights. Positions are recomputed every frame; colours stay fixed:
-     a warm key, a cool-white fill, and a gold rim to flatter the brand gold. */
-  const lightPositions = [
-    new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(),
-  ];
-  const lightColors = [
-    new THREE.Color('#FFB067'), // warm key
-    new THREE.Color('#BFD4FF'), // cool fill
-    new THREE.Color('#FFD98A'), // gold rim
-  ];
+  /* ---------- luci ---------- */
+  const key = new THREE.DirectionalLight('#ffe3bd', 2.4);   // chiave calda, alto a sinistra
+  key.position.set(-3.5, 4.5, 5);
+  const rim = new THREE.DirectionalLight('#ffd98a', 1.6);   // controluce oro, dietro a destra
+  rim.position.set(4, 2, -3);
+  const fill = new THREE.HemisphereLight('#fff3e2', '#15100a', isMobile ? 1.6 : 0.5);
+  const under = new THREE.DirectionalLight('#ffc98a', 0.7);  // riempie il lato in ombra dell'anello
+  under.position.set(3, -4, 4);
+  scene.add(key, rim, fill, under);
 
-  const stageGroup = new THREE.Group();
-  scene.add(stageGroup);
+  /* ---------- materiali ----------
+     Sul telefono gli shader PBR (Standard/Physical) costano troppo in
+     compilazione (Lighthouse: TBT +400 ms): si usa Phong, piu' leggero,
+     con uno speculare oro. Sul computer, PBR con ambiente da studio. */
+  const gold = isMobile
+    ? new THREE.MeshPhongMaterial({ color: GOLD, specular: '#fff0b0', shininess: 60 })
+    : new THREE.MeshStandardMaterial({
+        color: GOLD, metalness: 1, roughness: 0.34,
+        roughnessMap: makeBrushedRoughness(), envMapIntensity: 1.25,
+      });
+  // La scritta e' di faccia: con metalness 1 rifletterebbe solo il buio dietro
+  // la camera. Un po' di diffusa e un'emissiva calda la tengono oro e leggibile.
+  const goldFlat = isMobile
+    ? new THREE.MeshPhongMaterial({ color: '#f2c84c', emissive: '#6a4e10', specular: '#fff6c8', shininess: 40, transparent: true, depthWrite: false })
+    : new THREE.MeshStandardMaterial({
+        color: '#f2c84c', metalness: 0.35, roughness: 0.5, envMapIntensity: 1.0,
+        emissive: '#8a6616', emissiveIntensity: 1.0,
+        transparent: true, depthWrite: false,
+      });
+  const goldSide = isMobile
+    ? new THREE.MeshPhongMaterial({ color: GOLD_DEEP, shininess: 10, transparent: true, depthWrite: false })
+    : new THREE.MeshStandardMaterial({
+        color: GOLD_DEEP, metalness: 1, roughness: 0.6, envMapIntensity: 0.5,
+        transparent: true, depthWrite: false,
+      });
+  const disc = isMobile
+    ? new THREE.MeshPhongMaterial({ color: '#040304', specular: '#6a6050', shininess: 80 })
+    : new THREE.MeshPhysicalMaterial({
+        color: '#040304', metalness: 0.05, roughness: 0.35,
+        clearcoat: 1, clearcoatRoughness: 0.3, envMapIntensity: 0.35,
+      });
 
-  /* ============ BACKDROP: pools of light behind the logo ============ */
-  const backdropMat = new THREE.ShaderMaterial({
-    uniforms: {
-      uLightPos: { value: lightPositions },
-      uLightColor: { value: lightColors },
-    },
-    vertexShader: /* glsl */ `
-      varying vec3 vWorldPos;
-      void main() {
-        vec4 wp = modelMatrix * vec4(position, 1.0);
-        vWorldPos = wp.xyz;
-        gl_Position = projectionMatrix * viewMatrix * wp;
-      }
-    `,
-    fragmentShader: /* glsl */ `
-      uniform vec3 uLightPos[${LIGHT_COUNT}];
-      uniform vec3 uLightColor[${LIGHT_COUNT}];
-      varying vec3 vWorldPos;
-      void main() {
-        vec3 col = vec3(0.0);
-        for (int i = 0; i < ${LIGHT_COUNT}; i++) {
-          float d = distance(uLightPos[i].xy, vWorldPos.xy);
-          float pool = exp(-d * d * 0.055);
-          col += uLightColor[i] * pool * 0.34;
-        }
-        float a = clamp(max(col.r, max(col.g, col.b)), 0.0, 1.0);
-        gl_FragColor = vec4(col, a);
-      }
-    `,
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-  });
-  const backdrop = new THREE.Mesh(new THREE.PlaneGeometry(26, 18), backdropMat);
-  backdrop.position.z = -2.2;
-  backdrop.renderOrder = 0;
-  stageGroup.add(backdrop);
+  /* ---------- la medaglia (raggio unitario = 1) ---------- */
+  const coin = new THREE.Group();
+  scene.add(coin);
 
-  /* ============ SHADOW: a single soft drop behind the mark ============ */
-  const shadowMat = new THREE.ShaderMaterial({
-    uniforms: { uLogo: { value: logoTexture }, uOpacity: { value: 0.5 } },
-    vertexShader: /* glsl */ `
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    `,
-    fragmentShader: /* glsl */ `
-      uniform sampler2D uLogo;
-      uniform float uOpacity;
-      varying vec2 vUv;
-      ${ALPHA_FROM_LUMA}
-      void main() {
-        // Ring of taps around each texel blurs the silhouette into a
-        // diffuse shadow rather than a hard duplicate of the logo.
-        float a = 0.0;
-        float o = 0.016;
-        a += lumaAlpha(texture2D(uLogo, vUv).rgb);
-        a += lumaAlpha(texture2D(uLogo, vUv + vec2( o, 0.0)).rgb);
-        a += lumaAlpha(texture2D(uLogo, vUv + vec2(-o, 0.0)).rgb);
-        a += lumaAlpha(texture2D(uLogo, vUv + vec2(0.0,  o)).rgb);
-        a += lumaAlpha(texture2D(uLogo, vUv + vec2(0.0, -o)).rgb);
-        a += lumaAlpha(texture2D(uLogo, vUv + vec2( o,  o)).rgb);
-        a += lumaAlpha(texture2D(uLogo, vUv + vec2(-o,  o)).rgb);
-        a += lumaAlpha(texture2D(uLogo, vUv + vec2( o, -o)).rgb);
-        a += lumaAlpha(texture2D(uLogo, vUv + vec2(-o, -o)).rgb);
-        a /= 9.0;
-        if (a < 0.01) discard;
-        gl_FragColor = vec4(0.01, 0.008, 0.02, a * uOpacity);
-      }
-    `,
-    transparent: true,
-    depthWrite: false,
-  });
-  const shadowMesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), shadowMat);
-  shadowMesh.renderOrder = 1;
-  stageGroup.add(shadowMesh);
+  // anello: nel PNG sta a r = 0.876, spessore 0.03; qui un toro vero
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.876, 0.042, 28, 128), gold);
+  coin.add(ring);
 
-  /* ============ BEAMS: volumetric shafts raking down from above ============ */
-  const beamMeshes = [];
-  for (let i = 0; i < LIGHT_COUNT; i++) {
-    const mat = new THREE.ShaderMaterial({
-      uniforms: { uColor: { value: lightColors[i] } },
-      vertexShader: /* glsl */ `
-        varying float vY;
-        void main() {
-          // Cone geometry runs 0..1 along its local Y after translation.
-          vY = uv.y;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: /* glsl */ `
-        uniform vec3 uColor;
-        varying float vY;
-        void main() {
-          // Bright at the emitter, fading out toward the wide end.
-          float fade = pow(1.0 - vY, 2.0) * 0.16;
-          gl_FragColor = vec4(uColor, fade);
-        }
-      `,
-      transparent: true,
-      depthWrite: false,
-      side: THREE.DoubleSide,
-      blending: THREE.AdditiveBlending,
-    });
-    const geo = new THREE.ConeGeometry(1.5, 9, 24, 1, true);
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.renderOrder = 2;
-    stageGroup.add(mesh);
-    beamMeshes.push(mesh);
+  // disco nero lucido, la faccia davanti a z = 0
+  const discMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.85, 0.07, 128), disc);
+  discMesh.rotation.x = Math.PI / 2;
+  discMesh.position.z = -0.035;
+  coin.add(discMesh);
+
+  // scritta in rilievo: quattro strati, i profondi piu' scuri
+  const letterPlane = new THREE.PlaneGeometry(2, 2);
+  const letterMeshes = [];
+  const LAYERS = 4;
+  for (let i = 0; i < LAYERS; i++) {
+    const top = i === LAYERS - 1;
+    const m = new THREE.Mesh(letterPlane, top ? goldFlat : goldSide);
+    m.position.z = 0.004 + i * 0.006;
+    m.renderOrder = 2 + i;
+    m.visible = false; // finche' la maschera non e' pronta
+    coin.add(m);
+    letterMeshes.push(m);
   }
-
-  /* ============ THE LOGO ITSELF ============ */
-  const logoMat = new THREE.ShaderMaterial({
-    uniforms: {
-      uLogo: { value: logoTexture },
-      uLightPos: { value: lightPositions },
-      uLightColor: { value: lightColors },
-    },
-    vertexShader: /* glsl */ `
-      varying vec2 vUv;
-      varying vec3 vWorldPos;
-      void main() {
-        vUv = uv;
-        vec4 wp = modelMatrix * vec4(position, 1.0);
-        vWorldPos = wp.xyz;
-        gl_Position = projectionMatrix * viewMatrix * wp;
-      }
-    `,
-    fragmentShader: /* glsl */ `
-      uniform sampler2D uLogo;
-      uniform vec3 uLightPos[${LIGHT_COUNT}];
-      uniform vec3 uLightColor[${LIGHT_COUNT}];
-      varying vec2 vUv;
-      varying vec3 vWorldPos;
-      ${ALPHA_FROM_LUMA}
-      void main() {
-        vec4 tex = texture2D(uLogo, vUv);
-        float a = lumaAlpha(tex.rgb);
-        if (a < 0.01) discard;
-
-        vec3 lit = vec3(0.0);
-        for (int i = 0; i < ${LIGHT_COUNT}; i++) {
-          float d = distance(uLightPos[i], vWorldPos);
-          float atten = 1.0 / (1.0 + 0.10 * d * d);
-          lit += uLightColor[i] * atten * 2.6;
-        }
-        // Ambient floor keeps the mark legible between sweeps.
-        vec3 color = markColor(vUv) * (0.55 + lit);
-        gl_FragColor = vec4(color, a);
-      }
-    `,
-    transparent: true,
-    depthWrite: false,
+  loadLetteringAlpha(LOGO_URL, isMobile ? 400 : 800, (tex) => {
+    goldFlat.alphaMap = tex; goldFlat.needsUpdate = true;
+    goldSide.alphaMap = tex; goldSide.needsUpdate = true;
+    letterMeshes.forEach(m => { m.visible = true; });
+    wake();
   });
-  /* The mark is carried by a group so the extrusion stack below shares its
-     transform exactly. */
-  const logoGroup = new THREE.Group();
-  stageGroup.add(logoGroup);
 
-  const logoMesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), logoMat);
-  logoMesh.renderOrder = 4;
-  logoGroup.add(logoMesh);
+  // alone dietro
+  const glow = new THREE.Sprite(new THREE.SpriteMaterial({
+    // depthTest acceso: lo sprite sta nel passaggio trasparente, dopo il disco;
+    // senza test di profondita' si sommava sopra il disco e lo faceva verdastro.
+    map: makeGlowTexture(), transparent: true, depthWrite: false, depthTest: true,
+    blending: THREE.AdditiveBlending, opacity: 1,
+  }));
+  glow.renderOrder = -1;
+  scene.add(glow);
 
-  /* ============ EXTRUSION: real thickness behind the face ============
-     A stack of copies marching back along -Z, each darker than the last.
-     Flat-on they hide behind the face; as the group sways they reveal the
-     side wall of the ring and lettering, so the mark reads as a solid
-     object rather than a decal. */
-  const EXTRUDE_LAYERS = isMobile ? 10 : 18;
-  const EXTRUDE_DEPTH = 0.075;
-  const extrusionMeshes = [];
-  for (let i = 1; i <= EXTRUDE_LAYERS; i++) {
-    const k = i / EXTRUDE_LAYERS;            // 0 → front, 1 → deepest
-    const mat = new THREE.ShaderMaterial({
-      uniforms: {
-        uLogo: { value: logoTexture },
-        uShade: { value: 0.52 * (1 - k * 0.82) },
-      },
-      vertexShader: /* glsl */ `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: /* glsl */ `
-        uniform sampler2D uLogo;
-        uniform float uShade;
-        varying vec2 vUv;
-        ${ALPHA_FROM_LUMA}
-        void main() {
-          float a = lumaAlpha(texture2D(uLogo, vUv).rgb);
-          if (a < 0.01) discard;
-          gl_FragColor = vec4(markColor(vUv) * uShade, a);
-        }
-      `,
-      transparent: true,
-      depthWrite: false,
-    });
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat);
-    mesh.renderOrder = 3;
-    mesh.userData.depth = -k * EXTRUDE_DEPTH;
-    logoGroup.add(mesh);
-    extrusionMeshes.push(mesh);
-  }
-
-  /* ============ INTERACTION ============ */
+  /* ---------- interazione ---------- */
   const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
   window.addEventListener('mousemove', (e) => {
     mouse.tx = (e.clientX / window.innerWidth) * 2 - 1;
     mouse.ty = -(e.clientY / window.innerHeight) * 2 + 1;
   });
-
   let scrollY = 0;
-  window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
+  window.addEventListener('scroll', () => { scrollY = window.scrollY; wake(); }, { passive: true });
 
-  /* ============ LAYOUT ============
-     The logo is anchored off the real hero text block, measured from the
-     DOM: to its right when there is room, otherwise below it. */
+  /* ---------- impaginazione: a destra del testo se c'e' posto, sotto se no ---------- */
   const BASE_Z = 9.5;
   const contentEl = document.querySelector('.hero__content');
   let logoPos = new THREE.Vector3(0, -2.4, 0);
@@ -303,23 +260,19 @@ export function initHero(canvas) {
     const w = canvas.clientWidth;
     const h = canvas.clientHeight;
     if (!contentEl || w <= 0 || h <= 0) return;
-
     const canvasBox = canvas.getBoundingClientRect();
-
-    // .hero__content is the full-width container, so its own box says
-    // nothing about where the copy actually ends. Measure the real
-    // children (they carry the max-widths) to find the true text edge.
     let textRight = 0;
     let textBottom = 0;
-    // Full-width flex wrappers (.hero__actions) would report the container
-    // edge, so drill into them and measure the buttons themselves.
     const parts = [];
     contentEl.querySelectorAll('.hero__eyebrow, .hero__title, .hero__sub').forEach(el => parts.push(el));
     contentEl.querySelectorAll('.hero__actions > *').forEach(el => parts.push(el));
     if (!parts.length) parts.push(contentEl);
-
+    const range = document.createRange();
     for (const el of parts) {
-      const b = el.getBoundingClientRect();
+      // La scatola del titolo e' larga 14ch anche quando il testo e' piu' corto:
+      // si misura l'inchiostro vero con un Range.
+      range.selectNodeContents(el);
+      const b = range.getBoundingClientRect();
       if (b.width === 0) continue;
       textRight = Math.max(textRight, b.right - canvasBox.left);
       textBottom = Math.max(textBottom, b.bottom - canvasBox.top);
@@ -327,25 +280,20 @@ export function initHero(canvas) {
     const roomRight = w - textRight;
 
     if (roomRight > 300) {
-      // Tucked into the top-right of the free column beside the copy.
-      // The clamps keep it inside the right edge and just clear of the nav.
-      const px = Math.min(roomRight * 0.70, h * 0.46);
-      const cx = Math.min(textRight + roomRight * 0.74, w - px / 2 - 20);
-      const cy = Math.max(h * 0.28, px / 2 + 84);
+      const px = Math.min(roomRight * 0.86, h * 0.6);
+      const cx = Math.min(textRight + roomRight * 0.55, w - px / 2 - 24);
+      const cy = Math.max(h * 0.48, px / 2 + 100);
       logoPos = screenToWorld(cx, cy, w, h);
       const edge = screenToWorld(cx + px / 2, cy, w, h);
-      logoSize = Math.abs(edge.x - logoPos.x) * 2;
+      logoSize = Math.abs(edge.x - logoPos.x);
     } else {
-      // Narrow viewport: sit under the copy, sized to whatever strip is
-      // actually left. Forcing a minimum here made it overlap the CTAs on
-      // short phones, so the available height wins.
       const avail = Math.max(0, h - textBottom - 24);
       const px = Math.max(80, Math.min(w * 0.55, avail - 12));
       const cx = w / 2;
       const cy = textBottom + avail / 2;
       logoPos = screenToWorld(cx, cy, w, h);
       const edge = screenToWorld(cx + px / 2, cy, w, h);
-      logoSize = Math.abs(edge.x - logoPos.x) * 2;
+      logoSize = Math.abs(edge.x - logoPos.x);
     }
   }
 
@@ -360,14 +308,16 @@ export function initHero(canvas) {
     layout();
   }
   resize();
-  const ro = new ResizeObserver(resize);
+  const ro = new ResizeObserver(() => { resize(); wake(); });
   ro.observe(canvas);
 
-  /* ============ RENDER LOOP ============ */
+  /* ---------- ciclo ---------- */
   const clock = new THREE.Clock();
+  let rafId = 0;
+  let hidden = false;
 
   function tick() {
-    const t = clock.getElapsedTime();
+    const t = still ? 0.6 : clock.getElapsedTime();
     mouse.x += (mouse.tx - mouse.x) * 0.06;
     mouse.y += (mouse.ty - mouse.y) * 0.06;
 
@@ -375,72 +325,45 @@ export function initHero(canvas) {
     const cx = logoPos.x + mouse.x * 0.12;
     const cy = logoPos.y + parallaxY + mouse.y * 0.08;
 
-    // Logo: face-on, with a wider sway so the extruded side wall shows and
-    // the mark reads as a solid object catching the lights.
-    logoGroup.position.set(cx, cy, 0);
-    logoGroup.scale.setScalar(logoSize);
-    logoGroup.rotation.y = Math.sin(t * 0.22) * 0.30 + mouse.x * 0.22;
-    logoGroup.rotation.x = Math.sin(t * 0.17) * 0.10 + mouse.y * 0.12;
-    // Local offsets stay in group space so the stack rotates as one solid.
-    logoMesh.position.set(0, 0, 0);
-    for (const m of extrusionMeshes) m.position.set(0, 0, m.userData.depth);
+    coin.position.set(cx, cy, 0);
+    coin.scale.setScalar(logoSize);
+    // Dondolio lento, di faccia: l'anello mostra il bordo, la scritta resta leggibile.
+    coin.rotation.y = Math.sin(t * 0.24) * 0.26 + mouse.x * 0.22;
+    coin.rotation.x = Math.sin(t * 0.18) * 0.08 + mouse.y * 0.10;
 
-    backdrop.position.set(cx, cy, -2.2);
+    // La chiave gira piano intorno alla medaglia: i riflessi camminano sull'oro.
+    key.position.set(-3.5 + Math.sin(t * 0.3) * 1.6, 4.5, 5 + Math.cos(t * 0.3) * 0.8);
 
-    // Drive the three spotlights on independent orbits, and track their
-    // combined direction so the single shadow leans away from the light.
-    let sumDx = 0, sumDy = 0;
-    for (let i = 0; i < LIGHT_COUNT; i++) {
-      const speed = 0.24 + i * 0.11;
-      const phase = (i * Math.PI * 2) / LIGHT_COUNT;
-      const rx = logoSize * (0.95 + i * 0.18);
-      const ry = logoSize * (0.5 + i * 0.1);
-      const lx = cx + Math.cos(t * speed + phase) * rx;
-      const ly = cy + Math.sin(t * speed * 1.35 + phase) * ry + logoSize * 0.25;
-      lightPositions[i].set(lx, ly, 2.6);
-      sumDx += cx - lx;
-      sumDy += cy - ly;
+    glow.position.set(cx, cy - logoSize * 0.05, -1.2);
+    glow.scale.set(logoSize * 3.1, logoSize * 3.1, 1);
 
-      // Beam: a cone from the light, aimed at the logo.
-      const beam = beamMeshes[i];
-      beam.position.set(lx, ly + 4.5, 2.4);
-      beam.lookAt(cx, cy, 0);
-      // ConeGeometry points along +Y; rotate so it points along the look axis.
-      beam.rotateX(-Math.PI / 2);
-      beam.translateY(-4.5);
-    }
-
-    // One soft shadow, offset along the average light direction.
-    const k = 0.055 / LIGHT_COUNT;
-    shadowMesh.position.set(cx + sumDx * k, cy + sumDy * k - logoSize * 0.02, -1.9);
-    shadowMesh.scale.setScalar(logoSize * 1.08);
-    shadowMesh.rotation.copy(logoGroup.rotation);
-
-    // Fade the whole stage out as the hero leaves, so the next section
-    // arrives as a dissolve instead of a hard cut.
+    // Dissolvenza mentre l'apertura esce dallo schermo; fuori vista il ciclo si ferma.
     const fade = 1 - Math.min(1, Math.max(0, (scrollY - canvas.clientHeight * 0.15) / (canvas.clientHeight * 0.55)));
     if (fade <= 0.001) {
-      stageGroup.visible = false;
-    } else {
-      stageGroup.visible = true;
-      logoMat.opacity = fade;
-      canvas.style.opacity = fade.toFixed(3);
+      if (!hidden) {
+        hidden = true;
+        canvas.style.opacity = '0';
+        renderer.clear();
+      }
+      rafId = 0;
+      return;
     }
-
+    hidden = false;
+    canvas.style.opacity = fade.toFixed(3);
     renderer.render(scene, camera);
-    rafId = requestAnimationFrame(tick);
+    rafId = still ? 0 : requestAnimationFrame(tick);
   }
-  let rafId = requestAnimationFrame(tick);
+  function wake() { if (!rafId) rafId = requestAnimationFrame(tick); }
+  rafId = requestAnimationFrame(tick);
 
   return {
     dispose() {
       cancelAnimationFrame(rafId);
       ro.disconnect();
-      stageGroup.traverse((obj) => {
+      scene.traverse((obj) => {
         if (obj.geometry) obj.geometry.dispose();
         if (obj.material) obj.material.dispose();
       });
-      logoTexture.dispose();
       renderer.dispose();
     },
   };

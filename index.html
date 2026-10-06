@@ -4,30 +4,190 @@
   <meta charset="UTF-8" />
   <meta name="color-scheme" content="dark" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>RistoNext — La ristorazione, finalmente insieme</title>
-  <meta name="description" content="RistoNext è l'app che unisce ristoratori e professionisti della ristorazione. Match IA, turni, squadra, competenze verificate. Scaricala su App Store e Google Play." />
-  <meta name="theme-color" content="#0a0a0a" />
-  <meta property="og:title" content="RistoNext — La ristorazione, finalmente insieme" />
-  <meta property="og:description" content="L'app che unisce chi cerca e chi offre lavoro nella ristorazione. Match IA, turni, squadra, competenze verificate." />
+  <title>RistoNext · App per lavoro e personale nella ristorazione</title>
+  <meta name="description" content="App per la ristorazione: il locale pubblica l'annuncio con contratto e retribuzione, chi cerca lavoro vede quanto è compatibile. Annunci e candidature gratis." />
+  <meta name="theme-color" content="#060608" />
+  <meta name="apple-itunes-app" content="app-id=6762455597" />
+  <link rel="canonical" href="https://ristonext.com/" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://ristonext.com" />
+  <meta property="og:site_name" content="RistoNext" />
+  <meta property="og:locale" content="it_IT" />
+  <meta property="og:url" content="https://ristonext.com/" />
+  <meta property="og:title" content="RistoNext · App per lavoro e personale nella ristorazione" />
+  <meta property="og:description" content="App per la ristorazione: il locale pubblica l'annuncio con contratto e retribuzione, chi cerca lavoro vede quanto è compatibile. Annunci e candidature gratis." />
   <meta property="og:image" content="https://ristonext.com/assets/img/og.jpg" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23E67E22'/%3E%3C/svg%3E" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <script defer src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script defer src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Logo di RistoNext Strategy &amp; Management" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="preload" href="assets/fonts/Archivo-wght.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/Fraunces-wght.woff2" as="font" type="font/woff2" crossorigin />
+  <script>/* Giro 3: ?font=vecchio mostra i caratteri di prima; la scelta resta per la sessione. */(function(){var f=null;try{f=new URLSearchParams(location.search).get('font');if(f)sessionStorage.setItem('rn-font',f);f=f||sessionStorage.getItem('rn-font')}catch(e){}if(f==='vecchio')document.documentElement.setAttribute('data-font','vecchio')})();</script>
+  <link rel="stylesheet" href="assets/css/main.css?v=20261011" />
+  <script defer src="assets/vendor/gsap.min.js"></script>
+  <script defer src="assets/vendor/ScrollTrigger.min.js"></script>
   <script type="importmap">
   {
     "imports": {
-      "three": "https://unpkg.com/three@0.161.0/build/three.module.js"
+      "three": "./assets/vendor/three.module.min.js"
     }
   }
   </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ristonext.com/#azienda",
+      "name": "RistoNext Strategy & Management",
+      "alternateName": "RistoNext",
+      "url": "https://ristonext.com/",
+      "logo": "https://ristonext.com/assets/img/logo-official.png",
+      "email": "info@ristonext.com",
+      "founder": {
+        "@type": "Person",
+        "name": "Michele Ricciardi"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Italia"
+      },
+      "sameAs": [
+        "https://www.instagram.com/ristonext/",
+        "https://apps.apple.com/it/app/ristonext/id6762455597",
+        "https://play.google.com/store/apps/details?id=dev.a0.apps.ristonext493"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ristonext.com/#sito",
+      "url": "https://ristonext.com/",
+      "name": "RistoNext",
+      "inLanguage": "it-IT",
+      "publisher": {
+        "@id": "https://ristonext.com/#azienda"
+      }
+    },
+    {
+      "@type": "MobileApplication",
+      "@id": "https://ristonext.com/#app",
+      "name": "RistoNext",
+      "operatingSystem": "iOS, Android",
+      "applicationCategory": "BusinessApplication",
+      "inLanguage": "it",
+      "description": "L'app che mette insieme locali e professionisti della ristorazione: annunci con contratto e retribuzione, compatibilità in percentuale, turni, squadra ed extra.",
+      "url": "https://ristonext.com/",
+      "image": "https://ristonext.com/assets/img/og.jpg",
+      "installUrl": [
+        "https://apps.apple.com/it/app/ristonext/id6762455597",
+        "https://play.google.com/store/apps/details?id=dev.a0.apps.ristonext493"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "publisher": {
+        "@id": "https://ristonext.com/#azienda"
+      }
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quanto costa?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Scaricarla non costa niente. Annunci, candidature, turni, squadra ed extra sono gratis, per il locale e per chi cerca lavoro. Ci sono abbonamenti facoltativi: la chat con un assistente IA, il Consulente per il locale e il Coach per il professionista, è solo in abbonamento. I prezzi li vedi nell'app, prima di qualsiasi acquisto."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Chi paga?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Per annunci, candidature, turni, squadra ed extra non paga nessuno: né il locale né chi cerca lavoro. Per iscriversi non serve nessuna carta. Si paga solo quello che scegli tu nell'app, per esempio un abbonamento con l'assistente IA o l'importazione del CV, e si paga dallo store, come per le altre app."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "La paga è sempre scritta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nel modulo dell'annuncio la retribuzione è un campo obbligatorio: senza, il modulo non pubblica. Chi cerca lavoro la legge sull'annuncio prima di candidarsi. Se trovi un annuncio senza retribuzione, scrivimi e lo controllo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Come si calcola la compatibilità?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Su sei fattori, ognuno con un peso: aree e reparti, ruoli, competenze, tipo di locale, affinità di squadra, lingue. Turni e distanza non entrano nel calcolo. Nella vista normale il numero è lo stesso per il locale e per il professionista; se il professionista usa i filtri personalizzati, la percentuale si ricalcola sui filtri che ha scelto."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Chi decide chi assumere?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Il locale. L'app ordina i candidati per compatibilità e vi mette in contatto in chat. Il colloquio, la prova e la scelta restano vostri. Vale anche per chi cerca lavoro: la percentuale aiuta a capire dove candidarsi, poi decide lui."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Mi sono candidato e nessuno risponde. Perché?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La scelta è del locale, e non sempre risponde subito. Se scarta la candidatura, ti arriva una notifica con l'esito. Se non risponde, la candidatura resta in attesa. Intanto puoi candidarti ad altri annunci."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Nella mia zona c'è qualcuno?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Dipende dalla zona, e un numero che non posso dimostrare non te lo scrivo. L'app è nuova: in alcune zone annunci e profili sono ancora pochi. Pubblicare un annuncio o un profilo non costa niente, e resta lì per chi arriva dopo. Il locale può vedere solo chi sta entro 30 o 60 km."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "È un'altra app di annunci?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Gli annunci ci sono, ed è la prima cosa che si usa. Accanto ci sono il calendario con turni ed extra, la squadra del locale e la chat. Chi ha un locale tiene tutto in un posto solo. Chi lavora ci trova anche le serate extra."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Che fine fanno i miei dati? Come cancello l'account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Il locale vede il profilo che hai pubblicato. Quali dati raccolgo e perché è scritto nella Privacy. L'account lo cancelli dall'app, in Impostazioni, alla voce «Elimina account»: si cancellano il profilo, gli annunci, le candidature e i messaggi. Per gli altri dati vale quello che è scritto nella Privacy. Se non riesci, c'è la pagina Cancella account."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "La consulenza cos'è, e come si chiede?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "È l'altro lavoro dell'azienda, per i locali che vogliono una mano col digitale. Mi scrivi cosa fa il tuo locale e cosa vorresti ottenere, e ti rispondo io: costi e tempi te li dico a voce, senza impegno. Per usare l'app non serve. Chiedi un preventivo."
+      }
+    }
+  ]
+}
+  </script>
 </head>
-<body>
+<body data-page="home">
 
   <div class="aurora" aria-hidden="true">
     <div class="aurora__blob aurora__blob--1"></div>
@@ -50,37 +210,49 @@
       <li><a href="professionisti.html">Professionisti</a></li>
       <li><a href="funzioni.html">Funzioni</a></li>
       <li><a href="consulenze.html">Consulenze</a></li>
-      <li><a href="chi-siamo.html">Chi siamo</a></li>
+      <li><a href="chi-siamo.html">L'azienda</a></li>
       <li><a href="contatti.html">Contatti</a></li>
     </ul>
-    <a href="#download" class="nav__cta">Scarica l'app <span aria-hidden="true">→</span></a>
-    <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <a href="#download" class="nav__cta" data-cta="store-auto" data-pos="nav">Scarica l'app <span aria-hidden="true">→</span></a>
+    <button class="nav__burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu-mobile"><span></span><span></span><span></span></button>
   </nav>
 
-  <div class="nav__mobile" role="dialog" aria-label="Menu">
+  <div class="nav__mobile" id="menu-mobile" role="dialog" aria-label="Menu">
     <a href="index.html">Home</a>
     <a href="ristoratori.html">Ristoratori</a>
     <a href="professionisti.html">Professionisti</a>
     <a href="funzioni.html">Funzioni</a>
     <a href="consulenze.html">Consulenze</a>
-    <a href="chi-siamo.html">Chi siamo</a>
+    <a href="chi-siamo.html">L'azienda</a>
     <a href="contatti.html">Contatti</a>
   </div>
 
   <!-- HERO ============================================= -->
-  <section class="hero">
+  <section class="hero hero--logo-b"><!-- giro 3: la classe sta nell'HTML, cosi' il logo si vede subito (LCP); ?logo=a la toglie dal JS -->
     <canvas class="hero__canvas" aria-hidden="true"></canvas>
     <div class="container hero__content">
-      <span class="hero__eyebrow eyebrow">Live su App Store e Google Play</span>
-      <h1 class="h-display hero__title split">La ristorazione, finalmente <em>insieme</em>.</h1>
-      <p class="hero__sub word-reveal">RistoNext è l'app che connette ristoratori e professionisti con l'intelligenza artificiale. Cerca profili verificati, gestisci turni, costruisci squadre. Tutto in un posto.</p>
+      <span class="hero__eyebrow eyebrow">L'app per la ristorazione</span>
+      <h1 class="h-display hero__title split">Personale e lavoro, nella stessa <em>app.</em></h1>
+      <p class="hero__sub word-reveal">Il locale pubblica l'annuncio con contratto e retribuzione. Chi cerca lavoro vede quanto è compatibile, prima di candidarsi.</p>
       <div class="hero__actions">
-        <a href="#download" class="btn btn--primary">
+        <a href="#download" class="btn btn--primary" data-cta="store-auto" data-pos="hero">
           Scarica gratis
           <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
         </a>
-        <a href="funzioni.html" class="btn btn--ghost">Scopri come funziona</a>
+        <a href="funzioni.html" class="btn btn--ghost" data-cta="funzioni" data-pos="hero">Scopri come funziona</a>
+        <p class="hero__paths">
+          <a href="ristoratori.html" data-cta="path-locale" data-pos="hero">Ho un locale <span aria-hidden="true">→</span></a>
+          <a href="professionisti.html" data-cta="path-lavoro" data-pos="hero">Cerco lavoro <span aria-hidden="true">→</span></a>
+        </p>
       </div>
+      <!-- Logo B (giro 2, predefinito): il file ufficiale, tondo come vuole il brand book. Con ?logo=a si vede la medaglia 3D. -->
+      <figure class="hero__logo" aria-hidden="true">
+        <div class="hero__logo-coin">
+          <img src="assets/img/logo-official.webp" width="600" height="600" alt="" decoding="async" />
+          <span class="hero__logo-ring"></span>
+          <span class="hero__logo-sheen"></span>
+        </div>
+      </figure>
     </div>
     <div class="hero__scroll">Scroll<span></span></div>
   </section>
@@ -89,43 +261,47 @@
   <section class="phone-scene" id="app-vetrina">
     <div class="container">
       <div class="phone-scene__head reveal">
-        <span class="eyebrow">Toccala con mano</span>
-        <h2 class="h-section split">L'app che <em>lavora davvero</em>.</h2>
-        <p class="lead">Passa sulle voci ai lati, oppure scorri: l'app cambia sotto i tuoi occhi. Ogni sezione risolve un problema concreto della ristorazione.</p>
+        <span class="eyebrow">L'app, schermata per schermata</span>
+        <h2 class="h-section split">Dieci schermate dell'app <em>vera.</em></h2>
+        <p class="lead word-reveal">Tocca le voci, oppure scorri: la schermata cambia. Sono catture dell'app, con dati dimostrativi.</p>
       </div>
 
       <div class="phone-scene__stage">
 
         <div class="phone-scene__labels phone-scene__labels--left">
-          <div class="phone-scene__label active" data-phone-index="0"><span class="phone-scene__label__num">01</span><span>Match IA — compatibilità reale</span></div>
-          <div class="phone-scene__label" data-phone-index="1"><span class="phone-scene__label__num">02</span><span>Feed annunci ordinato per te</span></div>
-          <div class="phone-scene__label" data-phone-index="2"><span class="phone-scene__label__num">03</span><span>Squadra del locale, viva</span></div>
-          <div class="phone-scene__label" data-phone-index="3"><span class="phone-scene__label__num">04</span><span>Calendario turni intelligente</span></div>
-          <div class="phone-scene__label" data-phone-index="4"><span class="phone-scene__label__num">05</span><span>Extra & ingaggi last-minute</span></div>
+          <button type="button" class="phone-scene__label active" data-phone-index="0"><span class="phone-scene__label__num">01</span><span>Compatibilità in percentuale su ogni annuncio</span></button>
+          <button type="button" class="phone-scene__label" data-phone-index="1"><span class="phone-scene__label__num">02</span><span>L'annuncio: contratto e retribuzione</span></button>
+          <button type="button" class="phone-scene__label" data-phone-index="2"><span class="phone-scene__label__num">03</span><span>Squadra del locale</span></button>
+          <button type="button" class="phone-scene__label" data-phone-index="3"><span class="phone-scene__label__num">04</span><span>Calendario: turni, extra e chi manca</span></button>
+          <button type="button" class="phone-scene__label" data-phone-index="4"><span class="phone-scene__label__num">05</span><span>Extra: chi è libero in zona</span></button>
         </div>
+
+        <p class="phone-scene__caption" aria-hidden="true"><span class="phone-scene__caption__num">01</span><span class="phone-scene__caption__text">Compatibilità in percentuale su ogni annuncio</span></p>
 
         <div class="phone">
           <div class="phone__screen">
-            <div class="phone__slide active"><img src="assets/img/match-ia.png" alt="Match IA" /></div>
-            <div class="phone__slide"><img src="assets/img/feed-annunci.png" alt="Feed annunci" /></div>
-            <div class="phone__slide"><img src="assets/img/squadra.png" alt="Squadra" /></div>
-            <div class="phone__slide"><img src="assets/img/turni-locale.png" alt="Turni" /></div>
-            <div class="phone__slide"><img src="assets/img/extra-cerca.png" alt="Extra" /></div>
-            <div class="phone__slide"><img src="assets/img/competenze.png" alt="Competenze e sigilli" /></div>
-            <div class="phone__slide"><img src="assets/img/verificati.png" alt="Esperienze e competenze verificate sul campo" /></div>
-            <div class="phone__slide"><img src="assets/img/attestazioni.png" alt="Attestazioni e valutazioni della squadra" /></div>
-            <div class="phone__slide"><img src="assets/img/mappa-italia.png" alt="Mappa Italia" /></div>
-            <div class="phone__slide"><img src="assets/img/consulente-ia.png" alt="Consulente IA" /></div>
+            <div class="phone__slide active"><img src="assets/img/annunci-compatibilita.webp" width="760" height="1351" alt="Elenco annunci con la compatibilità in percentuale" loading="lazy" /></div>
+            <div class="phone__slide"><img src="assets/img/annuncio-paga.webp" width="760" height="1351" alt="Annuncio di cameriere con contratto e retribuzione" loading="lazy" /></div>
+            <div class="phone__slide"><img src="assets/img/squadra.webp" width="760" height="1351" alt="Squadra del locale con statistiche" loading="lazy" /></div>
+            <div class="phone__slide"><img src="assets/img/calendario-locale.webp" width="760" height="1351" alt="Calendario del locale con turni ed extra" loading="lazy" /></div>
+            <div class="phone__slide"><img src="assets/img/extra-liberi.webp" width="760" height="1351" alt="Calendario con il filtro degli extra liberi" loading="lazy" /></div>
+            <div class="phone__slide"><img src="assets/img/nuovo-annuncio.webp" width="760" height="1351" alt="Nuovo annuncio: lingue, affinità di squadra, retribuzione" loading="lazy" /></div>
+            <div class="phone__slide"><img src="assets/img/agenda-promemoria.webp" width="760" height="1351" alt="Nuovo appuntamento in agenda con promemoria" loading="lazy" /></div>
+            <div class="phone__slide"><img src="assets/img/professionista-turni.webp" width="760" height="1351" alt="Calendario del professionista con i suoi turni" loading="lazy" /></div>
+            <div class="phone__slide"><img src="assets/img/notifica-promemoria.webp" width="760" height="1351" alt="Notifica di promemoria" loading="lazy" /></div>
+            <div class="phone__slide"><img src="assets/img/consulente-ia.webp" width="760" height="1351" alt="Chat col Consulente IA" loading="lazy" /></div>
             <div class="phone__glare"></div>
           </div>
         </div>
 
+        <div class="phone-scene__dots" aria-label="Scegli la schermata"></div>
+
         <div class="phone-scene__labels phone-scene__labels--right">
-          <div class="phone-scene__label" data-phone-index="5"><span class="phone-scene__label__num">06</span><span>Competenze verificate & sigilli</span></div>
-          <div class="phone-scene__label" data-phone-index="6"><span class="phone-scene__label__num">07</span><span>Verificato sul campo, non dichiarato</span></div>
-          <div class="phone-scene__label" data-phone-index="7"><span class="phone-scene__label__num">08</span><span>Attestazioni & valutazioni</span></div>
-          <div class="phone-scene__label" data-phone-index="8"><span class="phone-scene__label__num">09</span><span>Mappa Italia, città per città</span></div>
-          <div class="phone-scene__label" data-phone-index="9"><span class="phone-scene__label__num">10</span><span>Consulente IA sui tuoi dati</span></div>
+          <button type="button" class="phone-scene__label" data-phone-index="5"><span class="phone-scene__label__num">06</span><span>Lingue e affinità di squadra nell'annuncio</span></button>
+          <button type="button" class="phone-scene__label" data-phone-index="6"><span class="phone-scene__label__num">07</span><span>Agenda personale con promemoria</span></button>
+          <button type="button" class="phone-scene__label" data-phone-index="7"><span class="phone-scene__label__num">08</span><span>I turni del professionista</span></button>
+          <button type="button" class="phone-scene__label" data-phone-index="8"><span class="phone-scene__label__num">09</span><span>Notifiche: turni, candidature, promemoria</span></button>
+          <button type="button" class="phone-scene__label" data-phone-index="9"><span class="phone-scene__label__num">10</span><span>La chat col Consulente IA</span></button>
         </div>
 
       </div>
@@ -133,32 +309,39 @@
   </section>
 
   <!-- MARQUEE ========================================== -->
+  <!-- Giro 3: parole vere dell'app; con GSAP la striscia accelera quando si scorre (main.js, marqueeVivo). -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee__track">
-      <span>Match IA</span><em>◆</em>
-      <span>Turni intelligenti</span><em>◆</em>
-      <span>Squadra del locale</span><em>◆</em>
-      <span>Competenze verificate</span><em>◆</em>
-      <span>Extra & Ingaggi</span><em>◆</em>
-      <span>Consulente IA</span><em>◆</em>
-      <span>Coach IA</span><em>◆</em>
-      <span>Match IA</span><em>◆</em>
-      <span>Turni intelligenti</span><em>◆</em>
-      <span>Squadra del locale</span><em>◆</em>
-      <span>Competenze verificate</span><em>◆</em>
-      <span>Extra & Ingaggi</span><em>◆</em>
-      <span>Consulente IA</span><em>◆</em>
-      <span>Coach IA</span><em>◆</em>
+      <span>Sala</span><em>◆</em>
+      <span>Cucina</span><em>◆</em>
+      <span>Bar</span><em>◆</em>
+      <span>Extra nel weekend</span><em>◆</em>
+      <span>Turni</span><em>◆</em>
+      <span>Squadra</span><em>◆</em>
+      <span>Annunci con la paga</span><em>◆</em>
+      <span>Compatibilità</span><em>◆</em>
+      <span>Chat</span><em>◆</em>
+      <span>Competenze</span><em>◆</em>
+      <span>Sala</span><em>◆</em>
+      <span>Cucina</span><em>◆</em>
+      <span>Bar</span><em>◆</em>
+      <span>Extra nel weekend</span><em>◆</em>
+      <span>Turni</span><em>◆</em>
+      <span>Squadra</span><em>◆</em>
+      <span>Annunci con la paga</span><em>◆</em>
+      <span>Compatibilità</span><em>◆</em>
+      <span>Chat</span><em>◆</em>
+      <span>Competenze</span><em>◆</em>
     </div>
   </div>
 
   <!-- PROBLEM/SOLUTION ================================= -->
-  <section id="perche" class="section-problem">
+  <section id="perche" class="section-problem section--light">
     <div class="container">
       <div class="sec-head reveal">
         <span class="eyebrow">Perché esiste RistoNext</span>
-        <h2 class="h-section split">Trovare persone giuste per il tuo locale — o un locale giusto per te — non dovrebbe essere <em>una lotteria</em>.</h2>
-        <p class="lead">Curriculum che nessuno legge. Turni che saltano. Colloqui a vuoto. Squadre che si sfaldano. La ristorazione italiana perde ogni anno miliardi in turnover e ricerche fallite. RistoNext è la risposta: un'app fatta da chi lavora nella ristorazione, per chi lavora nella ristorazione.</p>
+        <h2 class="h-section split">Trovare la persona giusta, o il locale giusto, costa tempo a tutti e <em>due.</em></h2>
+        <p class="lead scrub-words">Annunci senza paga, curriculum tutti uguali, colloqui a vuoto, turni scoperti all'ultimo. RistoNext mette il locale e il professionista davanti agli stessi dati, prima che si parlino.</p>
       </div>
     </div>
   </section>
@@ -168,20 +351,21 @@
     <div class="container">
       <div class="sec-head reveal">
         <span class="eyebrow">Le funzioni</span>
-        <h2 class="h-section split">Un'app, <em>otto strumenti</em>, zero attriti.</h2>
+        <h2 class="h-section split">Un'app, dieci <em>strumenti.</em></h2>
       </div>
       <div class="bento reveal--stagger">
 
-        <div class="bento__cell bento__cell--wide bento__cell--tall">
+        <div class="bento__cell bento__cell--wide bento__cell--tall bento__cell--light">
           <div class="bento__body">
             <div class="bento__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/><path d="M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>
             </div>
-            <h3 class="bento__title">Match IA che capisce davvero.</h3>
-            <p class="bento__desc">L'IA ordina i candidati per compatibilità reale con il tuo locale — non per data di pubblicazione. Come funziona, nel dettaglio, qui sotto.</p>
+            <h3 class="bento__title">Compatibilità in percentuale.</h3>
+            <p class="bento__desc">Un numero su ogni annuncio e su ogni candidato: quanto il profilo corrisponde a quello che chiede l'annuncio. Nella vista normale è lo stesso per tutti e due. Il professionista può filtrare gli annunci per soglia.</p>
+            <div class="bento__chips" aria-label="Soglie del filtro"><span class="bento__chip">Tutti</span><span class="bento__chip">dal 50%</span><span class="bento__chip bento__chip--on">dal 70%</span><span class="bento__chip">dal 90%</span></div>
           </div>
-          <div class="bento__num">98<span style="font-size:0.4em;color:var(--text-mute)">%</span>
-            <div class="bento__num-label">match più rilevanti vs ricerca classica</div>
+          <div class="bento__num">6
+            <div class="bento__num-label">fattori nel calcolo. Come funziona: qui sotto, al punto 01.</div>
           </div>
         </div>
 
@@ -190,8 +374,8 @@
             <div class="bento__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
             </div>
-            <h3 class="bento__title">Turni</h3>
-            <p class="bento__desc">Pianifica settimane in minuti. Notifiche push a chi lavora.</p>
+            <h3 class="bento__title">Calendario</h3>
+            <p class="bento__desc">Turni ed extra nello stesso calendario. Un controllo blocca le doppie prenotazioni.</p>
           </div>
         </div>
 
@@ -201,7 +385,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/><circle cx="18" cy="9" r="2.5"/><path d="M22 21v-1a3 3 0 0 0-2.5-3"/></svg>
             </div>
             <h3 class="bento__title">Squadra</h3>
-            <p class="bento__desc">La rosa del tuo locale con ruoli, schede e statistiche.</p>
+            <p class="bento__desc">Chi lavora nel locale, con ruolo, statistiche e valutazioni.</p>
           </div>
         </div>
 
@@ -210,8 +394,8 @@
             <div class="bento__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="4"/></svg>
             </div>
-            <h3 class="bento__title">Extra & Ingaggi</h3>
-            <p class="bento__desc">Copri buchi last-minute con professionisti già verificati nella tua zona. Chiama, conferma, chiuso.</p>
+            <h3 class="bento__title">Extra &amp; Ingaggi</h3>
+            <p class="bento__desc">Il locale pubblica la richiesta per una sera. Chi è libero in zona la vede e risponde.</p>
           </div>
         </div>
 
@@ -220,8 +404,8 @@
             <div class="bento__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
             </div>
-            <h3 class="bento__title">Competenze verificate</h3>
-            <p class="bento__desc">Quiz profondi per ruolo. Sigilli visibili sul profilo. Basta CV che dicono tutti la stessa cosa.</p>
+            <h3 class="bento__title">Annunci</h3>
+            <p class="bento__desc">Il modulo chiede tutto quello che serve a chi legge. La retribuzione è un campo obbligatorio.</p>
           </div>
         </div>
 
@@ -231,7 +415,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             </div>
             <h3 class="bento__title">Consulente IA + Coach IA</h3>
-            <p class="bento__desc">Due assistenti pensati per due mondi diversi. Il Consulente legge i tuoi dati e ti suggerisce mosse concrete. Il Coach guida i professionisti nella crescita di carriera.</p>
+            <p class="bento__desc">Due assistenti in chat, in abbonamento. Il Consulente legge i dati del locale e risponde su tutto quello che riguarda la ristorazione. Il Coach legge il profilo del professionista e risponde su lavoro e carriera.</p>
           </div>
         </div>
 
@@ -240,8 +424,8 @@
             <div class="bento__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
-            <h3 class="bento__title">Mappa Italia</h3>
-            <p class="bento__desc">Filtra per città, provincia, distanza. Zero fuffa.</p>
+            <h3 class="bento__title">Vicino a me</h3>
+            <p class="bento__desc">Il locale vede solo chi sta a una certa distanza. La lista cambia ordine, la percentuale no.</p>
           </div>
         </div>
 
@@ -250,8 +434,8 @@
             <div class="bento__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 17h5l-1.4-1.4A6 6 0 0 0 20 11V8a6 6 0 0 0-12 0v3a6 6 0 0 0 1.4 4.6L8 17h5"/><path d="M9 17a3 3 0 0 0 6 0"/></svg>
             </div>
-            <h3 class="bento__title">Chat & notifiche</h3>
-            <p class="bento__desc">Messaggi diretti, note vocali, sveglie turno. Tutto nell'app.</p>
+            <h3 class="bento__title">Chat &amp; notifiche</h3>
+            <p class="bento__desc">Messaggi, note vocali, notifiche per turni, candidature e promemoria.</p>
           </div>
         </div>
 
@@ -260,8 +444,8 @@
             <div class="bento__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg>
             </div>
-            <h3 class="bento__title">CV importato & verificato</h3>
-            <p class="bento__desc">Importa il tuo CV: l'IA lo legge e lo trasforma subito in un profilo strutturato, pronto per i match.</p>
+            <h3 class="bento__title">Importa il CV</h3>
+            <p class="bento__desc">Carichi il PDF e l'IA scrive le esperienze nel profilo. Si attiva con un acquisto singolo.</p>
           </div>
         </div>
 
@@ -270,8 +454,8 @@
             <div class="bento__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
             </div>
-            <h3 class="bento__title">Deleghe granulari</h3>
-            <p class="bento__desc">Assegna permessi singoli al tuo team: chi gestisce i turni, chi le assunzioni, chi la squadra. Ogni delega tracciata, revocabile in un tap.</p>
+            <h3 class="bento__title">Deleghe</h3>
+            <p class="bento__desc">Scegli chi nel tuo staff fa cosa, un permesso alla volta.</p>
           </div>
         </div>
 
@@ -284,107 +468,105 @@
     <div class="container">
       <div class="sec-head reveal">
         <span class="eyebrow">In profondità</span>
-        <h2 class="h-section split">Le cinque cose che <em>nessuno fa così</em>.</h2>
-        <p class="lead">Le funzioni sopra sono ovvie. Queste cinque sono il vero motivo per cui RistoNext è diversa da qualsiasi altra app di annunci — e perché i ristoratori che la provano non tornano indietro.</p>
+        <h2 class="h-section split">Cinque cose da <em>vicino.</em></h2>
+        <p class="lead word-reveal">Le cinque funzioni su cui si regge l'app, spiegate una per una, con la schermata accanto.</p>
       </div>
 
       <div class="feat-row reveal">
         <div>
-          <span class="feat-row__eyebrow">01 · Compatibilità IA</span>
-          <h2 class="feat-row__title split">Un match che <em>ha davvero senso</em>.</h2>
-          <p class="feat-row__desc">L'IA non legge parole chiave. Legge il contesto. Un cameriere junior con esperienza in pizzeria da asporto non è la stessa cosa di un chef de rang stellato — e il tuo annuncio nemmeno. Il match è calcolato su decine di segnali: ruolo, seniority, esperienza reale, disponibilità, distanza, cucina, ritmo di servizio. Il numero che vedi (92%, 45%, 8%) è una percentuale onesta.</p>
+          <span class="feat-row__eyebrow">01 · Compatibilità</span>
+          <h3 class="feat-row__title split">Un numero, sei <em>fattori.</em></h3>
+          <p class="feat-row__desc">La compatibilità confronta quello che chiede l'annuncio con quello che dichiara il profilo: aree e reparti, ruoli, competenze, tipo di locale, affinità di squadra, lingue. Ogni fattore ha un peso. Il risultato è una percentuale che serve a scegliere chi incontrare.</p>
           <ul class="feat-row__list">
-            <li>Percentuale visibile sia lato locale che lato professionista</li>
-            <li>Ricalcolo in tempo reale quando modifichi l'annuncio</li>
-            <li>Motivazione sintetica del match (cosa ti manca, dove hai chance)</li>
+            <li>Visibile su ogni annuncio e su ogni candidato</li>
+            <li>Si aggiorna quando cambi l'annuncio o il profilo</li>
+            <li>Turni e distanza non entrano nel calcolo</li>
           </ul>
         </div>
-        <div class="feat-row__media"><img src="assets/img/match-ia.png" alt="Match IA con percentuali" loading="lazy" class="parallax-img" /></div>
+        <div class="feat-row__media"><img src="assets/img/annunci-compatibilita.webp" width="760" height="1351" alt="Elenco annunci con la compatibilità in percentuale" loading="lazy" class="parallax-img" /></div>
       </div>
 
       <div class="feat-row reveal">
         <div>
-          <span class="feat-row__eyebrow">02 · Team del locale</span>
-          <h2 class="feat-row__title split">La tua squadra <em>è un'infrastruttura</em>.</h2>
-          <p class="feat-row__desc">Non un elenco. Un ecosistema vivo con ruoli, competenze, statistiche, deleghe granulari. Il tuo capo servizio gestisce i turni. Il tuo chef gestisce la brigata. Tu vedi tutto, decidi cosa. Storico completo, note, valutazioni interne, copertura per servizio.</p>
+          <span class="feat-row__eyebrow">02 · Squadra</span>
+          <h3 class="feat-row__title split">Chi lavora nel locale, in una <em>schermata.</em></h3>
+          <p class="feat-row__desc">Le persone assunte, con ruolo, turni degli ultimi 30 giorni, extra e valutazioni di rendimento. Da qui il titolare delega: chi gestisce gli annunci, chi la selezione, chi i colloqui, chi gli esiti, chi la squadra, chi i turni.</p>
           <ul class="feat-row__list">
-            <li>Ruoli configurabili (cuoco, sala, bar, back-office)</li>
-            <li>Deleghe per singolo permesso, revocabili in un tap</li>
-            <li>Statistiche di squadra: chi copre, chi salta, chi cresce</li>
-            <li>Schede membri con storico completo</li>
+            <li>Statistiche per persona: turni degli ultimi 30 giorni ed extra</li>
+            <li>Valutazione di rendimento, persona per persona</li>
+            <li>Un permesso, una persona</li>
           </ul>
         </div>
-        <div class="feat-row__media"><img src="assets/img/squadra.png" alt="Squadra del locale" loading="lazy" class="parallax-img" /></div>
+        <div class="feat-row__media"><img src="assets/img/squadra.webp" width="760" height="1351" alt="Squadra del locale" loading="lazy" class="parallax-img" /></div>
       </div>
 
       <div class="feat-row reveal">
         <div>
-          <span class="feat-row__eyebrow">03 · Solo Italia</span>
-          <h2 class="feat-row__title split">Profondità <em>sul mercato che ti interessa</em>.</h2>
-          <p class="feat-row__desc">Le piattaforme globali sono deserti locali. RistoNext è solo Italia — città per città, provincia per provincia. Mappa geografica, filtri per zona, disponibilità distanza in chilometri reali. A Roma c'è la copertura di Roma. A Palermo la copertura di Palermo. Non 12 candidati polacchi per un posto in un locale di Milano.</p>
+          <span class="feat-row__eyebrow">03 · Distanza</span>
+          <h3 class="feat-row__title split">La distanza ordina la <em>lista.</em></h3>
+          <p class="feat-row__desc">Il locale accende «Vicino a me» e vede solo chi sta entro 30 o 60 km; sotto ogni candidato compare «a X km». La distanza decide l'ordine e il filtro, non la percentuale, che resta la stessa.</p>
           <ul class="feat-row__list">
-            <li>Mappa con densità profili nella tua zona</li>
-            <li>Zero rumore da altri paesi — solo il mercato italiano</li>
+            <li>Si accende e si spegne quando vuoi</li>
+            <li>Distanza in chilometri sotto ogni scheda</li>
+            <li>Vale anche per le richieste di extra</li>
           </ul>
         </div>
-        <div class="feat-row__media"><img src="assets/img/extra-cerca.png" alt="Ricerca geografica Italia" loading="lazy" class="parallax-img" /></div>
+        <div class="feat-row__media"><img src="assets/img/match-ia.webp" width="760" height="1351" alt="Elenco candidati dal lato del locale" loading="lazy" class="parallax-img" /></div>
       </div>
 
       <div class="feat-row reveal">
         <div>
-          <span class="feat-row__eyebrow">04 · Attestazioni & sigilli</span>
-          <h2 class="feat-row__title split">Non "verificato". <em>Attestato</em>.</h2>
-          <p class="feat-row__desc">Il badge blu comprato non serve a niente. Da noi si passa attraverso quiz veri, profondi, specifici per ruolo. Bronzo, argento, oro. Poi sigilli scuola per chi ha formazione. Sigilli specialista per aree tecniche (HACCP, sommellerie, mixology). Il ristoratore vede a colpo d'occhio cosa sa fare la persona che sta valutando.</p>
+          <span class="feat-row__eyebrow">04 · Annuncio</span>
+          <h3 class="feat-row__title split">Contratto e retribuzione, <em>nell'annuncio.</em></h3>
+          <p class="feat-row__desc">Chi legge l'annuncio sa cosa gli offrono prima di candidarsi: il modulo chiede forma contrattuale e retribuzione, e senza retribuzione non pubblica. Gli stessi campi alimentano la percentuale.</p>
           <ul class="feat-row__list">
-            <li>Quiz specifici per ruolo (cucina, sala, bar, gestione)</li>
-            <li>4 livelli di sigillo: bronzo, argento, oro, scuola</li>
-            <li>Filtri "solo attestati" per il ristoratore</li>
-            <li>Storico attestazioni sempre visibile</li>
+            <li>Ruolo, regione, lingue e affinità di squadra</li>
+            <li>Tipo di locale: bistrot, cocktail bar, hotel, eventi, stagionale</li>
+            <li>Forma contrattuale e retribuzione, obbligatoria</li>
           </ul>
         </div>
-        <div class="feat-row__media"><img src="assets/img/competenze.png" alt="Sigilli e attestazioni" loading="lazy" class="parallax-img" /></div>
+        <div class="feat-row__media"><img src="assets/img/annuncio-paga.webp" width="760" height="1351" alt="Annuncio di cameriere con contratto e retribuzione" loading="lazy" class="parallax-img" /></div>
       </div>
 
       <div class="feat-row reveal">
         <div>
-          <span class="feat-row__eyebrow">05 · Esperienze verificate</span>
-          <h2 class="feat-row__title split">Non solo <em>dichiarate</em>.</h2>
-          <p class="feat-row__desc">"Ho lavorato al Ritz" scrivere è facile. RistoNext permette al locale precedente di confermare l'esperienza direttamente in app: date, ruolo, valutazione sintetica. Il profilo diventa un curriculum che nessuno può gonfiare. Chi non ha verifiche non è invisibile — è solo un candidato da valutare senza scorciatoie.</p>
+          <span class="feat-row__eyebrow">05 · Calendario</span>
+          <h3 class="feat-row__title split">Il calendario dice chi <em>manca.</em></h3>
+          <p class="feat-row__desc">Il locale indica quante persone servono per ogni servizio. Il calendario mostra turni ed extra insieme, segna i posti scoperti e blocca le doppie prenotazioni. Il professionista ha il suo calendario: turni, disponibilità per gli extra e impegni personali con promemoria.</p>
           <ul class="feat-row__list">
-            <li>Conferma esperienza dal locale precedente in un tap</li>
-            <li>Icona "verificato" accanto a ogni esperienza confermata</li>
-            <li>Filtri "solo con esperienze verificate" per ricerche mirate</li>
-            <li>Reputazione che cresce col tempo, senza scorciatoie</li>
+            <li>Filtro «Mancano»: i posti scoperti per giorno</li>
+            <li>Turni ed extra nello stesso calendario</li>
+            <li>Agenda personale con promemoria</li>
           </ul>
         </div>
-        <div class="feat-row__media"><img src="assets/img/profilo-professionista.png" alt="Profilo con esperienze verificate" loading="lazy" class="parallax-img" /></div>
+        <div class="feat-row__media"><img src="assets/img/calendario-mancano.webp" width="760" height="1351" alt="Calendario del locale con il filtro Mancano" loading="lazy" class="parallax-img" /></div>
       </div>
 
     </div>
   </section>
 
   <!-- STEPS ============================================ -->
-  <section id="come-funziona">
+  <section id="come-funziona" class="section--light">
     <div class="container">
       <div class="sec-head reveal">
         <span class="eyebrow">Come funziona</span>
-        <h2 class="h-section split">Dall'iscrizione al primo turno in <em>tre passaggi</em>.</h2>
+        <h2 class="h-section split">Dall'iscrizione al primo turno, in tre <em>passaggi.</em></h2>
       </div>
       <div class="steps">
         <div class="step reveal">
           <div class="step__num">01 / RISTORATORE</div>
-          <h3 class="step__title">Racconta il tuo locale in due minuti.</h3>
-          <p class="step__desc">Nome, cucina, città, ritmo di servizio. Aggiungi la squadra attuale se già ce l'hai. L'IA impara chi sei per proporti i profili giusti.</p>
+          <h3 class="step__title">Descrivi il locale e pubblica l'annuncio.</h3>
+          <p class="step__desc">Ti iscrivi come locale, lo descrivi una volta sola e pubblichi. Da qui parte la compatibilità con chi si candida.</p>
         </div>
         <div class="step reveal">
           <div class="step__num">02 / PROFESSIONISTA</div>
-          <h3 class="step__title">Crea il profilo che parla di te davvero.</h3>
-          <p class="step__desc">Esperienze, competenze, disponibilità, sigilli. Fai i quiz per verificare quello che sai. Il profilo diventa il tuo miglior curriculum.</p>
+          <h3 class="step__title">Compila il profilo.</h3>
+          <p class="step__desc">Ruoli, aree, competenze, lingue, dove vuoi lavorare. Lo stesso profilo serve per annunci, extra e turni.</p>
         </div>
         <div class="step reveal">
           <div class="step__num">03 / INSIEME</div>
-          <h3 class="step__title">L'IA fa il resto.</h3>
-          <p class="step__desc">Match ordinati per compatibilità reale. Chat diretta. Turni e ingaggi in due tap. Nessuna piattaforma di mezzo che ti spreme in commissioni.</p>
+          <h3 class="step__title">Vi scrivete, decidete voi.</h3>
+          <p class="step__desc">Candidature e annunci arrivano ordinati per compatibilità. Vi scrivete in chat e vi incontrate. Turni ed extra si confermano nell'app.</p>
         </div>
       </div>
     </div>
@@ -395,37 +577,25 @@
     <div class="container">
       <div class="sec-head reveal">
         <span class="eyebrow">Chi usa RistoNext</span>
-        <h2 class="h-section split">Fatta per due, <em>pensata come una</em>.</h2>
+        <h2 class="h-section split">Due profili, gli stessi <em>dati.</em></h2>
       </div>
       <div class="dual reveal--stagger">
-        <a href="ristoratori.html" class="dual-card">
+        <a href="ristoratori.html" class="dual-card" data-cta="path-locale" data-pos="dual">
           <div class="dual-card__head">
             <div class="dual-card__label">Sei un ristoratore</div>
-            <h3 class="dual-card__title">Costruisci la tua squadra migliore.</h3>
-            <p class="dual-card__desc">Ogni giorno che perdi cercando personale è un giorno che il tuo locale rende meno. RistoNext ti dà uno strumento chirurgico.</p>
+            <h3 class="dual-card__title">Trova chi ti serve, quando ti serve.</h3>
+            <p class="dual-card__desc">Hai un locale e ti manca una persona, per una stagione o per una sera. Qui la cerchi, la scegli e la metti in turno, nello stesso posto.</p>
           </div>
-          <ul class="dual-card__list">
-            <li>Pubblica annunci e ricevi candidati ordinati per match</li>
-            <li>Gestisci turni, extra, coperture last-minute</li>
-            <li>Analisi IA sui tuoi dati per decisioni migliori</li>
-            <li>Deleghe granulari al tuo team</li>
-          </ul>
-          <span class="dual-card__link">Vedi funzioni per ristoratori →</span>
+          <span class="dual-card__link">Ho un locale →</span>
         </a>
 
-        <a href="professionisti.html" class="dual-card">
+        <a href="professionisti.html" class="dual-card" data-cta="path-lavoro" data-pos="dual">
           <div class="dual-card__head">
             <div class="dual-card__label">Sei un professionista</div>
             <h3 class="dual-card__title">Fatti trovare da chi ti cerca.</h3>
-            <p class="dual-card__desc">Cuoco, cameriere, pizzaiolo, barista, sommelier, manager. Se lavori nella ristorazione, RistoNext esiste per te.</p>
+            <p class="dual-card__desc">Cuoco, cameriere, pizzaiolo, barista, sommelier, manager. Il profilo al posto del CV, le serate extra quando sei libero, e i turni nel tuo calendario.</p>
           </div>
-          <ul class="dual-card__list">
-            <li>Profilo con sigilli, competenze verificate, portfolio</li>
-            <li>Candidature ordinate per match — vedi dove hai chance</li>
-            <li>Extra pagati per singole serate</li>
-            <li>Coach IA per crescere in carriera</li>
-          </ul>
-          <span class="dual-card__link">Vedi funzioni per professionisti →</span>
+          <span class="dual-card__link">Cerco lavoro →</span>
         </a>
       </div>
     </div>
@@ -435,9 +605,9 @@
   <section class="agency" id="consulenze-preview">
     <div class="container">
       <div class="agency__intro reveal">
-        <div class="agency__flag">Non solo un'app</div>
-        <h2 class="h-section split">Costruiamo <em>siti, social e strategia</em> per la ristorazione.</h2>
-        <p class="lead">Se hai visto RistoNext e ti stai chiedendo "chi c'è dietro?", la risposta è: la stessa squadra che porta il tuo locale online. Sito web, gestione Instagram, video reel, campagne ads, consulenza digitale. Fatti da chi la ristorazione la conosce sul serio.</p>
+        <div class="agency__flag">L'azienda</div>
+        <h2 class="h-section split">Consulenza e marketing per la <em>ristorazione.</em></h2>
+        <p class="lead">Sono Michele Ricciardi e RistoNext Strategy &amp; Management è la mia azienda. L'app è il progetto principale. Accanto all'app lavoro per i locali: sito, Instagram, video, campagne, strumenti digitali e consulenza.</p>
       </div>
     </div>
 
@@ -447,7 +617,7 @@
           <div>
             <div class="h-scroll__num">01</div>
             <h3 class="h-scroll__title">Sito web per il tuo locale</h3>
-            <p class="h-scroll__desc">One-page eleganti o siti completi con menu, prenotazioni, area eventi. Design moderno, veloce, ottimizzato per Google.</p>
+            <p class="h-scroll__desc">Una pagina o un sito completo, con menu, prenotazioni ed eventi. Veloce e leggibile da Google.</p>
           </div>
           <div class="h-scroll__tags">
             <span class="h-scroll__tag">Design</span>
@@ -460,7 +630,7 @@
           <div>
             <div class="h-scroll__num">02</div>
             <h3 class="h-scroll__title">Social media & Instagram</h3>
-            <p class="h-scroll__desc">Feed strategico, reel produzione, calendario editoriale, community management. Facciamo crescere l'account che meriti.</p>
+            <p class="h-scroll__desc">Piano dei contenuti, reel, calendario editoriale, risposte ai commenti. Lo stesso lavoro che faccio su @ristonext.</p>
           </div>
           <div class="h-scroll__tags">
             <span class="h-scroll__tag">Content</span>
@@ -473,7 +643,7 @@
           <div>
             <div class="h-scroll__num">03</div>
             <h3 class="h-scroll__title">Video content</h3>
-            <p class="h-scroll__desc">Ripresa in loco + editing pro. Stesso stile visivo dei reel di RistoNext — audio pulito, ritmo, storia.</p>
+            <p class="h-scroll__desc">Riprese nel locale e montaggio. Lo stesso stile dei reel di RistoNext: audio pulito, ritmo, una storia.</p>
           </div>
           <div class="h-scroll__tags">
             <span class="h-scroll__tag">Shooting</span>
@@ -486,7 +656,7 @@
           <div>
             <div class="h-scroll__num">04</div>
             <h3 class="h-scroll__title">Meta & Google Ads</h3>
-            <p class="h-scroll__desc">Campagne performance con obiettivi chiari: coperti, prenotazioni, follower. Report leggibile ogni mese.</p>
+            <p class="h-scroll__desc">Campagne con un obiettivo preciso: coperti, prenotazioni, follower. Un rapporto leggibile ogni mese.</p>
           </div>
           <div class="h-scroll__tags">
             <span class="h-scroll__tag">Ads</span>
@@ -499,7 +669,7 @@
           <div>
             <div class="h-scroll__num">05</div>
             <h3 class="h-scroll__title">Consulenza 1:1</h3>
-            <p class="h-scroll__desc">Sessioni mirate: cosa fare online per il tuo locale, dove tagliare, dove investire, quali strumenti adottare. Zero fuffa.</p>
+            <p class="h-scroll__desc">Una sessione su cosa fare online per il tuo locale: dove tagliare, dove investire, quali strumenti usare.</p>
           </div>
           <div class="h-scroll__tags">
             <span class="h-scroll__tag">Strategia</span>
@@ -512,7 +682,7 @@
           <div>
             <div class="h-scroll__num">06</div>
             <h3 class="h-scroll__title">Setup strumenti digitali</h3>
-            <p class="h-scroll__desc">Menu digitale QR, sistema prenotazioni, Google Business, TripAdvisor, TheFork. Ti configuriamo tutto, ti mostriamo come mantenerlo.</p>
+            <p class="h-scroll__desc">Menu digitale con QR, prenotazioni, Google Business, TripAdvisor, TheFork. Li configuro e ti mostro come mantenerli.</p>
           </div>
           <div class="h-scroll__tags">
             <span class="h-scroll__tag">QR</span>
@@ -523,13 +693,13 @@
       </div>
     </div>
 
-    <div class="container" style="margin-top: 60px;">
+    <div class="container agency__cta">
       <div class="mini-cta reveal">
         <div class="mini-cta__text">
-          <h3>Cerchi qualcuno per il tuo digitale?</h3>
-          <p>Rispondo entro 24h con un preventivo trasparente. Nessun impegno.</p>
+          <h3>Vuoi una mano col digitale del tuo locale?</h3>
+          <p>Scrivimi: rispondo io, con un preventivo scritto. Senza impegno.</p>
         </div>
-        <a href="consulenze.html" class="btn btn--primary">Vedi tutti i servizi <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+        <a href="consulenze.html" class="btn btn--primary" data-cta="consulenze" data-pos="agency">Vedi tutti i servizi <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
       </div>
     </div>
   </section>
@@ -538,26 +708,78 @@
   <section id="numeri">
     <div class="container">
       <div class="sec-head reveal">
-        <span class="eyebrow">I numeri</span>
-        <h2 class="h-section split">Fatti, <em>non promesse</em>.</h2>
+        <span class="eyebrow">I fatti</span>
+        <h2 class="h-section split">Quattro numeri <em>verificabili.</em></h2>
       </div>
       <div class="stats reveal--stagger">
         <div class="stat">
-          <div class="stat__num"><span data-count="1833">1833</span></div>
-          <div class="stat__label">Community Instagram attiva</div>
+          <div class="stat__num"><em data-count="2">2</em></div>
+          <div class="stat__label">Store: App Store e Google Play</div>
         </div>
         <div class="stat">
-          <div class="stat__num"><em>8</em></div>
-          <div class="stat__label">Strumenti in una sola app</div>
+          <div class="stat__num"><em data-count="6">6</em></div>
+          <div class="stat__label">Permessi che il titolare può delegare allo staff</div>
         </div>
         <div class="stat">
-          <div class="stat__num"><em>2</em></div>
-          <div class="stat__label">Store: iOS + Android</div>
+          <div class="stat__num"><em data-count="4">4</em></div>
+          <div class="stat__label">Aspetti nella valutazione di rendimento</div>
         </div>
         <div class="stat">
-          <div class="stat__num"><em>Live</em></div>
-          <div class="stat__label">Su App Store e Google Play</div>
+          <div class="stat__num"><em><span data-count="30">30</span>/<span data-count="60">60</span></em></div>
+          <div class="stat__label">Chilometri del filtro «Vicino a me»</div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOMANDE FREQUENTI =============================== -->
+  <section id="domande">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Domande frequenti</span>
+        <h2 class="h-section split">Le domande prima di <em>scaricarla.</em></h2>
+      </div>
+      <div class="faq reveal">
+        <details class="faq__item">
+          <summary class="faq__q">Quanto costa?</summary>
+          <p class="faq__a">Scaricarla non costa niente. Annunci, candidature, turni, squadra ed extra sono gratis, per il locale e per chi cerca lavoro. Ci sono abbonamenti facoltativi: la chat con un assistente IA, il Consulente per il locale e il Coach per il professionista, è solo in abbonamento. I prezzi li vedi nell'app, prima di qualsiasi acquisto.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Chi paga?</summary>
+          <p class="faq__a">Per annunci, candidature, turni, squadra ed extra non paga nessuno: né il locale né chi cerca lavoro. Per iscriversi non serve nessuna carta. Si paga solo quello che scegli tu nell'app, per esempio un abbonamento con l'assistente IA o l'importazione del CV, e si paga dallo store, come per le altre app.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">La paga è sempre scritta?</summary>
+          <p class="faq__a">Nel modulo dell'annuncio la retribuzione è un campo obbligatorio: senza, il modulo non pubblica. Chi cerca lavoro la legge sull'annuncio prima di candidarsi. Se trovi un annuncio senza retribuzione, scrivimi e lo controllo.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Come si calcola la compatibilità?</summary>
+          <p class="faq__a">Su sei fattori, ognuno con un peso: aree e reparti, ruoli, competenze, tipo di locale, affinità di squadra, lingue. Turni e distanza non entrano nel calcolo. Nella vista normale il numero è lo stesso per il locale e per il professionista; se il professionista usa i filtri personalizzati, la percentuale si ricalcola sui filtri che ha scelto.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Chi decide chi assumere?</summary>
+          <p class="faq__a">Il locale. L'app ordina i candidati per compatibilità e vi mette in contatto in chat. Il colloquio, la prova e la scelta restano vostri. Vale anche per chi cerca lavoro: la percentuale aiuta a capire dove candidarsi, poi decide lui.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Mi sono candidato e nessuno risponde. Perché?</summary>
+          <p class="faq__a">La scelta è del locale, e non sempre risponde subito. Se scarta la candidatura, ti arriva una notifica con l'esito. Se non risponde, la candidatura resta in attesa. Intanto puoi candidarti ad altri annunci.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Nella mia zona c'è qualcuno?</summary>
+          <p class="faq__a">Dipende dalla zona, e un numero che non posso dimostrare non te lo scrivo. L'app è nuova: in alcune zone annunci e profili sono ancora pochi. Pubblicare un annuncio o un profilo non costa niente, e resta lì per chi arriva dopo. Il locale può vedere solo chi sta entro 30 o 60 km.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">È un'altra app di annunci?</summary>
+          <p class="faq__a">Gli annunci ci sono, ed è la prima cosa che si usa. Accanto ci sono il calendario con turni ed extra, la squadra del locale e la chat. Chi ha un locale tiene tutto in un posto solo. Chi lavora ci trova anche le serate extra.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Che fine fanno i miei dati? Come cancello l'account?</summary>
+          <p class="faq__a">Il locale vede il profilo che hai pubblicato. Quali dati raccolgo e perché è scritto nella <a href="https://ricciardi96-netizen.github.io/ristonext-legal/privacy.html" target="_blank" rel="noopener">Privacy</a>. L'account lo cancelli dall'app, in Impostazioni, alla voce «Elimina account»: si cancellano il profilo, gli annunci, le candidature e i messaggi. Per gli altri dati vale quello che è scritto nella Privacy. Se non riesci, c'è la pagina <a href="https://ricciardi96-netizen.github.io/ristonext-legal/account-deletion.html" target="_blank" rel="noopener">Cancella account</a>.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">La consulenza cos'è, e come si chiede?</summary>
+          <p class="faq__a">È l'altro lavoro dell'azienda, per i locali che vogliono una mano col digitale. Mi scrivi cosa fa il tuo locale e cosa vorresti ottenere, e ti rispondo io: costi e tempi te li dico a voce, senza impegno. Per usare l'app non serve. <a href="consulenze.html#contatto" data-cta="contatto" data-pos="faq">Chiedi un preventivo</a>.</p>
+        </details>
       </div>
     </div>
   </section>
@@ -566,18 +788,18 @@
   <section id="download" class="cta-final">
     <div class="cta-final__bg" aria-hidden="true"></div>
     <div class="container cta-final__inner reveal">
-      <span class="eyebrow">Pronto?</span>
-      <h2 class="h-display">Scaricala. È <em>gratis</em>.</h2>
-      <p class="lead" style="text-align:center;">Iscriviti in 60 secondi. Nessuna carta di credito richiesta.</p>
+      <span class="eyebrow">Scaricala</span>
+      <h2 class="h-display">L'app è <em>gratis.</em></h2>
+      <p class="lead word-reveal">Annunci, candidature, turni ed extra non costano niente. Il resto lo scegli nell'app, solo se ti serve.</p>
       <div class="store-badges">
-        <a href="https://apps.apple.com/it/app/ristonext/id6762455597" target="_blank" rel="noopener" class="store-badge">
+        <a href="https://apps.apple.com/it/app/ristonext/id6762455597?ct=sito-home&amp;mt=8" target="_blank" rel="noopener" class="store-badge" data-cta="store-apple" data-pos="final" aria-label="Scarica RistoNext su App Store (si apre in una nuova scheda)">
           <svg class="store-badge__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.7 17.3c-.3.7-.7 1.4-1.2 2-.6.8-1.1 1.4-1.5 1.7-.6.5-1.3.8-2 .8-.5 0-1.1-.1-1.9-.4-.7-.3-1.4-.4-2-.4-.7 0-1.4.1-2.1.4-.7.3-1.3.4-1.8.4-.7 0-1.4-.3-2.1-.8-.4-.3-.9-.9-1.6-1.7-.7-.9-1.2-2-1.7-3.2C1 15 .7 13.6.7 12.3c0-1.5.3-2.8 1-3.9.5-.9 1.2-1.6 2-2.1.9-.5 1.8-.8 2.8-.8.5 0 1.2.2 2.1.5.9.3 1.4.5 1.7.5.2 0 .8-.2 1.9-.5.9-.3 1.7-.5 2.4-.4 1.7.1 3 .8 3.9 2.1-1.5.9-2.3 2.2-2.3 3.9 0 1.3.5 2.4 1.4 3.3.4.4.9.7 1.5.9-.1.4-.2.7-.4 1.1zm-4.3-16.6c0 1.1-.4 2.1-1.2 3.1-1 1.1-2.1 1.8-3.4 1.7 0-.1 0-.3 0-.4 0-1.1.4-2.2 1.3-3.1.4-.5.9-.9 1.6-1.2.6-.3 1.2-.4 1.7-.5 0 .2 0 .3 0 .4z"/></svg>
           <span class="store-badge__text">
             <span class="store-badge__small">Scarica su</span>
             <span class="store-badge__big">App Store</span>
           </span>
         </a>
-        <a href="https://play.google.com/store/apps/details?id=dev.a0.apps.ristonext493" target="_blank" rel="noopener" class="store-badge">
+        <a href="https://play.google.com/store/apps/details?id=dev.a0.apps.ristonext493&amp;referrer=utm_source%3Dsito%26utm_medium%3Dhome" target="_blank" rel="noopener" class="store-badge" data-cta="store-play" data-pos="final" aria-label="Scarica RistoNext su Google Play (si apre in una nuova scheda)">
           <svg class="store-badge__icon" viewBox="0 0 24 24"><path fill="#EA4335" d="M3 2.5v19l10-9.5z" transform="translate(0.5,0)"/><path fill="#4285F4" d="M13 12L3 21.5l14-8z" transform="translate(0.5,0)"/><path fill="#FBBC04" d="M17 13.5l4.5-2.5-4.5-2.5-4 4z" transform="translate(0.5,0)"/><path fill="#34A853" d="M13 12L3 2.5l14 8z" transform="translate(0.5,0)"/></svg>
           <span class="store-badge__text">
             <span class="store-badge__small">Scarica su</span>
@@ -585,6 +807,12 @@
           </span>
         </a>
       </div>
+      <!-- Giro 3: chi legge dal computer non puo' installare. Il QR porta a ristonext.com/?da=qr: sul telefono il JS apre lo store giusto. Nascosto sui telefoni. -->
+      <figure class="qr">
+        <img src="assets/img/qr-scarica.svg" width="120" height="120" alt="Codice QR: inquadralo col telefono per scaricare RistoNext" loading="lazy" decoding="async" />
+        <figcaption>Dal computer? <strong>Inquadra il codice col telefono.</strong> Si apre lo store giusto: App Store su iPhone, Google Play su Android.</figcaption>
+      </figure>
+      <p class="store-note">Per iscriverti non serve nessuna carta. Si paga solo quello che scegli nell'app, dallo store.</p>
     </div>
   </section>
 
@@ -594,28 +822,28 @@
       <div class="footer__grid">
         <div class="footer__brand">
           <div class="nav__logo">Risto<em>Next</em></div>
-          <p>L'app che unisce ristoratori e professionisti della ristorazione italiana. Match IA, turni, squadra, competenze verificate.</p>
+          <p>RistoNext Strategy &amp; Management, di Michele Ricciardi: consulenza e marketing per la ristorazione. RistoNext è l'app che mette insieme locali e professionisti.</p>
         </div>
         <div class="footer__col">
-          <h4>Prodotto</h4>
+          <h2 class="footer__title">Prodotto</h2>
           <ul>
             <li><a href="funzioni.html">Funzioni</a></li>
             <li><a href="ristoratori.html">Per i ristoratori</a></li>
             <li><a href="professionisti.html">Per i professionisti</a></li>
-            <li><a href="#download">Scarica l'app</a></li>
+            <li><a href="#download" data-cta="store-auto" data-pos="footer">Scarica l'app</a></li>
           </ul>
         </div>
         <div class="footer__col">
-          <h4>Azienda</h4>
+          <h2 class="footer__title">Azienda</h2>
           <ul>
             <li><a href="consulenze.html">Consulenze</a></li>
-            <li><a href="chi-siamo.html">Chi siamo</a></li>
+            <li><a href="chi-siamo.html">L'azienda</a></li>
             <li><a href="contatti.html">Contatti</a></li>
             <li><a href="https://www.instagram.com/ristonext/" target="_blank" rel="noopener">Instagram</a></li>
           </ul>
         </div>
         <div class="footer__col">
-          <h4>Legale</h4>
+          <h2 class="footer__title">Legale</h2>
           <ul>
             <li><a href="https://ricciardi96-netizen.github.io/ristonext-legal/privacy.html" target="_blank" rel="noopener">Privacy</a></li>
             <li><a href="https://ricciardi96-netizen.github.io/ristonext-legal/support.html" target="_blank" rel="noopener">Supporto</a></li>
@@ -624,15 +852,29 @@
         </div>
       </div>
       <div class="footer__bottom">
-        <div>© 2026 Michele Ricciardi — RistoNext. Tutti i diritti riservati.</div>
+        <div>© 2026 RistoNext Strategy &amp; Management — Michele Ricciardi. Tutti i diritti riservati. <span class="footer__piva">Ditta individuale · P.IVA 04561970403 · Rimini</span></div>
         <div class="footer__social">
           <a href="https://www.instagram.com/ristonext/" target="_blank" rel="noopener">Instagram</a>
-          <a href="mailto:ristonext@outlook.com">Email</a>
+          <a href="mailto:info@ristonext.com">Email</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <script type="module" src="assets/js/main.js"></script>
+  <!-- Giro 3: bottone fisso in basso, solo telefono. Compare quando l'apertura esce dallo schermo,
+       sparisce vicino ai badge degli store e al piede. Il JS lo punta allo store del telefono. -->
+  <div class="sticky-cta" hidden>
+    <a href="#download" class="sticky-cta__btn" data-cta="store-auto" data-pos="sticky">
+      <span class="sticky-cta__main">Scarica gratis</span>
+      <span class="sticky-cta__sub">App Store e Google Play</span>
+    </a>
+    <button type="button" class="sticky-cta__close" aria-label="Nascondi il bottone Scarica">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+
+  <script type="module" src="assets/js/main.js?v=20261010"></script>
+  <!-- Cloudflare Web Analytics: qui, subito prima della chiusura del body, va lo snippet che Michele copia dalla dashboard
+       Cloudflare (Analytics & Logs > Web Analytics > Add a site > ristonext.com). Il token non si inventa. -->
 </body>
 </html>

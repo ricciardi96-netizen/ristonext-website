@@ -1,0 +1,26 @@
+# RistoNext
+
+> RistoNext è un'app gratuita per iPhone e Android, in italiano, che mette in contatto i locali della ristorazione e i professionisti del settore (cuochi, camerieri, pizzaioli, baristi, sommelier, manager). Il locale pubblica l'annuncio con contratto e retribuzione (campo obbligatorio nel modulo), il professionista vede una percentuale di compatibilità prima di candidarsi. Dentro ci sono anche turni, squadra, serate extra, competenze e chat. Annunci, candidature, turni ed extra non costano niente; gli abbonamenti sono facoltativi e si vedono nell'app. L'app è di RistoNext Strategy & Management, l'azienda di Michele Ricciardi, che fa anche consulenza e marketing per i locali.
+
+La compatibilità si calcola su sei fattori: aree e reparti, ruoli, competenze, tipo di locale, affinità di squadra, lingue. Turni e distanza non entrano nel calcolo. Il locale può filtrare i candidati entro 30 o 60 km.
+
+## Pagine
+
+- [Home](https://ristonext.com/): cosa fa l'app, dieci schermate, come funziona, domande frequenti
+- [Per i ristoratori](https://ristonext.com/ristoratori.html): annunci, candidati ordinati per compatibilità, turni, extra, squadra
+- [Per i professionisti](https://ristonext.com/professionisti.html): profilo al posto del CV, annunci con retribuzione, calendario, extra
+- [Funzioni](https://ristonext.com/funzioni.html): tutti gli strumenti, uno per uno
+- [Consulenze](https://ristonext.com/consulenze.html): consulenza e marketing per i locali, preventivo scritto
+- [L'azienda](https://ristonext.com/chi-siamo.html): RistoNext Strategy & Management e Michele Ricciardi
+- [Contatti](https://ristonext.com/contatti.html): email, WhatsApp, Instagram, assistenza
+
+## Dove si scarica
+
+- [App Store](https://apps.apple.com/it/app/ristonext/id6762455597)
+- [Google Play](https://play.google.com/store/apps/details?id=dev.a0.apps.ristonext493)
+
+## Legale
+
+- [Privacy](https://ricciardi96-netizen.github.io/ristonext-legal/privacy.html)
+- [Supporto](https://ricciardi96-netizen.github.io/ristonext-legal/support.html)
+- [Cancellazione dell'account](https://ricciardi96-netizen.github.io/ristonext-legal/account-deletion.html)
