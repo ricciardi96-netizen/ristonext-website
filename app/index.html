@@ -69,7 +69,7 @@
     <a class="bottone" id="apple" href="https://apps.apple.com/it/app/ristonext/id6762455597?ct=sito-app&mt=8">Scarica per iPhone</a>
     <a class="bottone" id="android" href="https://play.google.com/store/apps/details?id=dev.a0.apps.ristonext493&referrer=utm_source%3Dsito-app%26utm_medium%3Dorganico">Scarica per Android</a>
   </div>
-  <p class="nota">Gratis sugli store. Nessuna carta richiesta per iscriversi.</p>
+  <p class="nota">Gratis per chi cerca lavoro, senza carta. L'app è nuova: se vuoi sapere prima se c'è qualcosa nella tua zona, scrivimi su Instagram (@ristonext) e te lo dico io.</p>
 
   <div class="filo"></div>
 
@@ -111,6 +111,12 @@
     if (android) { droid.parentNode.insertBefore(droid, apple); apple.className = "bottone secondario"; }
     else if (iOS) { droid.className = "bottone secondario"; }
   })();
+</script>
+<script>
+  // etichetta di provenienza: ?da=dm-a, dm-b, bio, email-locali, scuole, gruppi (07/10/2026)
+  (function(){var d=(new URLSearchParams(location.search).get('da')||'').replace(/[^a-z0-9-]/gi,'').slice(0,30);if(!d)return;
+  document.querySelectorAll('a[href*="apps.apple.com"]').forEach(function(a){a.href=a.href.replace(/ct=[^&]*/,'ct='+d);});
+  document.querySelectorAll('a[href*="play.google.com"]').forEach(function(a){a.href=a.href.replace(/utm_source%3D[^%&]*/,'utm_source%3D'+d);});})();
 </script>
 </body>
 </html>
