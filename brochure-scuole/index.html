@@ -1,0 +1,796 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RistoNext per le scuole</title>
+<meta name="description" content="RistoNext per gli istituti alberghieri: tutte le funzioni che un ragazzo vede nell'app, cosa risolvono oggi e cosa cambiano col tempo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Una palette sola, quella del marchio RistoNext (brand book): nero caldo, avorio, oro. Sull'avorio l'oro diventa #6E5210. */
+:root{
+  --nero:#080806; --oro:#D4A82E; --oro-testo:#6E5210;
+  --avorio:#F3EAD6; --scheda:#FBF6EA; --linea:#D9CDB0;
+  --inchiostro:#14110C; --grigio:#6B645A;
+  --titolo:"Fraunces",Georgia,"Times New Roman",serif;
+  --testo:"Manrope","Segoe UI","Helvetica Neue",Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{background:var(--nero);color:var(--avorio);font-family:var(--testo);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  padding-inline:16px;padding-block:28px 24px;overflow-x:hidden;
+  background-image:
+    radial-gradient(ellipse 60% 45% at 30% 20%,rgba(212,168,46,.16),transparent 70%),
+    radial-gradient(ellipse 55% 50% at 80% 85%,rgba(212,168,46,.09),transparent 70%)}
+.testata{font-family:var(--testo);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#A39A86;text-align:center}
+.testata b{color:var(--oro);font-weight:800}
+
+.scena{width:100%;max-width:960px;display:flex;justify-content:center;perspective:1800px}
+.libro-wrap{position:relative;width:100%;display:flex;justify-content:center;
+  transform:rotateX(var(--rx,6deg)) rotateY(var(--ry,0deg));transition:transform .5s cubic-bezier(.2,.7,.2,1);
+  animation:galleggia 7s ease-in-out infinite}
+.libro-wrap::after{content:"";position:absolute;left:12%;right:12%;bottom:-38px;height:40px;border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(0,0,0,.55),transparent 70%);filter:blur(6px);z-index:-1}
+@keyframes galleggia{0%,100%{translate:0 0}50%{translate:0 -8px}}
+#libro{margin:0 auto}
+
+.page{overflow:hidden;position:relative;background:var(--avorio);color:var(--inchiostro)}
+.pag{position:absolute;inset:0;padding:30px 26px 30px;display:flex;flex-direction:column}
+.page::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background:radial-gradient(circle at 1px 1px,rgba(20,17,12,.06) 1px,transparent 1.2px) 0 0/9px 9px}
+.page::after{content:"";position:absolute;top:0;bottom:0;width:26px;pointer-events:none}
+.page.--left::after{right:0;background:linear-gradient(270deg,rgba(0,0,0,.14),transparent)}
+.page.--right::after{left:0;background:linear-gradient(90deg,rgba(0,0,0,.14),transparent)}
+
+.num{position:absolute;bottom:13px;right:22px;font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--grigio);font-variant-numeric:tabular-nums}
+.etichetta{font-size:9.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--oro-testo);margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.etichetta::before{content:"";width:18px;height:2px;border-radius:2px;background:currentColor}
+h1,h2,h3{font-family:var(--titolo);font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:25px;line-height:1.08;margin-bottom:9px;font-variation-settings:"opsz" 72}
+h2 em{font-style:italic;font-weight:500;color:var(--oro-testo)}
+p{font-size:12.4px;line-height:1.5}
+p+p{margin-top:7px}
+
+.funz .alto{display:flex;gap:14px;align-items:flex-start;flex:1;min-height:0}
+.funz .testo{flex:1;min-width:0}
+.funz h2{font-size:22px}
+.funz .testo p{font-size:12px;line-height:1.42}
+.tel{flex:0 0 52%;max-width:218px;height:auto;align-self:center;border-radius:26px;padding:5px;background:#16110f;position:relative;
+  transform:perspective(900px) rotateY(-10deg) rotateX(3deg);transform-origin:center;
+  box-shadow:1px 1px 0 #3a302b,3px 3px 0 #2a221f,6px 6px 0 #1d1715,18px 26px 34px rgba(20,17,12,.35);
+  animation:tel 6s ease-in-out infinite}
+.tel img{width:100%;height:auto;aspect-ratio:620/1102;object-fit:cover;object-position:top;border-radius:21px;display:block}
+.tel img.lunga{aspect-ratio:520/1125}
+.tel:has(img.lunga){flex-basis:44%;max-width:186px}
+.tel::after{content:"";position:absolute;inset:5px;border-radius:21px;pointer-events:none;
+  background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.28) 48%,transparent 60%) no-repeat;background-size:250% 100%;
+  animation:riflesso 6s ease-in-out infinite}
+@keyframes tel{0%,100%{transform:perspective(900px) rotateY(-10deg) rotateX(3deg) translateY(0)}50%{transform:perspective(900px) rotateY(-6deg) rotateX(2deg) translateY(-5px)}}
+@keyframes riflesso{0%,30%{background-position:120% 0}70%,100%{background-position:-60% 0}}
+.dx .tel{transform:perspective(900px) rotateY(10deg) rotateX(3deg);animation-name:tel2;
+  box-shadow:-1px 1px 0 #3a302b,-3px 3px 0 #2a221f,-6px 6px 0 #1d1715,-18px 26px 34px rgba(20,17,12,.35)}
+@keyframes tel2{0%,100%{transform:perspective(900px) rotateY(10deg) rotateX(3deg) translateY(0)}50%{transform:perspective(900px) rotateY(6deg) rotateX(2deg) translateY(-5px)}}
+.dx .alto{flex-direction:row-reverse}
+
+.tempo{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.tempo div{padding:8px 10px 9px;border-radius:12px;background:var(--scheda);box-shadow:0 1px 0 var(--linea),0 6px 14px rgba(20,17,12,.07)}
+.tempo h3{font-family:var(--testo);font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin-bottom:3px;color:var(--oro-testo)}
+.tempo p{font-size:10.8px;line-height:1.38}
+.paga{margin-top:9px;display:inline-flex;align-self:flex-start;font-size:10px;font-weight:700;letter-spacing:.06em;padding:4px 9px;border-radius:99px;background:rgba(212,168,46,.2);color:var(--oro-testo)}
+
+.cop{background:radial-gradient(ellipse 80% 50% at 25% 15%,rgba(212,168,46,.22),transparent 70%),var(--nero);color:var(--avorio)}
+.cop .pag{justify-content:space-between}
+.marchio{font-family:var(--testo);font-weight:800;font-size:13px;letter-spacing:.32em;text-transform:uppercase}
+.marchio span{color:var(--oro)}
+.cop h1{font-size:44px;line-height:.98;font-weight:900;font-variation-settings:"opsz" 144;margin-top:10px}
+.cop h1 em{font-style:italic;font-weight:500;color:var(--oro)}
+.cop .sotto{font-size:13px;line-height:1.42;max-width:290px;margin-top:10px;color:var(--avorio)}
+.duetel{position:relative;height:272px;margin-top:4px}
+.duetel .tel{position:absolute;flex:none;width:142px;max-width:none;height:auto}
+.duetel .a{left:22px;top:0;transform:perspective(800px) rotateY(16deg) rotateZ(-4deg);animation:none;z-index:1}
+.duetel .b{left:192px;top:20px;transform:perspective(800px) rotateY(-16deg) rotateZ(4deg);animation:none}
+.cop .piede{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#A39A86}
+
+.liste{list-style:none;margin-top:10px;display:grid;gap:7px}
+.liste li{font-size:12.2px;line-height:1.45;padding:9px 11px;border-radius:11px;background:var(--scheda);box-shadow:0 1px 0 var(--linea)}
+.liste b{font-family:var(--titolo);font-weight:700;font-size:13.5px;display:block;margin-bottom:1px}
+.indice{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;margin-top:10px}
+.indice div{font-size:11.3px;line-height:1.3;padding:5px 0;border-top:1px solid var(--linea);display:flex;gap:7px}
+.indice span{font-weight:800;color:var(--oro-testo);font-variant-numeric:tabular-nums;min-width:16px}
+.chip{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.chip span{font-size:11.5px;font-weight:700;padding:7px 12px;border-radius:99px;background:var(--scheda);color:var(--inchiostro);box-shadow:0 1px 0 var(--linea),0 6px 12px rgba(20,17,12,.08)}
+.chip span.on{background:var(--oro-testo);color:var(--avorio);transform:translateY(-3px) rotate(-2deg);box-shadow:0 10px 20px rgba(20,17,12,.25)}
+.chip.rep{gap:6px;margin-top:10px}
+.chip.rep span{font-size:10.5px;font-weight:600;padding:5px 10px}
+.citazione{font-family:var(--titolo);font-style:italic;font-weight:500;font-size:21px;line-height:1.25;margin-top:auto}
+.citazione small{display:block;font-family:var(--testo);font-style:normal;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-top:8px;opacity:.75}
+.tabella{display:grid;gap:8px;margin-top:10px}
+.tabella div{display:grid;grid-template-columns:116px 1fr;gap:10px;align-items:start;padding-top:8px;border-top:1px solid var(--linea)}
+.tabella b{font-family:var(--titolo);font-size:15px;color:var(--oro-testo)}
+.tabella p{font-size:11.6px}
+.colonne{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.colonne h3{font-family:var(--testo);font-size:9.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px;color:var(--oro-testo)}
+.colonne li{list-style:none;font-size:11.3px;line-height:1.35;padding:5px 0;border-top:1px solid var(--linea)}
+
+.quarta{background:radial-gradient(ellipse 80% 50% at 75% 85%,rgba(212,168,46,.2),transparent 70%),var(--nero);color:var(--avorio)}
+.quarta .pag{justify-content:space-between}
+.quarta .consulenza{font-size:.82rem;line-height:1.45;max-width:30ch;opacity:.95}
+.contatto{font-size:12.5px;line-height:1.9;word-break:break-word}
+.contatto b{font-family:var(--titolo);font-size:18px;display:block;color:var(--oro)}
+.contatto a{color:var(--avorio);text-decoration:none;font-weight:700}
+
+.comandi{display:flex;align-items:center;gap:14px;font-size:12px;font-weight:700;color:#A39A86;font-variant-numeric:tabular-nums}
+.comandi button{background:rgba(255,255,255,.06);border:1px solid rgba(212,168,46,.55);color:var(--avorio);font-family:var(--testo);
+  font-size:12px;font-weight:700;padding:9px 16px;border-radius:99px;cursor:pointer;letter-spacing:.04em}
+.comandi button:hover{background:rgba(212,168,46,.18)}
+.senza-libro #libro{display:flex;flex-direction:column;gap:18px;width:100%;max-width:440px}
+.senza-libro .page{width:100%;aspect-ratio:7/10;border-radius:6px}
+.senza-libro .comandi{display:none}
+.senza-libro .libro-wrap{transform:none;animation:none}
+.page{container-type:inline-size}
+@container (max-width:400px){
+  .tel{flex-basis:49%;max-width:none;border-radius:20px;padding:4px}.tel img,.tel::after{border-radius:16px}.tel::after{inset:4px}
+  .tel:has(img.lunga){flex-basis:42%}
+  h2{font-size:19px}.funz h2{font-size:17px}.cop h1{font-size:32px}.cop .sotto{font-size:11.5px}.pag{padding:20px 16px 26px}
+  p{font-size:11px}.funz .testo p{font-size:10.6px;line-height:1.38}.funz .alto{gap:10px}
+  .tempo{gap:6px;margin-top:6px}.tempo div{padding:6px 8px}.tempo p{font-size:9.6px;line-height:1.32}
+  .duetel{height:208px}.duetel .tel{width:104px}.duetel .a{left:14px}.duetel .b{left:128px;top:16px}
+  .indice{gap:0 10px;margin-top:6px}.indice div{font-size:9.6px;padding:3px 0}
+  .liste{gap:5px;margin-top:7px}.liste li{font-size:10.5px;padding:6px 9px}.liste b{font-size:12px}
+  .chip span{font-size:10.5px;padding:6px 10px}.chip.rep span{font-size:9.4px;padding:4px 8px}.chip.rep{gap:5px;margin-top:7px}
+  .citazione{font-size:17px}.colonne li{font-size:10.4px;padding:3px 0}
+  .tabella div{grid-template-columns:84px 1fr}.tabella p{font-size:10.4px}.paga{font-size:9px;margin-top:6px}}
+@container (max-width:330px){
+  .pag{padding:16px 14px 22px}h2{font-size:16px}.funz h2{font-size:15px}p{font-size:9.8px;line-height:1.35}.funz .testo p{font-size:9.6px}
+  .chip.rep span{font-size:8.4px;padding:3px 6px}.chip.rep{gap:4px;margin-top:5px}.citazione{font-size:14px}.etichetta{margin-bottom:5px}
+  .tempo p{font-size:8.8px}.liste li{font-size:9.6px}.indice div{font-size:8.8px}.colonne li{font-size:9.4px}.tabella p{font-size:9.6px}.tabella div{grid-template-columns:72px 1fr;padding-top:5px}.tabella b{font-size:12px}.tabella{gap:5px}}
+@media (prefers-reduced-motion:reduce){.libro-wrap,.tel,.tel::after{animation:none}}
+</style>
+</head>
+<body>
+
+<div class="testata"><b>RistoNext</b> · per gli istituti alberghieri</div>
+
+<div class="scena"><div class="libro-wrap" id="wrap"><div id="libro">
+
+<!-- 1 copertina -->
+<div class="page cop" data-density="hard"><div class="pag">
+  <div>
+    <div class="marchio">Risto<span>Next</span></div>
+    <h1>Dopo l'alberghiero, <em>il primo lavoro.</em></h1>
+    <p class="sotto">Un'app per iPhone e Android che mette in contatto chi esce dalla scuola con i locali della sua zona.</p>
+  </div>
+  <div class="duetel">
+    <div class="tel a"><img src="img/feed.jpg" alt="Annunci per te, con la percentuale di compatibilità"></div>
+    <div class="tel b"><img src="img/italia.jpg" alt="La tua Italia: la mappa delle regioni dove hai lavorato"></div>
+  </div>
+  <div class="piede">Cartella per docenti PCTO e orientamento</div>
+</div></div>
+
+<!-- 2 per chi -->
+<div class="page"><div class="pag">
+  <div class="etichetta">Per chi è</div>
+  <h2>Per chi accompagna i ragazzi <em>verso il lavoro.</em></h2>
+  <p>È pensata per i docenti referenti di PCTO e orientamento, e per le quarte e le quinte.</p>
+  <p>RistoNext unisce camerieri, cuochi, baristi, receptionist e i locali che li cercano. Prima che si incontrino, calcola quanto sono compatibili.</p>
+  <p>Nelle pagine che seguono c'è ogni funzione che un ragazzo vede nell'app. Per ognuna: il problema che risolve oggi e cosa cambia col tempo, usandola.</p>
+  <div class="chip rep"><span>Sala</span><span>Ricevimento e portineria</span><span>Bar</span><span>Cucina</span><span>Pizzeria</span><span>Piani e Pulizie · Camere</span><span>Delivery e Asporto</span><span>Economato e Magazzino</span><span>Banqueting e Eventi</span><span>Food &amp; Beverage</span><span>Management e Direzione</span><span>Amministrazione e Controllo</span><span>Manutenzione e Sicurezza</span></div>
+  <p style="margin-top:10px">I ruoli di ogni reparto si scelgono nell'app.</p>
+  <p class="citazione">Alla fine trovate una proposta: un incontro in classe di 30 minuti.<small>Michele Ricciardi, RistoNext</small></p>
+  <div class="num">02</div>
+</div></div>
+
+<!-- 3 indice -->
+<div class="page"><div class="pag">
+  <div class="etichetta">Cosa c'è dentro</div>
+  <h2>Tutta l'app, <em>pagina per pagina.</em></h2>
+  <div class="indice">
+    <div><span>04</span>Cosa trova oggi un diplomato</div>
+    <div><span>05</span>Si guarda senza account</div>
+    <div><span>06</span>Il profilo</div>
+    <div><span>07</span>Importa il CV</div>
+    <div><span>08</span>Il CV verificato</div>
+    <div><span>09</span>Esperienze verificate</div>
+    <div><span>10</span>Annunci per te</div>
+    <div><span>11</span>Cerca e salva</div>
+    <div><span>12</span>Tutto scritto prima</div>
+    <div><span>13</span>La paga si scrive</div>
+    <div><span>14</span>Stagionali e primi lavori</div>
+    <div><span>15</span>Colloqui e notifiche</div>
+    <div><span>16</span>Scambi e cambi di turno</div>
+    <div><span>17</span>Messaggi</div>
+    <div><span>18</span>Calendario e turni</div>
+    <div><span>19</span>Extra: i giorni liberi</div>
+    <div><span>20</span>La proposta scritta</div>
+    <div><span>21</span>Il mio percorso</div>
+    <div><span>22</span>La tua Italia</div>
+    <div><span>23</span>Il Coach</div>
+    <div><span>24</span>Cosa vede il locale</div>
+    <div><span>25</span>Turni ed extra del locale</div>
+    <div><span>26</span>La squadra</div>
+    <div><span>27</span>Il rendimento</div>
+    <div><span>28</span>Le valutazioni</div>
+    <div><span>29</span>Le deleghe</div>
+    <div><span>30</span>Le riunioni</div>
+    <div><span>31</span>Cosa cambia nel tempo</div>
+    <div><span>32</span>Cosa è gratis</div>
+    <div><span>33</span>L'incontro in classe</div>
+  </div>
+  <div class="num">03</div>
+</div></div>
+
+<!-- 4 problema -->
+<div class="page"><div class="pag">
+  <div class="etichetta">Il punto di partenza</div>
+  <h2>Cosa trova oggi <em>un diplomato.</em></h2>
+  <ul class="liste">
+    <li><b>La paga "da definire".</b>Si scopre al colloquio. A volte con la prima busta paga.</li>
+    <li><b>L'extra che sparisce.</b>Ti chiamano il venerdì per il sabato. Poi il sabato non serve più.</li>
+    <li><b>Il curriculum senza risposta.</b>Lo mandi e non sai se qualcuno l'ha letto.</li>
+    <li><b>La scuola che non si vede.</b>PCTO, laboratori, servizi di sala: sul foglio diventano una riga.</li>
+  </ul>
+  <div class="num">04</div>
+</div></div>
+
+<!-- 5 ospite -->
+<div class="page"><div class="pag">
+  <div class="etichetta">Per cominciare</div>
+  <h2>Gli annunci si guardano <em>senza account.</em></h2>
+  <p>Chi apre l'app vede gli annunci della zona prima di registrarsi. Un breve tutorial mostra com'è fatto un profilo.</p>
+  <p>Per candidarsi serve l'account. Si sceglie "professionista" o "locale". Poi si entra con l'impronta o col volto.</p>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Per vedere un'offerta spesso bisogna lasciare prima i propri dati.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Un ragazzo conosce il lavoro della sua zona già in quarta, prima del diploma.</p></div>
+  </div>
+  <p class="citazione">Si guarda prima. Ci si iscrive quando si è pronti.</p>
+  <div class="num">05</div>
+</div></div>
+
+<!-- 6 profilo -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Professionista · Profilo</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Quello che sai fare, <em>scritto bene.</em></h2>
+      <p>Ruolo, esperienze, foto, zona. C'è anche l'anteprima: il tuo CV come lo vede il locale.</p>
+      <p>Dal profilo si chiede un cambio di ruolo e si danno le dimissioni.</p>
+    </div>
+    <div class="tel"><img src="img/profilo2.jpg" alt="Il profilo del professionista, come lo vede il locale"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Il CV di un diplomato è quasi vuoto. Quello che ha fatto a scuola non si vede.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Turni, extra e competenze verificate entrano nel profilo. Lo segue da un locale all'altro.</p></div>
+  </div>
+  <div class="num">06</div>
+</div></div>
+
+<!-- 7 import cv -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Professionista · Importa il CV</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Il CV <em>si carica in foto.</em></h2>
+      <p>Si carica il curriculum in PDF o in foto. Il profilo si riempie da solo. Il ragazzo lo controlla prima di salvare.</p>
+      <p>L'import è a pagamento, una volta sola. Il profilo si compila anche a mano, gratis.</p>
+    </div>
+    <div class="tel"><img src="img/profilo-cv.jpg" alt="Il profilo compilato: nome, email, città, regione"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Lo stesso CV si riscrive su ogni sito, ogni volta da capo.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Un curriculum solo, sempre aggiornato, pronto quando arriva l'occasione.</p></div>
+  </div>
+  <div class="num">07</div>
+</div></div>
+
+<!-- 8 cv verificato -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Professionista · Il CV verificato</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Il CV dice <em>cosa è verificato.</em></h2>
+      <p>Ogni voce del CV porta il suo sigillo: verificato sul campo, certificato, documentato.</p>
+      <p>Il locale legge il CV così, con i sigilli in vista.</p>
+    </div>
+    <div class="tel"><img src="img/cv-verificato.jpg" alt="Il CV con i sigilli: verificato sul campo, certificato, documentato"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Sul CV si può scrivere qualsiasi cosa. Il titolare non ha modo di controllare.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Un ragazzo serio si distingue. Quello che c'è scritto regge.</p></div>
+  </div>
+  <div class="num">08</div>
+</div></div>
+
+<!-- 9 esperienze verificate -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Professionista · Esperienze verificate</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>L'esperienza la conferma <em>il datore di lavoro.</em></h2>
+      <p>Ogni lavoro fatto con un locale su RistoNext entra nel CV: locale, ruolo, date.</p>
+      <p>Lo conferma il locale, non il ragazzo.</p>
+    </div>
+    <div class="tel"><img src="img/esperienze-verificate.jpg" alt="Esperienze verificate dal locale, con ruoli e date"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Una stagione fatta bene, senza una lettera di referenze, sul CV pesa poco.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Ogni esperienza confermata è una referenza che il ragazzo si porta dietro.</p></div>
+  </div>
+  <div class="num">09</div>
+</div></div>
+
+<!-- 10 annunci -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Professionista · Annunci per te</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Ogni annuncio dice <em>quanto ti somiglia.</em></h2>
+      <p>Le offerte arrivano in ordine di compatibilità. Su ognuna ci sono la percentuale e la paga.</p>
+      <p>Ci si candida con un tasto.</p>
+      <span class="paga">% di compatibilità · paga scritta</span>
+    </div>
+    <div class="tel"><img src="img/feed.jpg" alt="Annunci per te con percentuale e paga"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Si risponde a decine di annunci a caso, senza sapere se si è adatti.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Ogni candidatura ha più senso. Si capisce quali ruoli e quali zone ti somigliano.</p></div>
+  </div>
+  <div class="num">10</div>
+</div></div>
+
+<!-- 11 ricerca -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Professionista · Cerca e salva</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Filtri veri, <em>e gli annunci salvati.</em></h2>
+      <p>Si cerca per regione, provincia, ruolo e area: sala, cucina, bar, ricevimento.</p>
+      <p>Gli annunci che interessano si salvano e si ritrovano in una lista.</p>
+    </div>
+    <div class="tel"><img src="img/ricerca.jpg" alt="Ricerca per percentuale con i filtri"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Le offerte buone si perdono in mezzo agli annunci vecchi.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Si impara a cercare con criterio, come fa chi lavora da anni.</p></div>
+  </div>
+  <div class="num">11</div>
+</div></div>
+
+<!-- 12 dettaglio -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Professionista · Dettaglio annuncio</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Tutto scritto, <em>prima di candidarsi.</em></h2>
+      <p>Orari, contratto, compenso, ruolo. Si legge prima, non al colloquio.</p>
+      <p>Dal dettaglio si scrive direttamente al locale.</p>
+    </div>
+    <div class="tel"><img class="lunga" src="img/pro-02-dettaglio.jpg" alt="Il dettaglio di un annuncio"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Le condizioni si scoprono seduti davanti al titolare.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Si arriva al colloquio sapendo già cosa si è disposti ad accettare.</p></div>
+  </div>
+  <div class="num">12</div>
+</div></div>
+
+<!-- 13 paga -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">La regola dell'app</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>La paga si scrive. <em>Sempre.</em></h2>
+      <p>Un annuncio senza retribuzione non si pubblica. L'app lo blocca prima che esca.</p>
+      <p>È la regola che i ragazzi notano per prima.</p>
+    </div>
+    <div class="tel"><img class="lunga" src="img/paga-vuota.jpg" alt="Annuncio bloccato senza retribuzione"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Molti annunci del settore scrivono "retribuzione da definire".</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Chi entra nel lavoro si abitua a confrontare le paghe. I locali seri si riconoscono subito.</p></div>
+  </div>
+  <div class="num">13</div>
+</div></div>
+
+<!-- 14 stagionali -->
+<div class="page"><div class="pag">
+  <div class="etichetta">Professionista · Tipo di contratto</div>
+  <h2>Lavori stagionali <em>e primi lavori.</em></h2>
+  <p>Ogni annuncio dice il tipo di contratto. Chi cerca la stagione la trova accanto ai lavori in città.</p>
+  <div class="chip">
+    <span>Tempo pieno</span><span>Part-time</span><span class="on">Stagionale</span><span>Determinato</span><span>Indeterminato</span>
+  </div>
+  <p style="margin-top:14px">Con i filtri per regione si guarda anche lontano da casa: il mare d'estate, la montagna d'inverno.</p>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>La stagione si trova col passaparola. Chi non conosce nessuno parte tardi.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Una stagione fatta bene resta nel profilo e apre la porta a quella dopo.</p></div>
+  </div>
+  <div class="num">14</div>
+</div></div>
+
+<!-- 15 colloqui -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Professionista · Colloqui e notifiche</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Sai sempre <em>a che punto sei.</em></h2>
+      <p>Le notifiche dicono quando il locale ti contatta, ti fissa un colloquio, ti risponde.</p>
+      <p>Si risponde dalla notifica: "Ci sarò", accetto, rifiuto. In "Colloqui" ci sono i prossimi e quelli passati.</p>
+    </div>
+    <div class="tel"><img class="lunga" src="img/pro-09-notifiche-colloquio.jpg" alt="Notifica di un colloquio"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Si aspetta una risposta che spesso non arriva.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Ogni candidatura ha un esito che si vede. Anche dai no si impara.</p></div>
+  </div>
+  <div class="num">15</div>
+</div></div>
+
+<!-- 16 notifiche interazioni -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Professionista · Notifiche</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Ogni cambio <em>arriva per iscritto.</em></h2>
+      <p>Scambi di turno approvati o rifiutati, un turno tolto, una proposta di cambio ruolo. Arriva tutto nelle notifiche.</p>
+      <p>Anche la fine di una collaborazione resta scritta, e si vede nel curriculum.</p>
+    </div>
+    <div class="tel"><img src="img/notifiche-scambi.jpg" alt="Notifiche: scambio approvato, turno rimosso, proposta di cambio ruolo"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Un turno cambiato con un vocale. Dopo una settimana nessuno se lo ricorda.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Si impara a lavorare con regole chiare, da tutte e due le parti.</p></div>
+  </div>
+  <div class="num">16</div>
+</div></div>
+
+<!-- 17 messaggi -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Professionista · Messaggi</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Si parla col locale <em>dentro l'app.</em></h2>
+      <p>Le conversazioni con i locali stanno in un posto solo.</p>
+      <p>Chi disturba si blocca o si segnala con due tocchi.</p>
+    </div>
+    <div class="tel"><img src="img/chat.jpg" alt="Conversazione tra professionista e locale"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Il numero personale di un ragazzo gira tra sconosciuti.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Il lavoro resta separato dalla vita privata. E resta scritto cosa ci si è detti.</p></div>
+  </div>
+  <div class="num">17</div>
+</div></div>
+
+<!-- 18 turni -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Professionista · Calendario e turni</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>I turni arrivano <em>nel calendario.</em></h2>
+      <p>La settimana con turni e impegni. I turni dati dal locale compaiono qui.</p>
+      <p>Si scambiano con un collega e si prendono quelli rimasti liberi.</p>
+    </div>
+    <div class="tel"><img src="img/turni.jpg" alt="I miei turni"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Turni detti a voce o in un gruppo di chat, cambiati all'ultimo.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Si organizza la vita fuori dal lavoro, studio compreso.</p></div>
+  </div>
+  <div class="num">18</div>
+</div></div>
+
+<!-- 19 disponibilita extra -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Professionista · Extra</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>I giorni liberi <em>diventano lavoro.</em></h2>
+      <p>Nel calendario ogni giornata libera ha il suo tasto: la si rende disponibile come extra. I locali della zona ingaggiano senza colloquio.</p>
+      <p>Gli extra svolti finiscono nel CV.</p>
+    </div>
+    <div class="tel"><img src="img/calendario-libero.jpg" alt="Calendario: la giornata libera si rende disponibile come extra"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>L'extra passa dalle conoscenze. Chi non conosce nessuno resta fuori.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Weekend dopo weekend si fa esperienza in più locali, e ognuno resta scritto.</p></div>
+  </div>
+  <div class="num">19</div>
+</div></div>
+
+<!-- 20 proposta -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Professionista · La proposta</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Data, ruolo, compenso. <em>Per iscritto.</em></h2>
+      <p>La proposta di un extra arriva completa. Si accetta con un tasto: "Lo prendo".</p>
+      <p>In "Cercano qualcuno" si vedono i locali vicini con un turno da coprire.</p>
+    </div>
+    <div class="tel"><img class="lunga" src="img/extra-proposta-ingaggio.jpg" alt="Proposta di ingaggio per un extra"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Un messaggio la sera prima, senza la paga scritta.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Gli accordi sono chiari per tutti e due. Chi si presenta si fa un nome.</p></div>
+  </div>
+  <div class="num">20</div>
+</div></div>
+
+<!-- 21 percorso -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Professionista · Il mio percorso</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Le competenze <em>si dimostrano.</em></h2>
+      <p>Quiz a livelli sulle competenze. Chi li supera ottiene un sigillo che si vede sul profilo.</p>
+      <p>Il titolare attesta le competenze viste sul campo. Si caricano i certificati.</p>
+      <p>La tracciabilità regionale mostra in quali regioni sei stato verificato.</p>
+    </div>
+    <div class="tel"><img src="img/competenze-regioni.jpg" alt="Il mio percorso: competenze verificate e tracciabilità regionale"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Il diploma non dice cosa sai fare in sala o in cucina.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Una competenza alla volta, il profilo diventa una prova di quello che sai.</p></div>
+  </div>
+  <div class="num">21</div>
+</div></div>
+
+<!-- 22 italia -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Professionista · La tua Italia</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Le regioni dove lavori <em>si accendono.</em></h2>
+      <p>Una mappa dell'Italia. Ogni regione dove hai lavorato si colora.</p>
+      <p>Per ognuna: storia, prodotti tipici, tradizioni e traguardi.</p>
+    </div>
+    <div class="tel"><img src="img/italia.jpg" alt="La tua Italia, mappa delle regioni"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Chi fa la stagione in un'altra regione torna con un'esperienza che nessuno vede.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Il percorso diventa una mappa del mestiere. La cucina e la sala si imparano anche dai territori.</p></div>
+  </div>
+  <div class="num">22</div>
+</div></div>
+
+<!-- 23 coach -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Professionista · Coach</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Prepararsi <em>al colloquio.</em></h2>
+      <p>Il Coach risponde a domande su colloqui, lettere di presentazione e carriera.</p>
+      <p>La prima domanda è gratis. Poi il Coach è a pagamento, con un abbonamento che si sceglie solo se serve.</p>
+    </div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Al primo colloquio si arriva senza sapere cosa ti chiederanno.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Un ragazzo si prepara da solo, quando vuole, sul lavoro che cerca.</p></div>
+  </div>
+  <div class="num">23</div>
+</div></div>
+
+<!-- 24 locale candidati -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Dall'altra parte · Il locale</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Cosa vede <em>il titolare.</em></h2>
+      <p>Il locale confronta i professionisti con un suo annuncio. Vede la percentuale, la zona, le esperienze verificate e le recensioni.</p>
+      <p>Dalla scheda contatta e fissa il colloquio.</p>
+    </div>
+    <div class="tel"><img src="img/loc-candidati.jpg" alt="I candidati ordinati per percentuale"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Un titolare legge pile di curriculum tutti uguali.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Chi ha competenze verificate viene trovato, anche senza conoscenze.</p></div>
+  </div>
+  <div class="num">24</div>
+</div></div>
+
+<!-- 25 locale turni extra -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Dall'altra parte · Turni ed extra</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Il turno scoperto <em>si copre.</em></h2>
+      <p>Il locale assegna i turni della settimana. Un buco va a chi è libero. Oppure diventa una richiesta di extra, col compenso, per i professionisti della zona.</p>
+    </div>
+    <div class="tel"><img src="img/loc-extra.jpg" alt="Il locale cerca un extra disponibile"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Il sabato sera scoperto e il giro di telefonate.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Chi è disponibile lavora di più. Il locale sa chi chiamare.</p></div>
+  </div>
+  <div class="num">25</div>
+</div></div>
+
+<!-- 26 locale squadra -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Dall'altra parte · La squadra</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>La squadra <em>in una pagina.</em></h2>
+      <p>Personale attivo, andamento del mese, copertura per area, affinità tra colleghi. Il titolare valuta e attesta le competenze sul campo.</p>
+      <p>Per i locali c'è anche un Consulente a pagamento.</p>
+    </div>
+    <div class="tel"><img src="img/squadra.jpg" alt="Le statistiche della squadra"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Chi lavora bene non lascia traccia quando cambia locale.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Il lavoro fatto bene resta scritto e segue la persona.</p></div>
+  </div>
+  <div class="num">26</div>
+</div></div>
+
+<!-- 27 rendimento -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Dall'altra parte · Il rendimento</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Il voto <em>e l'andamento.</em></h2>
+      <p>Per ogni persona della squadra il titolare vede il voto medio, l'andamento mese per mese e i voti per area.</p>
+      <p>Si vede chi cresce e dove serve una mano.</p>
+    </div>
+    <div class="tel"><img src="img/rendimento.jpg" alt="Scheda di un membro della squadra con voto, andamento e voti per area"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Un ragazzo non sa come sta andando finché qualcuno non glielo dice.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Si vede dove si è forti e dove migliorare, mese per mese.</p></div>
+  </div>
+  <div class="num">27</div>
+</div></div>
+
+<!-- 28 valutazioni -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Dall'altra parte · Le valutazioni</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Si valuta <em>su cose precise.</em></h2>
+      <p>Puntualità, qualità del lavoro, spirito di squadra. Un voto per ognuna, più il voto d'insieme.</p>
+      <p>Dopo un lavoro ci si dà un voto, da tutte e due le parti.</p>
+    </div>
+    <div class="tel"><img src="img/valuta.jpg" alt="La finestra Valuta con le stelle per ogni area"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Il giudizio su un ragazzo resta nella testa del titolare.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Il giudizio diventa scritto, punto per punto.</p></div>
+  </div>
+  <div class="num">28</div>
+</div></div>
+
+<!-- 29 deleghe -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Dall'altra parte · Le deleghe</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Il titolare <em>affida dei compiti.</em></h2>
+      <p>Il titolare sceglie una persona della squadra e le dà dei permessi: gestire gli annunci, selezionare i candidati.</p>
+      <p>Le responsabilità arrivano per iscritto.</p>
+    </div>
+    <div class="tel"><img src="img/deleghe.jpg" alt="La finestra Delega con i permessi"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>La fiducia del titolare si dice a voce, e lì resta.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Chi cresce nel locale riceve responsabilità vere, con il suo nome sopra.</p></div>
+  </div>
+  <div class="num">29</div>
+</div></div>
+
+<!-- 30 riunioni -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Dall'altra parte · Le riunioni</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Briefing e riunioni <em>in calendario.</em></h2>
+      <p>Il locale fissa una riunione con data e ora. L'invito arriva nelle notifiche e si conferma con un tocco.</p>
+      <p>Si vede chi ha confermato.</p>
+    </div>
+    <div class="tel"><img src="img/riunioni.jpg" alt="Le riunioni del locale con data, ora e conferme"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>La riunione si scopre all'ultimo, in un gruppo di chat.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Si arriva preparati. Chi conferma, c'è.</p></div>
+  </div>
+  <div class="num">30</div>
+</div></div>
+
+<!-- 31 nel tempo -->
+<div class="page"><div class="pag">
+  <div class="etichetta">In Italia, col tempo</div>
+  <h2>Cosa cambia <em>usandola.</em></h2>
+  <div class="tabella">
+    <div><b>Ragazzi</b><p>Entrano nel lavoro sapendo la paga prima. Il loro percorso resta scritto e si porta da un locale all'altro.</p></div>
+    <div><b>Locali</b><p>Trovano persone compatibili e coprono i turni con chi è libero vicino a loro.</p></div>
+    <div><b>Settore</b><p>Gli annunci con la paga scritta diventano la norma. Le competenze si vedono, oltre ai titoli.</p></div>
+    <div><b>Scuola</b><p>Ha un modo concreto per parlare di lavoro in classe, con annunci veri della sua zona.</p></div>
+  </div>
+  <div class="num">31</div>
+</div></div>
+
+<!-- 32 gratis -->
+<div class="page"><div class="pag">
+  <div class="etichetta">Cosa costa</div>
+  <h2>Per i ragazzi <em>è gratis.</em></h2>
+  <p>Per chi cerca lavoro l'app è gratuita. Gli extra si scelgono solo se servono.</p>
+  <div class="colonne">
+    <div class="g"><h3>Gratis</h3><ul>
+      <li>Profilo e annunci</li><li>Candidature e colloqui</li><li>Messaggi e notifiche</li><li>Calendario e turni</li><li>Extra e proposte</li><li>Il mio percorso</li><li>La tua Italia</li>
+    </ul></div>
+    <div class="s"><h3>Solo se serve</h3><ul>
+      <li>Import del CV da file</li><li>Coach, dopo la prima domanda</li><li>Profilo in cima alle ricerche</li>
+    </ul></div>
+  </div>
+  <p style="margin-top:12px">Per i locali pubblicare annunci, turni, squadra ed extra è gratuito.</p>
+  <div class="num">32</div>
+</div></div>
+
+<!-- 33 incontro -->
+<div class="page"><div class="pag">
+  <div class="etichetta">La proposta</div>
+  <h2>Un incontro in classe, <em>30 minuti.</em></h2>
+  <p>Online o in classe, con le quarte e le quinte. Lo tengo io.</p>
+  <ul class="liste">
+    <li><b>Cosa guardano i titolari.</b>Cosa salta all'occhio in un profilo, e cosa lo fa scartare.</li>
+    <li><b>Come si presenta un profilo.</b>Esperienze di scuola comprese.</li>
+    <li><b>Come si riconosce un annuncio poco serio.</b>Paga assente, orari vaghi, richieste strane.</li>
+  </ul>
+  <p class="citazione">Mi scriva una riga e troviamo la data.</p>
+  <div class="num">33</div>
+</div></div>
+
+<!-- 34 retro -->
+<div class="page quarta" data-density="hard"><div class="pag">
+  <div class="marchio">Risto<span>Next</span></div>
+  <div class="contatto">
+    <b>Michele Ricciardi — RistoNext</b>
+    info@ristonext.com<br>
+    <a href="tel:+393517173727">+39 351 717 3727</a> · <a href="https://wa.me/393517173727" target="_blank" rel="noopener">WhatsApp</a><br>
+    <a href="https://ristonext.com" target="_blank" rel="noopener">ristonext.com</a><br>
+    <a href="https://apps.apple.com/it/app/ristonext/id6762455597?ct=scuole&amp;mt=8" target="_blank" rel="noopener">App Store</a> · <a href="https://play.google.com/store/apps/details?id=dev.a0.apps.ristonext493&amp;referrer=utm_source%3Dscuole%26utm_medium%3Dorganico" target="_blank" rel="noopener">Google Play</a>
+  </div>
+  <p class="consulenza">Seguiamo anche i locali con una consulenza su marketing, personale, operatività e organizzazione e, se serve, sui conti. Scriveteci per parlarne.</p>
+  <div class="cop piede" style="background:none">Le schermate sono dell'app vera, con profili di prova.</div>
+</div></div>
+
+</div></div></div>
+
+<div class="comandi">
+  <button id="ind" aria-label="Pagina precedente">← Indietro</button>
+  <span id="conta">1 / 34</span>
+  <button id="ava" aria-label="Pagina successiva">Avanti →</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+<script>
+(function(){
+  var conta=document.getElementById('conta'), wrap=document.getElementById('wrap');
+  // inclinazione 3D che segue il puntatore
+  if(window.matchMedia&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.addEventListener('pointermove',function(e){
+      var x=e.clientX/innerWidth-.5, y=e.clientY/innerHeight-.5;
+      wrap.style.setProperty('--ry',(x*10).toFixed(2)+'deg');
+      wrap.style.setProperty('--rx',(6-y*8).toFixed(2)+'deg');
+    });
+  }
+  if(!window.St||!St.PageFlip){document.body.classList.add('senza-libro');return;}
+  var libro=new St.PageFlip(document.getElementById('libro'),{
+    width:420,height:600,size:'stretch',minWidth:280,maxWidth:460,minHeight:400,maxHeight:657,
+    showCover:true,usePortrait:true,mobileScrollSupport:false,maxShadowOpacity:.6,flippingTime:900
+  });
+  libro.loadFromHTML(document.querySelectorAll('.page'));
+  var tot=libro.getPageCount();
+  function aggiorna(i){conta.textContent=(i+1)+' / '+tot;}
+  libro.on('flip',function(e){aggiorna(e.data);});
+  document.getElementById('ind').onclick=function(){libro.flipPrev();};
+  document.getElementById('ava').onclick=function(){libro.flipNext();};
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight')libro.flipNext(); if(e.key==='ArrowLeft')libro.flipPrev();});
+  aggiorna(0);
+})();
+</script>
+</body>
+</html>
