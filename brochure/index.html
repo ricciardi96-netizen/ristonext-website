@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brochure RistoNext</title>
+<meta name="description" content="RistoNext, l'app italiana che mette in contatto camerieri, cuochi e baristi con i locali della loro zona. Brochure sfogliabile per la stampa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --nero:#080806; --carbone:#14110c; --carbone-2:#1c1811; --linea:#2e2616;
+  --oro:#c9a227; --oro-brunito:#6e5210; --avorio:#f3ead6; --fumo:#a39a86;
+  --titolo:"Anton",Impact,"Arial Narrow",sans-serif;
+  --testo:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --mono:"DM Mono",ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+}
+/* il brand e' oro su nero in entrambi i temi */
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--nero:#080806;--avorio:#f3ead6}}
+:root[data-theme="dark"]{--nero:#080806;--avorio:#f3ead6}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--nero);color:var(--avorio);font-family:var(--testo);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+  padding:20px 16px;overflow-x:hidden;
+  background-image:radial-gradient(ellipse at 50% 40%,#1a150b 0%,var(--nero) 70%)}
+.libro-wrap{width:100%;max-width:900px;display:flex;justify-content:center}
+#libro{margin:0 auto}
+.page{background:var(--carbone);color:var(--avorio);overflow:hidden;position:relative;
+  border:1px solid var(--linea)}
+.page.chiara{background:var(--avorio);color:var(--carbone)}
+.pag{position:absolute;inset:0;padding:30px 28px 26px;display:flex;flex-direction:column}
+.filo{position:absolute;left:28px;right:28px;top:18px;height:1px;background:linear-gradient(90deg,var(--oro),transparent)}
+.num{position:absolute;bottom:12px;right:20px;font-family:var(--mono);font-size:10px;color:var(--fumo);letter-spacing:.1em}
+.page.chiara .num{color:var(--oro-brunito)}
+.etichetta{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--oro);margin-bottom:10px}
+.page.chiara .etichetta{color:var(--oro-brunito)}
+h1,h2{font-family:var(--titolo);font-weight:400;line-height:1.02;letter-spacing:.01em}
+h1{font-size:54px;color:var(--oro)}
+h2{font-size:30px;margin-bottom:10px}
+p{font-size:13.5px;line-height:1.5}
+p+p{margin-top:8px}
+.oro{color:var(--oro)} .page.chiara .oro{color:var(--oro-brunito)}
+/* copertina */
+.cop{justify-content:space-between;background:
+  radial-gradient(circle at 80% 15%,rgba(201,162,39,.18),transparent 45%),var(--nero)}
+.marchio{font-family:var(--titolo);font-size:22px;letter-spacing:.06em;color:var(--avorio)}
+.marchio b{color:var(--oro);font-weight:400}
+.cop h1{font-size:60px}
+.cop .sotto{font-size:15px;color:var(--avorio);max-width:300px;margin-top:14px}
+.cop .piede{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--fumo);text-transform:uppercase}
+.sfoglia{font-family:var(--mono);font-size:10px;color:var(--oro);letter-spacing:.12em}
+/* pagina con telefono */
+.funz{flex-direction:row;gap:18px;align-items:center}
+.funz .testo{flex:1;min-width:0}
+.tel{flex:0 0 150px;height:325px;border-radius:24px;padding:6px;background:#000;
+  box-shadow:0 0 0 1px var(--oro-brunito),0 14px 30px rgba(0,0,0,.45)}
+.tel img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:19px;display:block}
+.punti{list-style:none;margin-top:12px}
+.punti li{font-size:12.5px;line-height:1.45;padding-left:14px;position:relative;margin-top:6px}
+.punti li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:1px;background:var(--oro)}
+.page.chiara .punti li::before{background:var(--oro-brunito)}
+/* problema */
+.coppia{display:grid;gap:14px;margin-top:14px}
+.box{border:1px solid var(--linea);padding:12px 14px;background:var(--carbone-2)}
+.box h3{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--oro);margin-bottom:6px;font-weight:500}
+.box p{font-size:12.5px}
+/* mappa */
+.mappa{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px;flex:1}
+.col h3{font-family:var(--titolo);font-weight:400;font-size:18px;margin-bottom:6px;color:var(--oro-brunito)}
+.col li{list-style:none;font-size:11.5px;line-height:1.35;padding:5px 0;border-top:1px solid rgba(110,82,16,.25)}
+/* quarta */
+.quarta{justify-content:space-between;background:var(--nero)}
+.link{font-family:var(--mono);font-size:11px;line-height:1.9;color:var(--avorio);word-break:break-all}
+.link a{color:var(--oro);text-decoration:none}
+.costo{border-left:2px solid var(--oro);padding-left:12px;margin-top:14px}
+/* comandi */
+.comandi{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12px;color:var(--fumo)}
+.comandi button{background:transparent;border:1px solid var(--oro-brunito);color:var(--oro);font-family:var(--mono);
+  font-size:12px;padding:8px 14px;cursor:pointer;letter-spacing:.08em}
+.comandi button:hover{background:rgba(201,162,39,.1)}
+/* se la libreria non carica: pagine una sotto l'altra */
+.senza-libro #libro{display:flex;flex-direction:column;gap:16px;width:100%;max-width:440px}
+.senza-libro .page{width:100%;aspect-ratio:7/10}
+.senza-libro .comandi{display:none}
+@media (max-width:520px){h1{font-size:44px}.cop h1{font-size:46px}.tel{flex-basis:118px;height:256px}h2{font-size:25px}.funz{gap:12px}}
+</style>
+</head>
+<body>
+<div class="libro-wrap"><div id="libro">
+
+  <!-- 1 copertina -->
+  <div class="page" data-density="hard"><div class="pag cop">
+    <div class="marchio">RISTO<b>NEXT</b></div>
+    <div>
+      <div class="etichetta">Cartella per la stampa · Ottobre 2026</div>
+      <h1>Il turno<br>giusto,<br>la persona<br>giusta.</h1>
+      <p class="sotto">L'app italiana che mette in contatto camerieri, cuochi e baristi con i locali della loro zona.</p>
+    </div>
+    <div class="sfoglia">Sfoglia →</div>
+  </div></div>
+
+  <!-- 2 cos'e' -->
+  <div class="page"><div class="pag"><div class="filo"></div>
+    <div class="etichetta">Che cos'è</div>
+    <h2>Un posto solo per chi lavora in sala, in cucina e al bar.</h2>
+    <p>RistoNext è un'app per iPhone e Android, nata in Italia per la ristorazione e l'accoglienza.</p>
+    <p>Da una parte ci sono i <span class="oro">locali</span>: ristoranti, trattorie, bar, hotel, pizzerie. Pubblicano gli annunci, gestiscono i turni e trovano un extra quando qualcuno manca.</p>
+    <p>Dall'altra ci sono i <span class="oro">professionisti</span>: camerieri, cuochi, baristi, personale di sala e di cucina. Vedono gli annunci della loro zona, con la paga scritta, e capiscono subito quanto sono adatti.</p>
+    <p>In mezzo c'è una percentuale di compatibilità, calcolata tra il profilo e l'annuncio prima che le due parti si incontrino.</p>
+    <div class="num">02</div>
+  </div></div>
+
+  <!-- 3 problema -->
+  <div class="page chiara"><div class="pag"><div class="filo"></div>
+    <div class="etichetta">Il problema</div>
+    <h2>Ogni stagione, la stessa storia.</h2>
+    <div class="coppia">
+      <div class="box"><h3>Per i locali</h3><p style="color:var(--avorio)">Il sabato sera manca una persona in sala. L'extra confermato non si presenta. I curriculum arrivano da chi abita a cento chilometri o non ha mai fatto il mestiere.</p></div>
+      <div class="box"><h3>Per chi lavora</h3><p style="color:var(--avorio)">Annunci vaghi, paga "da definire", telefonate a vuoto. Nessun modo di far vedere cosa si sa fare davvero, oltre a un foglio con l'elenco dei posti dove si è stati.</p></div>
+    </div>
+    <p style="margin-top:14px">RistoNext parte da qui: mettere insieme le persone giuste, nel posto giusto, nel turno giusto.</p>
+    <div class="num">03</div>
+  </div></div>
+
+  <!-- 4 locali: candidati -->
+  <div class="page"><div class="pag funz"><div class="filo"></div>
+    <div class="testo">
+      <div class="etichetta">Per i locali · 1</div>
+      <h2>I candidati, già in ordine.</h2>
+      <p>Chi cerca personale vede i professionisti disponibili nella sua zona, ordinati per compatibilità con l'annuncio.</p>
+      <ul class="punti">
+        <li>La percentuale su ogni candidato</li>
+        <li>Il profilo completo con un tocco</li>
+      </ul>
+    </div>
+    <div class="tel"><img src="img/loc-00-home.jpg" alt="Schermata Candidati con le percentuali di compatibilità"></div>
+    <div class="num">04</div>
+  </div></div>
+
+  <!-- 5 locali: paga -->
+  <div class="page"><div class="pag funz"><div class="filo"></div>
+    <div class="testo">
+      <div class="etichetta">Per i locali · 2</div>
+      <h2>La paga si scrive. Sempre.</h2>
+      <p>Un annuncio senza retribuzione non si pubblica: il campo è obbligatorio.</p>
+      <ul class="punti">
+        <li>Contratto: tempo pieno, part-time, stagionale</li>
+        <li>Lingue richieste e tipo di squadra</li>
+        <li>Regione e città, per arrivare a chi è vicino</li>
+      </ul>
+    </div>
+    <div class="tel"><img src="img/paga-vuota.jpg" alt="Nuovo annuncio: la retribuzione è obbligatoria"></div>
+    <div class="num">05</div>
+  </div></div>
+
+  <!-- 6 locali: turno scoperto -->
+  <div class="page"><div class="pag funz"><div class="filo"></div>
+    <div class="testo">
+      <div class="etichetta">Per i locali · 3</div>
+      <h2>Manca uno in sala? Si vede chi può venire.</h2>
+      <p>Il calendario segna i turni scoperti. Un tocco e compaiono le persone disponibili quella sera, con distanza e compenso.</p>
+      <ul class="punti">
+        <li>Turni della settimana in una lavagna</li>
+        <li>"Manca 1 · Sala · cena": chi può venire</li>
+      </ul>
+    </div>
+    <div class="tel"><img src="img/cal-chi-puo.jpg" alt="Calendario con il turno scoperto e chi può venire"></div>
+    <div class="num">06</div>
+  </div></div>
+
+  <!-- 7 locali: extra -->
+  <div class="page"><div class="pag funz"><div class="filo"></div>
+    <div class="testo">
+      <div class="etichetta">Per i locali · 4</div>
+      <h2>L'extra si propone con data, ruolo e compenso.</h2>
+      <p>La proposta arriva al professionista con tutto scritto: giorno, fascia, compenso e un messaggio. Lui accetta o no, e il calendario si aggiorna.</p>
+      <ul class="punti">
+        <li>Extra disponibili giorno per giorno</li>
+        <li>Proposta d'ingaggio in un passaggio</li>
+      </ul>
+    </div>
+    <div class="tel"><img src="img/extra-proposta-ingaggio.jpg" alt="Proposta di ingaggio per un extra"></div>
+    <div class="num">07</div>
+  </div></div>
+
+  <!-- 8 locali: colloquio -->
+  <div class="page"><div class="pag funz"><div class="filo"></div>
+    <div class="testo">
+      <div class="etichetta">Per i locali · 5</div>
+      <h2>Contatto, colloquio, assunzione. In ordine.</h2>
+      <p>Dalla scheda del candidato si sblocca il contatto, si fissa il colloquio e si segna l'assunzione. Ogni passo arriva al candidato come notifica.</p>
+      <ul class="punti">
+        <li>Chat interna con il candidato</li>
+        <li>Colloquio con data e ora</li>
+      </ul>
+    </div>
+    <div class="tel"><img src="img/loc-12-colloquio-avviso.jpg" alt="Profilo con il colloquio fissato"></div>
+    <div class="num">08</div>
+  </div></div>
+
+  <!-- 9 pro: annunci -->
+  <div class="page chiara"><div class="pag funz"><div class="filo"></div>
+    <div class="testo">
+      <div class="etichetta">Per chi lavora · 1</div>
+      <h2>Annunci con la percentuale e la paga.</h2>
+      <p>Ogni annuncio dice quanto è compatibile con il tuo profilo, dove si trova e quanto paga. Niente "retribuzione da definire".</p>
+      <ul class="punti">
+        <li>Filtri per regione, città e area: sala, bar, cucina…</li>
+        <li>Soglia minima di compatibilità</li>
+      </ul>
+    </div>
+    <div class="tel"><img src="img/pro-01-annunci.jpg" alt="Annunci con la percentuale di compatibilità"></div>
+    <div class="num">09</div>
+  </div></div>
+
+  <!-- 10 pro: dettaglio -->
+  <div class="page chiara"><div class="pag funz"><div class="filo"></div>
+    <div class="testo">
+      <div class="etichetta">Per chi lavora · 2</div>
+      <h2>Tutto scritto, prima di candidarsi.</h2>
+      <p>Locale, contratto, città, retribuzione e descrizione della posizione. Ci si candida con un tocco, oppure si scrive al locale.</p>
+    </div>
+    <div class="tel"><img src="img/pro-02-dettaglio.jpg" alt="Scheda di un annuncio con la retribuzione"></div>
+    <div class="num">10</div>
+  </div></div>
+
+  <!-- 11 pro: notifiche -->
+  <div class="page chiara"><div class="pag funz"><div class="filo"></div>
+    <div class="testo">
+      <div class="etichetta">Per chi lavora · 3</div>
+      <h2>Sai sempre a che punto sei.</h2>
+      <p>Una notifica quando un locale ti contatta, quando fissa un colloquio, quando cerca un extra vicino a te e quando ti assume.</p>
+    </div>
+    <div class="tel"><img src="img/pro-09-notifiche-colloquio.jpg" alt="Notifiche: colloquio fissato e contatti"></div>
+    <div class="num">11</div>
+  </div></div>
+
+  <!-- 12 pro: calendario -->
+  <div class="page chiara"><div class="pag funz"><div class="filo"></div>
+    <div class="testo">
+      <div class="etichetta">Per chi lavora · 4</div>
+      <h2>Il tuo calendario, i tuoi extra.</h2>
+      <p>Turni, colloqui e giornate libere in un posto. Una giornata libera si rende disponibile come extra, e i locali vicini lo vedono.</p>
+    </div>
+    <div class="tel"><img src="img/pro-mio-calendario.jpg" alt="Calendario del professionista"></div>
+    <div class="num">12</div>
+  </div></div>
+
+  <!-- 13 mappa -->
+  <div class="page chiara"><div class="pag"><div class="filo"></div>
+    <div class="etichetta">Mappa delle funzioni</div>
+    <h2>Cosa c'è dentro.</h2>
+    <div class="mappa">
+      <div class="col"><h3>Per i locali</h3><ul>
+        <li>Annunci con paga obbligatoria</li>
+        <li>Candidati ordinati per compatibilità</li>
+        <li>Contatto, colloquio, assunzione</li>
+        <li>Chat con i candidati</li>
+        <li>Calendario dei turni della squadra</li>
+        <li>Turni scoperti e "chi può venire"</li>
+        <li>Proposte d'ingaggio per gli extra</li>
+      </ul></div>
+      <div class="col"><h3>Per chi lavora</h3><ul>
+        <li>Annunci della zona con la %</li>
+        <li>Filtri per regione, città, area</li>
+        <li>Candidatura in un tocco</li>
+        <li>Notifiche su ogni passaggio</li>
+        <li>Chat con i locali</li>
+        <li>Calendario personale</li>
+        <li>Disponibilità come extra</li>
+        <li>Lingue e tipo di squadra preferito</li>
+      </ul></div>
+    </div>
+    <div class="num">13</div>
+  </div></div>
+
+  <!-- 14 quarta -->
+  <div class="page" data-density="hard"><div class="pag quarta">
+    <div class="marchio">RISTO<b>NEXT</b></div>
+    <div>
+      <div class="etichetta">Quanto costa</div>
+      <div class="costo">
+        <p>Per chi cerca lavoro è <span class="oro">gratis</span>.</p>
+        <p>Per i locali pubblicare i turni e gestire squadra ed extra è gratuito. Gli abbonamenti si scelgono solo se servono.</p>
+      </div>
+    </div>
+    <div>
+      <div class="etichetta">Dove trovarla</div>
+      <div class="link">
+        <a href="https://apps.apple.com/it/app/ristonext/id6762455597?ct=stampa&amp;mt=8">App Store</a> ·
+        <a href="https://play.google.com/store/apps/details?id=dev.a0.apps.ristonext493&amp;referrer=utm_source%3Dstampa%26utm_medium%3Dorganico">Google Play</a><br>
+        <a href="https://ristonext.com">ristonext.com</a> · <a href="https://instagram.com/ristonext">@ristonext</a><br>
+        Contatti per la stampa: <a href="mailto:info@ristonext.com">info@ristonext.com</a><br>
+        Michele Ricciardi, fondatore
+      </div>
+    </div>
+    <div>
+      <div class="etichetta">Consulenza</div>
+      <div class="link">Seguiamo anche i locali con una consulenza su marketing, personale, operatività e organizzazione e, se serve, sui conti. Scriveteci per parlarne.</div>
+    </div>
+  </div></div>
+
+</div></div>
+
+<div class="comandi">
+  <button id="ind" aria-label="Pagina precedente">← Indietro</button>
+  <span id="conta">1 / 14</span>
+  <button id="ava" aria-label="Pagina successiva">Avanti →</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+<script>
+(function(){
+  var conta=document.getElementById('conta');
+  if(!window.St||!St.PageFlip){document.body.classList.add('senza-libro');return;}
+  var libro=new St.PageFlip(document.getElementById('libro'),{
+    width:420,height:600,size:'stretch',minWidth:280,maxWidth:440,minHeight:400,maxHeight:630,
+    showCover:true,usePortrait:true,mobileScrollSupport:false,maxShadowOpacity:.5,flippingTime:800
+  });
+  libro.loadFromHTML(document.querySelectorAll('.page'));
+  var tot=libro.getPageCount();
+  function aggiorna(i){conta.textContent=(i+1)+' / '+tot;}
+  libro.on('flip',function(e){aggiorna(e.data);});
+  document.getElementById('ind').onclick=function(){libro.flipPrev();};
+  document.getElementById('ava').onclick=function(){libro.flipNext();};
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight')libro.flipNext(); if(e.key==='ArrowLeft')libro.flipPrev();});
+  aggiorna(0);
+})();
+</script>
+</body>
+</html>

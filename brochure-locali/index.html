@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RistoNext per ristoranti e alberghi</title>
+<meta name="description" content="RistoNext per ristoranti e alberghi: ogni funzione che il locale vede nell'app, il problema che risolve oggi e cosa cambia col tempo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Una palette sola, quella del marchio RistoNext (brand book): nero caldo, avorio, oro. Sull'avorio l'oro diventa #6E5210. */
+:root{
+  --nero:#080806; --oro:#D4A82E; --oro-testo:#6E5210;
+  --avorio:#F3EAD6; --scheda:#FBF6EA; --linea:#D9CDB0;
+  --inchiostro:#14110C; --grigio:#6B645A;
+  --titolo:"Fraunces",Georgia,"Times New Roman",serif;
+  --testo:"Manrope","Segoe UI","Helvetica Neue",Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{background:var(--nero);color:var(--avorio);font-family:var(--testo);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  padding-inline:16px;padding-block:28px 24px;overflow-x:hidden;
+  background-image:
+    radial-gradient(ellipse 60% 45% at 30% 20%,rgba(212,168,46,.16),transparent 70%),
+    radial-gradient(ellipse 55% 50% at 80% 85%,rgba(212,168,46,.09),transparent 70%)}
+.testata{font-family:var(--testo);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#A39A86;text-align:center}
+.testata b{color:var(--oro);font-weight:800}
+
+.scena{width:100%;max-width:960px;display:flex;justify-content:center;perspective:1800px}
+.libro-wrap{position:relative;width:100%;display:flex;justify-content:center;
+  transform:rotateX(var(--rx,6deg)) rotateY(var(--ry,0deg));transition:transform .5s cubic-bezier(.2,.7,.2,1);
+  animation:galleggia 7s ease-in-out infinite}
+.libro-wrap::after{content:"";position:absolute;left:12%;right:12%;bottom:-38px;height:40px;border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(0,0,0,.55),transparent 70%);filter:blur(6px);z-index:-1}
+@keyframes galleggia{0%,100%{translate:0 0}50%{translate:0 -8px}}
+#libro{margin:0 auto}
+
+.page{overflow:hidden;position:relative;background:var(--avorio);color:var(--inchiostro)}
+.pag{position:absolute;inset:0;padding:30px 26px 30px;display:flex;flex-direction:column}
+.page::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background:radial-gradient(circle at 1px 1px,rgba(20,17,12,.06) 1px,transparent 1.2px) 0 0/9px 9px}
+.page::after{content:"";position:absolute;top:0;bottom:0;width:26px;pointer-events:none}
+.page.--left::after{right:0;background:linear-gradient(270deg,rgba(0,0,0,.14),transparent)}
+.page.--right::after{left:0;background:linear-gradient(90deg,rgba(0,0,0,.14),transparent)}
+
+.num{position:absolute;bottom:13px;right:22px;font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--grigio);font-variant-numeric:tabular-nums}
+.etichetta{font-size:9.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--oro-testo);margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.etichetta::before{content:"";width:18px;height:2px;border-radius:2px;background:currentColor}
+h1,h2,h3{font-family:var(--titolo);font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:25px;line-height:1.08;margin-bottom:9px;font-variation-settings:"opsz" 72}
+h2 em{font-style:italic;font-weight:500;color:var(--oro-testo)}
+p{font-size:12.4px;line-height:1.5}
+p+p{margin-top:7px}
+
+.funz .alto{display:flex;gap:14px;align-items:flex-start;flex:1;min-height:0}
+.funz .testo{flex:1;min-width:0}
+.funz h2{font-size:22px}
+.funz .testo p{font-size:12px;line-height:1.42}
+.tel{flex:0 0 52%;max-width:218px;height:auto;align-self:center;border-radius:26px;padding:5px;background:#16110f;position:relative;
+  transform:perspective(900px) rotateY(-10deg) rotateX(3deg);transform-origin:center;
+  box-shadow:1px 1px 0 #3a302b,3px 3px 0 #2a221f,6px 6px 0 #1d1715,18px 26px 34px rgba(20,17,12,.35);
+  animation:tel 6s ease-in-out infinite}
+.tel img{width:100%;height:auto;aspect-ratio:620/1102;object-fit:cover;object-position:top;border-radius:21px;display:block}
+.tel img.lunga{aspect-ratio:520/1125}
+.tel:has(img.lunga){flex-basis:44%;max-width:186px}
+.tel::after{content:"";position:absolute;inset:5px;border-radius:21px;pointer-events:none;
+  background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.28) 48%,transparent 60%) no-repeat;background-size:250% 100%;
+  animation:riflesso 6s ease-in-out infinite}
+@keyframes tel{0%,100%{transform:perspective(900px) rotateY(-10deg) rotateX(3deg) translateY(0)}50%{transform:perspective(900px) rotateY(-6deg) rotateX(2deg) translateY(-5px)}}
+@keyframes riflesso{0%,30%{background-position:120% 0}70%,100%{background-position:-60% 0}}
+.dx .tel{transform:perspective(900px) rotateY(10deg) rotateX(3deg);animation-name:tel2;
+  box-shadow:-1px 1px 0 #3a302b,-3px 3px 0 #2a221f,-6px 6px 0 #1d1715,-18px 26px 34px rgba(20,17,12,.35)}
+@keyframes tel2{0%,100%{transform:perspective(900px) rotateY(10deg) rotateX(3deg) translateY(0)}50%{transform:perspective(900px) rotateY(6deg) rotateX(2deg) translateY(-5px)}}
+.dx .alto{flex-direction:row-reverse}
+
+.tempo{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.tempo div{padding:8px 10px 9px;border-radius:12px;background:var(--scheda);box-shadow:0 1px 0 var(--linea),0 6px 14px rgba(20,17,12,.07)}
+.tempo h3{font-family:var(--testo);font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin-bottom:3px;color:var(--oro-testo)}
+.tempo p{font-size:10.8px;line-height:1.38}
+.paga{margin-top:9px;display:inline-flex;align-self:flex-start;font-size:10px;font-weight:700;letter-spacing:.06em;padding:4px 9px;border-radius:99px;background:rgba(212,168,46,.2);color:var(--oro-testo)}
+
+.cop{background:radial-gradient(ellipse 80% 50% at 25% 15%,rgba(212,168,46,.22),transparent 70%),var(--nero);color:var(--avorio)}
+.cop .pag{justify-content:space-between}
+.marchio{font-family:var(--testo);font-weight:800;font-size:13px;letter-spacing:.32em;text-transform:uppercase}
+.marchio span{color:var(--oro)}
+.cop h1{font-size:44px;line-height:.98;font-weight:900;font-variation-settings:"opsz" 144;margin-top:10px}
+.cop h1 em{font-style:italic;font-weight:500;color:var(--oro)}
+.cop .sotto{font-size:13px;line-height:1.42;max-width:290px;margin-top:10px;color:var(--avorio)}
+.duetel{position:relative;height:272px;margin-top:4px}
+.duetel .tel{position:absolute;flex:none;width:142px;max-width:none;height:auto}
+.duetel .a{left:22px;top:0;transform:perspective(800px) rotateY(16deg) rotateZ(-4deg);animation:none;z-index:1}
+.duetel .b{left:192px;top:20px;transform:perspective(800px) rotateY(-16deg) rotateZ(4deg);animation:none}
+.cop .piede{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#A39A86}
+
+.liste{list-style:none;margin-top:10px;display:grid;gap:7px}
+.liste li{font-size:12.2px;line-height:1.45;padding:9px 11px;border-radius:11px;background:var(--scheda);box-shadow:0 1px 0 var(--linea)}
+.liste b{font-family:var(--titolo);font-weight:700;font-size:13.5px;display:block;margin-bottom:1px}
+.indice{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;margin-top:10px}
+.indice div{font-size:11.3px;line-height:1.3;padding:5px 0;border-top:1px solid var(--linea);display:flex;gap:7px}
+.indice span{font-weight:800;color:var(--oro-testo);font-variant-numeric:tabular-nums;min-width:16px}
+.chip{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.chip span{font-size:11.5px;font-weight:700;padding:7px 12px;border-radius:99px;background:var(--scheda);color:var(--inchiostro);box-shadow:0 1px 0 var(--linea),0 6px 12px rgba(20,17,12,.08)}
+.chip span.on{background:var(--oro-testo);color:var(--avorio);transform:translateY(-3px) rotate(-2deg);box-shadow:0 10px 20px rgba(20,17,12,.25)}
+.chip.rep{gap:6px;margin-top:10px}
+.chip.rep span{font-size:10.5px;font-weight:600;padding:5px 10px}
+.citazione{font-family:var(--titolo);font-style:italic;font-weight:500;font-size:21px;line-height:1.25;margin-top:auto}
+.citazione small{display:block;font-family:var(--testo);font-style:normal;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-top:8px;opacity:.75}
+.tabella{display:grid;gap:8px;margin-top:10px}
+.tabella div{display:grid;grid-template-columns:116px 1fr;gap:10px;align-items:start;padding-top:8px;border-top:1px solid var(--linea)}
+.tabella b{font-family:var(--titolo);font-size:15px;color:var(--oro-testo)}
+.tabella p{font-size:11.6px}
+.colonne{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.colonne h3{font-family:var(--testo);font-size:9.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px;color:var(--oro-testo)}
+.colonne li{list-style:none;font-size:11.3px;line-height:1.35;padding:5px 0;border-top:1px solid var(--linea)}
+
+.quarta{background:radial-gradient(ellipse 80% 50% at 75% 85%,rgba(212,168,46,.2),transparent 70%),var(--nero);color:var(--avorio)}
+.quarta .pag{justify-content:space-between}
+.quarta .consulenza{font-size:.82rem;line-height:1.45;max-width:30ch;opacity:.95}
+.contatto{font-size:12.5px;line-height:1.9;word-break:break-word}
+.contatto b{font-family:var(--titolo);font-size:18px;display:block;color:var(--oro)}
+.contatto a{color:var(--avorio);text-decoration:none;font-weight:700}
+
+.comandi{display:flex;align-items:center;gap:14px;font-size:12px;font-weight:700;color:#A39A86;font-variant-numeric:tabular-nums}
+.comandi button{background:rgba(255,255,255,.06);border:1px solid rgba(212,168,46,.55);color:var(--avorio);font-family:var(--testo);
+  font-size:12px;font-weight:700;padding:9px 16px;border-radius:99px;cursor:pointer;letter-spacing:.04em}
+.comandi button:hover{background:rgba(212,168,46,.18)}
+.senza-libro #libro{display:flex;flex-direction:column;gap:18px;width:100%;max-width:440px}
+.senza-libro .page{width:100%;aspect-ratio:7/10;border-radius:6px}
+.senza-libro .comandi{display:none}
+.senza-libro .libro-wrap{transform:none;animation:none}
+.page{container-type:inline-size}
+@container (max-width:400px){
+  .tel{flex-basis:49%;max-width:none;border-radius:20px;padding:4px}.tel img,.tel::after{border-radius:16px}.tel::after{inset:4px}
+  .tel:has(img.lunga){flex-basis:42%}
+  h2{font-size:19px}.funz h2{font-size:17px}.cop h1{font-size:32px}.cop .sotto{font-size:11.5px}.pag{padding:20px 16px 26px}
+  p{font-size:11px}.funz .testo p{font-size:10.6px;line-height:1.38}.funz .alto{gap:10px}
+  .tempo{gap:6px;margin-top:6px}.tempo div{padding:6px 8px}.tempo p{font-size:9.6px;line-height:1.32}
+  .duetel{height:208px}.duetel .tel{width:104px}.duetel .a{left:14px}.duetel .b{left:128px;top:16px}
+  .indice{gap:0 10px;margin-top:6px}.indice div{font-size:9.6px;padding:3px 0}
+  .liste{gap:5px;margin-top:7px}.liste li{font-size:10.5px;padding:6px 9px}.liste b{font-size:12px}
+  .chip span{font-size:10.5px;padding:6px 10px}.chip.rep span{font-size:9.4px;padding:4px 8px}.chip.rep{gap:5px;margin-top:7px}
+  .citazione{font-size:17px}.colonne li{font-size:10.4px;padding:3px 0}
+  .tabella div{grid-template-columns:84px 1fr}.tabella p{font-size:10.4px}.paga{font-size:9px;margin-top:6px}}
+@container (max-width:330px){
+  .pag{padding:16px 14px 22px}h2{font-size:16px}.funz h2{font-size:15px}p{font-size:9.8px;line-height:1.35}.funz .testo p{font-size:9.6px}
+  .chip.rep span{font-size:8.4px;padding:3px 6px}.chip.rep{gap:4px;margin-top:5px}.citazione{font-size:14px}.etichetta{margin-bottom:5px}
+  .tempo p{font-size:8.8px}.liste li{font-size:9.6px}.indice div{font-size:8.8px}.colonne li{font-size:9.4px}.tabella p{font-size:9.6px}.tabella div{grid-template-columns:72px 1fr;padding-top:5px}.tabella b{font-size:12px}.tabella{gap:5px}}
+@media (prefers-reduced-motion:reduce){.libro-wrap,.tel,.tel::after{animation:none}}
+</style>
+</head>
+<body>
+
+<div class="testata"><b>RistoNext</b> · per ristoranti e alberghi</div>
+
+<div class="scena"><div class="libro-wrap" id="wrap"><div id="libro">
+
+<!-- 1 copertina -->
+<div class="page cop" data-density="hard"><div class="pag">
+  <div>
+    <div class="marchio">Risto<span>Next</span></div>
+    <h1>Stasera manca uno. <em>Chi viene?</em></h1>
+    <p class="sotto">Un'app per iPhone e Android per ristoranti e alberghi. Annunci, candidati, turni ed extra in un posto solo.</p>
+  </div>
+  <div class="duetel">
+    <div class="tel a"><img src="img/loc-candidati.jpg" alt="I candidati ordinati per percentuale di compatibilità"></div>
+    <div class="tel b"><img src="img/loc-extra.jpg" alt="Cerca Extra: chi è libero nella data scoperta"></div>
+  </div>
+  <div class="piede">Per ristoranti e alberghi</div>
+</div></div>
+
+<!-- 2 per chi -->
+<div class="page"><div class="pag">
+  <div class="etichetta">Per chi è</div>
+  <h2>Per chi assume in sala, cucina, bar <em>e ricevimento.</em></h2>
+  <p>È pensata per titolari, responsabili di sala, chef e direttori d'albergo.</p>
+  <p>RistoNext mette in contatto il locale con camerieri, cuochi, baristi e receptionist della zona. Prima che si incontrino, calcola quanto sono compatibili.</p>
+  <p>Nelle pagine che seguono c'è ogni funzione che il locale vede nell'app. Per ognuna: il problema, cosa risolve oggi, cosa cambia col tempo.</p>
+  <p class="citazione">Pubblicare un annuncio è gratuito.<small>Michele Ricciardi, RistoNext</small></p>
+  <div class="num">02</div>
+</div></div>
+
+<!-- 3 indice -->
+<div class="page"><div class="pag">
+  <div class="etichetta">Cosa c'è dentro</div>
+  <h2>Tutta l'app del locale, <em>pagina per pagina.</em></h2>
+  <div class="indice">
+    <div><span>04</span>Cosa vive oggi un locale</div>
+    <div><span>05</span>L'annuncio con la paga</div>
+    <div><span>06</span>La compatibilità</div>
+    <div><span>07</span>Cercare i candidati</div>
+    <div><span>08</span>Le competenze verificate</div>
+    <div><span>09</span>Colloqui e notifiche</div>
+    <div><span>10</span>I messaggi</div>
+    <div><span>11</span>Turni e calendario</div>
+    <div><span>12</span>Il turno scoperto</div>
+    <div><span>13</span>Gli extra</div>
+    <div><span>14</span>La proposta di ingaggio</div>
+    <div><span>15</span>La squadra</div>
+    <div><span>16</span>Le altre cose</div>
+    <div><span>17</span>Ristorante o albergo</div>
+    <div><span>18</span>Cosa cambia col tempo</div>
+    <div><span>19</span>Cosa costa</div>
+  </div>
+  <div class="num">03</div>
+</div></div>
+
+<!-- 4 problema -->
+<div class="page"><div class="pag">
+  <div class="etichetta">Il punto di partenza</div>
+  <h2>Cosa vive oggi <em>un locale.</em></h2>
+  <ul class="liste">
+    <li><b>Il turno scoperto.</b>Alle sei arriva il messaggio: stasera non vengo. Parte il giro di telefonate.</li>
+    <li><b>L'extra che non si presenta.</b>Aveva detto sì su un vocale. Il sabato non arriva.</li>
+    <li><b>Il colloquio a vuoto.</b>Viene, sente la paga, se ne va. Un'ora persa per tutti e due.</li>
+    <li><b>I turni nel gruppo di chat.</b>Cambiati tre volte, letti da metà della squadra.</li>
+  </ul>
+  <div class="num">04</div>
+</div></div>
+
+<!-- 5 annuncio -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Locale · L'annuncio</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Il colloquio a vuoto <em>parte dall'annuncio.</em></h2>
+      <p>Nell'annuncio si scrivono ruolo, contratto, orari, zona e paga. Senza retribuzione l'annuncio non si pubblica.</p>
+      <p>Contratti: tempo pieno, part-time, stagionale, determinato, indeterminato.</p>
+      <span class="paga">la paga è un campo obbligatorio</span>
+    </div>
+    <div class="tel"><img class="lunga" src="img/paga-vuota.jpg" alt="Nuovo annuncio: la retribuzione è obbligatoria"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Chi si candida conosce già la paga. Al colloquio arriva chi l'ha accettata.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Il locale che scrive la paga si riconosce. Le candidature arrivano da chi è interessato davvero.</p></div>
+  </div>
+  <div class="num">05</div>
+</div></div>
+
+<!-- 6 compatibilita -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Locale · Compatibilità</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Tanti curriculum. <em>Quale si legge prima?</em></h2>
+      <p>Ogni professionista ha una percentuale di compatibilità col tuo annuncio. I candidati arrivano in ordine, dal più compatibile.</p>
+      <p>La percentuale si vede su ogni scheda.</p>
+    </div>
+    <div class="tel"><img src="img/loc-00-home.jpg" alt="Candidati con le percentuali di compatibilità"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Si comincia dai più compatibili. Gli altri restano in lista.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Meno colloqui fatti per niente. Più tempo per il servizio.</p></div>
+  </div>
+  <div class="num">06</div>
+</div></div>
+
+<!-- 7 ricerca -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Locale · Cercare i candidati</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Ti serve un cuoco, <em>non cento profili.</em></h2>
+      <p>Si cerca per ruolo e per soglia di compatibilità. Con "Vicino a me" si vede chi abita a pochi chilometri.</p>
+      <p>Non serve aspettare che scrivano: il locale cerca e contatta.</p>
+    </div>
+    <div class="tel"><img src="img/loc-candidati.jpg" alt="Ricerca dei candidati con i filtri per percentuale"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Trovi chi ha il ruolo giusto ed è vicino, senza aspettare.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Il locale si fa una lista di persone della zona da richiamare.</p></div>
+  </div>
+  <div class="num">07</div>
+</div></div>
+
+<!-- 8 competenze -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Locale · Competenze verificate</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Sul curriculum <em>sono tutti bravi.</em></h2>
+      <p>Il professionista supera quiz a livelli e ottiene un sigillo. Il titolare con cui ha lavorato attesta le competenze sul campo.</p>
+      <p>Il locale vede cosa è dimostrato e cosa è solo dichiarato.</p>
+    </div>
+    <div class="tel"><img src="img/verificati.jpg" alt="Competenze verificate sul campo"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Distingui chi dichiara da chi ha dimostrato.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Chi lavora bene si porta dietro le prove, da un locale all'altro.</p></div>
+  </div>
+  <div class="num">08</div>
+</div></div>
+
+<!-- 9 colloqui -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Locale · Colloqui e notifiche</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Aspetti un candidato <em>che non arriva.</em></h2>
+      <p>Dalla scheda si contatta e si fissa il colloquio, con data e ora. Il candidato riceve la notifica e risponde.</p>
+      <p>Se cambi data o ora, l'avviso gli arriva da solo.</p>
+    </div>
+    <div class="tel"><img class="lunga" src="img/loc-12-colloquio-avviso.jpg" alt="Colloquio fissato con data e ora"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Sai chi ha confermato prima di aspettarlo.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Contatto, colloquio e assunzione restano in ordine, per ogni persona.</p></div>
+  </div>
+  <div class="num">09</div>
+</div></div>
+
+<!-- 10 messaggi -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Locale · Messaggi</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Il tuo numero <em>gira tra sconosciuti.</em></h2>
+      <p>Si scrive al candidato dentro l'app. Le conversazioni di lavoro stanno in un posto solo.</p>
+      <p>Chi disturba si blocca o si segnala.</p>
+    </div>
+    <div class="tel"><img src="img/chat.jpg" alt="Conversazione tra locale e professionista"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Il lavoro resta fuori dal telefono personale. Gli accordi restano scritti.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Quando richiami qualcuno, trovi tutto quello che vi siete detti.</p></div>
+  </div>
+  <div class="num">10</div>
+</div></div>
+
+<!-- 11 turni -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Locale · Turni e calendario</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>I turni nel gruppo, <em>letti da metà squadra.</em></h2>
+      <p>Il locale assegna i turni della settimana: colazione, pranzo, cena. Ognuno li trova nel suo calendario, con la notifica.</p>
+      <p>I colleghi si scambiano i turni. Un turno rimasto libero si prende con un tocco.</p>
+    </div>
+    <div class="tel"><img src="img/loc-turni.jpg" alt="Il calendario dei turni del personale"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Un calendario solo, uguale per tutti.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Meno "non lo sapevo". La settimana si vede a colpo d'occhio.</p></div>
+  </div>
+  <div class="num">11</div>
+</div></div>
+
+<!-- 12 turno scoperto -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Locale · Il turno scoperto</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Alle sei: <em>stasera non vengo.</em></h2>
+      <p>Il calendario segna il buco: "Manca 1 · Sala · cena". Un tocco e compaiono le persone disponibili quella sera, con la distanza.</p>
+      <p>Il turno va a chi della squadra è libero. Oppure diventa una richiesta di extra.</p>
+    </div>
+    <div class="tel"><img class="lunga" src="img/cal-chi-puo.jpg" alt="Calendario con il turno scoperto e chi può venire"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Vedi chi può venire, invece di chiamare tutti.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Il locale impara su chi può contare.</p></div>
+  </div>
+  <div class="num">12</div>
+</div></div>
+
+<!-- 13 extra -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Locale · Gli extra</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Serve uno <em>solo per sabato.</em></h2>
+      <p>I professionisti pubblicano i giorni in cui sono liberi. In "Cerca Extra" scegli la data scoperta e vedi chi è disponibile.</p>
+      <p>L'extra si ingaggia senza colloquio.</p>
+    </div>
+    <div class="tel"><img src="img/loc-extra.jpg" alt="Cerca Extra per una data scoperta"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>L'extra si trova anche fuori dalle conoscenze.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Un giro di extra della zona che tornano, perché si sono trovati bene.</p></div>
+  </div>
+  <div class="num">13</div>
+</div></div>
+
+<!-- 14 proposta -->
+<div class="page funz dx"><div class="pag">
+  <div class="etichetta">Locale · Proposta di ingaggio</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>L'accordo preso <em>su un vocale.</em></h2>
+      <p>La proposta arriva completa: giorno, fascia, ruolo, compenso, un messaggio. Il professionista accetta con "Lo prendo".</p>
+      <p>Il calendario si aggiorna da solo.</p>
+    </div>
+    <div class="tel"><img class="lunga" src="img/extra-proposta-ingaggio.jpg" alt="Proposta di ingaggio per un extra"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Tutti e due sanno cosa è stato deciso, per iscritto.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Dopo il lavoro ci si dà un voto. Chi si presenta si fa un nome.</p></div>
+  </div>
+  <div class="num">14</div>
+</div></div>
+
+<!-- 15 squadra -->
+<div class="page funz"><div class="pag">
+  <div class="etichetta">Locale · La squadra</div>
+  <div class="alto">
+    <div class="testo">
+      <h2>Chi sa fare cosa, <em>nella tua squadra?</em></h2>
+      <p>Personale attivo, andamento del mese, copertura per competenza, affinità tra colleghi.</p>
+      <p>Le competenze scoperte stanno in cima: sono quelle su cui formare.</p>
+    </div>
+    <div class="tel"><img src="img/loc-squadra.jpg" alt="Le statistiche della squadra"></div>
+  </div>
+  <div class="tempo">
+    <div class="o"><h3>Oggi</h3><p>Vedi dove la squadra è scoperta.</p></div>
+    <div class="t"><h3>Col tempo</h3><p>Formi chi c'è e cerchi solo quello che manca.</p></div>
+  </div>
+  <div class="num">15</div>
+</div></div>
+
+<!-- 16 altre cose -->
+<div class="page"><div class="pag">
+  <div class="etichetta">Le altre cose</div>
+  <h2>Quello che c'è <em>intorno.</em></h2>
+  <ul class="liste">
+    <li><b>Riunioni.</b>Inviti la squadra a briefing e riunioni. L'invito arriva nelle notifiche.</li>
+    <li><b>Valutazioni.</b>Dopo un lavoro ci si dà un voto, da tutte e due le parti.</li>
+    <li><b>Deleghe.</b>Affidi a un collaboratore alcune cose, per esempio i turni.</li>
+    <li><b>Dimissioni.</b>Arrivano dentro l'app, per iscritto.</li>
+    <li><b>Ingresso.</b>Con l'impronta o col volto.</li>
+  </ul>
+  <div class="num">16</div>
+</div></div>
+
+<!-- 17 ristorante o albergo -->
+<div class="page"><div class="pag">
+  <div class="etichetta">Ristorante o albergo</div>
+  <h2>Tutti i reparti, <em>in un'app sola.</em></h2>
+  <p>Dalla sala alla portineria: il locale pubblica per il reparto che gli serve.</p>
+  <div class="chip rep"><span>Sala</span><span>Ricevimento e portineria</span><span>Bar</span><span>Cucina</span><span>Pizzeria</span><span>Piani e Pulizie · Camere</span><span>Delivery e Asporto</span><span>Economato e Magazzino</span><span>Banqueting e Eventi</span><span>Food &amp; Beverage</span><span>Management e Direzione</span><span>Amministrazione e Controllo</span><span>Manutenzione e Sicurezza</span></div>
+  <p style="margin-top:10px">I ruoli di ogni reparto si scelgono nell'app.</p>
+  <div class="num">17</div>
+</div></div>
+
+<!-- 18 nel tempo -->
+<div class="page"><div class="pag">
+  <div class="etichetta">Col tempo</div>
+  <h2>Cosa cambia <em>usandola.</em></h2>
+  <div class="tabella">
+    <div><b>Titolare</b><p>Meno telefonate. Sa chi ha confermato, chi è libero, chi manca.</p></div>
+    <div><b>Squadra</b><p>Turni scritti, scambi chiari, competenze riconosciute.</p></div>
+    <div><b>Extra</b><p>Proposte per iscritto, voti dopo il lavoro. Chi è serio si fa un nome.</p></div>
+    <div><b>Settore</b><p>Gli annunci con la paga scritta diventano la norma.</p></div>
+  </div>
+  <div class="num">18</div>
+</div></div>
+
+<!-- 19 costo -->
+<div class="page"><div class="pag">
+  <div class="etichetta">Cosa costa</div>
+  <h2>Per il locale <em>si comincia gratis.</em></h2>
+  <p>Pubblicare annunci, turni, squadra ed extra è gratuito. Gli abbonamenti si scelgono solo se servono.</p>
+  <div class="colonne">
+    <div class="g"><h3>Gratuito per il locale</h3><ul>
+      <li>Pubblicare annunci</li><li>Turni e calendario</li><li>La squadra</li><li>Extra e proposte</li>
+    </ul></div>
+    <div class="g"><h3>Gratuito per chi lavora</h3><ul>
+      <li>Profilo e annunci</li><li>Candidature e colloqui</li><li>Messaggi e notifiche</li><li>Turni ed extra</li>
+    </ul></div>
+  </div>
+  <p style="margin-top:12px">Nella tua zona ci sono ancora pochi profili? L'annuncio resta pubblicato. Chi apre l'app lo vede, anche prima di iscriversi.</p>
+  <div class="num">19</div>
+</div></div>
+
+<!-- 20 retro -->
+<div class="page quarta" data-density="hard"><div class="pag">
+  <div class="marchio">Risto<span>Next</span></div>
+  <div class="contatto">
+    <b>Michele Ricciardi — RistoNext</b>
+    info@ristonext.com<br>
+    <a href="tel:+393517173727">+39 351 717 3727</a> · <a href="https://wa.me/393517173727" target="_blank" rel="noopener">WhatsApp</a><br>
+    <a href="https://ristonext.com" target="_blank" rel="noopener">ristonext.com</a><br>
+    <a href="https://apps.apple.com/it/app/ristonext/id6762455597?ct=locali&amp;mt=8" target="_blank" rel="noopener">App Store</a> · <a href="https://play.google.com/store/apps/details?id=dev.a0.apps.ristonext493&amp;referrer=utm_source%3Dlocali%26utm_medium%3Dorganico" target="_blank" rel="noopener">Google Play</a>
+  </div>
+  <p class="consulenza">Seguiamo anche i locali con una consulenza su marketing, personale, operatività e organizzazione e, se serve, sui conti. Scriveteci per parlarne.</p>
+  <div class="cop piede" style="background:none">Le schermate sono dell'app vera, con profili di prova.</div>
+</div></div>
+
+</div></div></div>
+
+<div class="comandi">
+  <button id="ind" aria-label="Pagina precedente">← Indietro</button>
+  <span id="conta">1 / 20</span>
+  <button id="ava" aria-label="Pagina successiva">Avanti →</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+<script>
+(function(){
+  var conta=document.getElementById('conta'), wrap=document.getElementById('wrap');
+  // inclinazione 3D che segue il puntatore
+  if(window.matchMedia&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.addEventListener('pointermove',function(e){
+      var x=e.clientX/innerWidth-.5, y=e.clientY/innerHeight-.5;
+      wrap.style.setProperty('--ry',(x*10).toFixed(2)+'deg');
+      wrap.style.setProperty('--rx',(6-y*8).toFixed(2)+'deg');
+    });
+  }
+  if(!window.St||!St.PageFlip){document.body.classList.add('senza-libro');return;}
+  var libro=new St.PageFlip(document.getElementById('libro'),{
+    width:420,height:600,size:'stretch',minWidth:280,maxWidth:460,minHeight:400,maxHeight:657,
+    showCover:true,usePortrait:true,mobileScrollSupport:false,maxShadowOpacity:.6,flippingTime:900
+  });
+  libro.loadFromHTML(document.querySelectorAll('.page'));
+  var tot=libro.getPageCount();
+  function aggiorna(i){conta.textContent=(i+1)+' / '+tot;}
+  libro.on('flip',function(e){aggiorna(e.data);});
+  document.getElementById('ind').onclick=function(){libro.flipPrev();};
+  document.getElementById('ava').onclick=function(){libro.flipNext();};
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight')libro.flipNext(); if(e.key==='ArrowLeft')libro.flipPrev();});
+  aggiorna(0);
+})();
+</script>
+</body>
+</html>
